@@ -56,7 +56,31 @@ namespace CryptoAlbumCopa.Data
         /// <summary>
         /// Empacota os atributos em ulong, no mesmo layout do CardStats.sol.
         /// </summary>
-        public ulong Pack(Position pos, Rarity rar, int selecao)
+        /// <summary>
+        /// Empacota TODOS os campos como BigInteger, exatamente no layout do
+        /// CardStats.sol (uint256). Raridade (bit 64) e seleção (bit 72) ficam
+        /// além dos 64 bits de um ulong, por isso usamos BigInteger.
+        /// </summary>
+        public System.Numerics.BigInteger PackFull(Position pos, Rarity rar, int selecao)
+        {
+            System.Numerics.BigInteger p = PAC;
+            p |= (System.Numerics.BigInteger)SHO << 8;
+            p |= (System.Numerics.BigInteger)PAS << 16;
+            p |= (System.Numerics.BigInteger)DRI << 24;
+            p |= (System.Numerics.BigInteger)DEF << 32;
+            p |= (System.Numerics.BigInteger)PHY << 40;
+            p |= (System.Numerics.BigInteger)OVR << 48;
+            p |= (System.Numerics.BigInteger)(int)pos << 56;
+            p |= (System.Numerics.BigInteger)(int)rar << 64;
+            p |= (System.Numerics.BigInteger)selecao << 72;
+            return p;
+        }
+
+        /// <summary>
+        /// Empacota apenas os 64 primeiros bits (atributos + OVR + posição) em ulong.
+        /// Útil para comparações locais rápidas; a versão on-chain é PackFull.
+        /// </summary>
+        public ulong PackLow(Position pos)
         {
             return (ulong)PAC
                 | ((ulong)SHO << 8)
@@ -65,13 +89,21 @@ namespace CryptoAlbumCopa.Data
                 | ((ulong)DEF << 32)
                 | ((ulong)PHY << 40)
                 | ((ulong)OVR << 48)
-                | ((ulong)(int)pos << 56)
-                | ((ulong)(int)rar << 64 % 64); // nota: posições >63 exigem BigInteger on-chain
+                | ((ulong)(int)pos << 56);
         }
 
         /// <summary>
-        /// Desempacota de um ulong (para os 48 primeiros bits — atributos+ovr+pos).
-        /// A raridade e seleção (bits 64+) vêm separados via BigInteger no Web3Service.
+        /// Desempacota um BigInteger no layout do contrato (campos completos).
+        /// </summary>
+        public static (Attributes attrs, Position pos, Rarity rar, int selecao) UnpackFull(System.Numerics.BigInteger packed)
+        {
+            int B(int shift) => (int)((packed >> shift) & 0xFF);
+            var a = new Attributes(B(0), B(8), B(16), B(24), B(32), B(40), B(48));
+            return (a, (Position)B(56), (Rarity)B(64), B(72));
+        }
+
+        /// <summary>
+        /// Desempacota de um ulong (só os 56 primeiros bits: atributos+ovr+pos).
         /// </summary>
         public static Attributes Unpack(ulong packed)
         {

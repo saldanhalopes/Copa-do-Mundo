@@ -115,3 +115,28 @@ A mesma lógica já foi validada via porta JS (16 testes no `test/logic.test.js`
 3. Integrar matchmaking real (servidor) para PvP entre jogadores reais
 4. Sincronizar inventário com `balanceOfBatch` ao conectar a carteira
 5. Build Android/iOS/WebGL
+
+---
+
+## Telas implementadas (controllers de UI)
+
+| Script | Tela | O que faz |
+|---|---|---|
+| `UI/Screens/AlbumScreen.cs` | 📖 Álbum | 48 países + 5 categorias (jogadores, técnico, símbolos, curiosidades, estádios), grid de slots |
+| `UI/Screens/PackStoreScreen.cs` | ✨ Pacotes | 4 tipos incl. Mítico, animação VRF, revelação de cartas |
+| `UI/Screens/MatchScreen.cs` | ⚔️ Partida | Escala 11 + técnico, aposta, batalha animada confronto-a-confronto |
+| `UI/CardSlot.cs` | — | Slot de escalação (vazio/preenchido) |
+
+## Montagem rápida no editor
+
+Dois utilitários no menu **CryptoÁlbum** (requer Unity aberto):
+
+1. **CryptoÁlbum ▸ Criar Prefab de Carta** — gera `Assets/Prefabs/CardView.prefab` pronto
+2. **CryptoÁlbum ▸ Construir Cena de Demo** — cria `Assets/Scenes/Demo.unity` com Canvas, Managers e EventSystem
+
+Depois: arraste os screens aos painéis, ligue o `CardView.prefab` nos campos `cardViewPrefab`/`cardSlotPrefab`, e dê Play (o `DemoSeeder` popula o inventário de teste).
+
+## Assembly definitions
+
+- `Scripts/CryptoAlbumCopa.Runtime.asmdef` — código de jogo (vai no build)
+- `Editor/CryptoAlbumCopa.Editor.asmdef` — ferramentas de editor (não vai no build)
