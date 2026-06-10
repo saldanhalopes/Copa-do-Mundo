@@ -25,18 +25,49 @@ const ELENCOS = {
 
 const POSICOES = ["GOL", "ZAG", "ZAG", "LD", "LE", "VOL", "MEI", "MEI", "PD", "PE", "CAM"];
 
+// Perfis de atributos por posição (PAC,SHO,PAS,DRI,DEF,PHY) — pesos
+const PERFIS = {
+  GOL: [0.6,0.3,0.7,0.5,1.4,1.2], ZAG: [0.8,0.4,0.7,0.6,1.5,1.3],
+  LD:[1.3,0.6,1.1,1.0,1.2,1.0], LE:[1.3,0.6,1.1,1.0,1.2,1.0],
+  VOL:[0.9,0.7,1.2,1.0,1.3,1.2], MEI:[1.0,1.1,1.3,1.2,0.7,0.9],
+  PD:[1.4,1.1,1.0,1.3,0.5,0.8], PE:[1.4,1.1,1.0,1.3,0.5,0.8],
+  CAM:[1.1,1.3,1.3,1.4,0.5,0.8], ESCUDO:[0,0,0,0,0,0],
+};
+const ATTR_KEYS = ["PAC","SHO","PAS","DRI","DEF","PHY"];
+const OVR_RANGE = [[60,69],[70,79],[80,86],[87,92],[93,99]]; // por raridade
+
+// gerador determinístico simples (seed pelo id)
+function seeded(seed){ let s=seed; return ()=>{ s=(s*9301+49297)%233280; return s/233280; }; }
+
+function gerarAttrs(pos, rar, seedNum) {
+  if (pos === "ESCUDO") return null;
+  const rnd = seeded(seedNum * 7 + 13);
+  const [omin, omax] = OVR_RANGE[rar];
+  const ovrAlvo = Math.floor(omin + rnd() * (omax - omin));
+  const perfil = PERFIS[pos];
+  const attrs = {};
+  perfil.forEach((peso, i) => {
+    let v = Math.round(ovrAlvo * (0.7 + 0.3 * peso) + (rnd() * 12 - 6));
+    attrs[ATTR_KEYS[i]] = Math.max(30, Math.min(99, v));
+  });
+  attrs.OVR = Math.max(omin, Math.min(omax, ovrAlvo));
+  return attrs;
+}
+
 // Raridade: 0 comum · 1 rara · 2 épica · 3 lendária
 function buildStickers() {
   const list = [];
   let n = 1;
   for (const t of TEAMS) {
-    list.push({ id: `${t.id}-ESC`, num: n++, team: t.id, nome: `Escudo ${t.nome}`, pos: "ESCUDO", rar: 1 });
+    list.push({ id: `${t.id}-ESC`, num: n++, team: t.id, nome: `Escudo ${t.nome}`, pos: "ESCUDO", rar: 1, attrs: null });
     ELENCOS[t.id].forEach((nome, i) => {
       let rar = 0;
       if (i === 0) rar = 2; // goleiro épica
       if (i === 10) rar = 3; // camisa 10 lendária
       if (i === 5 || i === 8) rar = 1; // duas raras
-      list.push({ id: `${t.id}-${i + 1}`, num: n++, team: t.id, nome, pos: POSICOES[i], rar, camisa: i === 10 ? 10 : i + 1 });
+      const pos = POSICOES[i];
+      list.push({ id: `${t.id}-${i + 1}`, num: n, team: t.id, nome, pos, rar, camisa: i === 10 ? 10 : i + 1, attrs: gerarAttrs(pos, rar, n) });
+      n++;
     });
   }
   return list;
@@ -281,8 +312,8 @@ export default function CryptoAlbumCopa() {
 
       {/* TABS */}
       <nav className="flex gap-1 px-4 pt-4 max-w-3xl mx-auto">
-        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
-          <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 text-xs sm:text-sm font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
+        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["fantasy", "⚡ Fantasy"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
+          <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 text-xs font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
             {l}
           </button>
         ))}
@@ -293,6 +324,7 @@ export default function CryptoAlbumCopa() {
         <div className="rounded-b-2xl rounded-tr-2xl p-4 paper" style={{ color: "#3A2E1E" }}>
           {tab === "album" && <Album teamTab={teamTab} setTeamTab={setTeamTab} owned={owned} novas={novas} />}
           {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} />}
+          {tab === "fantasy" && <Fantasy owned={owned} connected={connected} toast={toast} />}
           {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} criarOferta={criarOferta} connected={connected} toast={toast} />}
           {tab === "vender" && <Vender owned={owned} activeChain={activeChain} connected={connected} toast={toast} />}
         </div>
@@ -401,10 +433,16 @@ function Sticker({ fig, count = 1, nova, pasted, big }) {
           <div style={{ fontSize: 8, color: "rgba(0,0,0,.55)", fontFamily: "monospace" }}>#{String(fig.num).padStart(3, "0")} · {RAR_META[fig.rar].nome}</div>
         </div>
       </div>
+      {/* OVR badge estilo FIFA */}
+      {!isEsc && fig.attrs && (
+        <div className="absolute top-1 left-1 text-center leading-none" style={{ color: t.texto === "#FFFFFF" || t.id === "FRA" ? "#fff" : "#1A1A1A", textShadow: "0 1px 2px rgba(0,0,0,.4)" }}>
+          <div className={`${big ? "text-lg" : "text-sm"} font-black`}>{fig.attrs.OVR}</div>
+        </div>
+      )}
       {count > 1 && (
         <div className="absolute top-1 right-1 text-xs font-black px-1.5 rounded-full" style={{ background: "#3A2E1E", color: "#FFDF00" }}>×{count}</div>
       )}
-      {nova && <div className="absolute top-1 left-1 text-xs font-black px-1.5 rounded-full anim-pulse" style={{ background: "#0A7A3C", color: "#fff", fontSize: 9 }}>NOVA</div>}
+      {nova && <div className="absolute bottom-7 left-1 text-xs font-black px-1.5 rounded-full anim-pulse" style={{ background: "#0A7A3C", color: "#fff", fontSize: 9 }}>NOVA</div>}
     </div>
   );
 }
@@ -682,6 +720,119 @@ function Vender({ owned, activeChain, connected, toast }) {
       <div className="mt-4 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
         💡 Dica: venda suas <b>repetidas</b> e use o valor para comprar mais pacotes ou troque diretamente na aba 🔄 Trocas (sem taxas de marketplace).
       </div>
+    </div>
+  );
+}
+
+// ============================================================
+// FANTASY — escalar time com atributos e pontuar (química estilo FIFA)
+// ============================================================
+const FORMACAO = [
+  { pos: "GOL", label: "GOL" }, { pos: "ZAG", label: "ZAG" }, { pos: "ZAG", label: "ZAG" },
+  { pos: "LD", label: "LD" }, { pos: "LE", label: "LE" },
+  { pos: "VOL", label: "VOL" }, { pos: "MEI", label: "MEI" }, { pos: "CAM", label: "CAM" },
+  { pos: "PD", label: "PD" }, { pos: "PE", label: "PE" }, { pos: "MEI", label: "MEI" },
+];
+
+function Fantasy({ owned, connected, toast }) {
+  const [time, setTime] = useState(Array(11).fill(null)); // tokenIds
+  const [slotAberto, setSlotAberto] = useState(null);
+
+  const minhas = Object.keys(owned).filter((id) => owned[id] > 0 && BY_ID[id] && BY_ID[id].attrs);
+
+  // cálculo de OVR + química (espelha FantasyLeague.sol)
+  const { somaOvr, quimica, pontuacao, preenchidos } = useMemo(() => {
+    let somaOvr = 0, quimica = 0, preenchidos = 0;
+    const selecoes = {};
+    time.forEach((id, i) => {
+      if (!id) return;
+      const f = BY_ID[id];
+      preenchidos++;
+      somaOvr += f.attrs.OVR;
+      if (f.pos === FORMACAO[i].pos) quimica += 3; // posição certa
+      selecoes[f.team] = (selecoes[f.team] || 0) + 1;
+    });
+    Object.values(selecoes).forEach((c) => { if (c >= 2) quimica += (c - 1) * 2; });
+    if (preenchidos === 11 && Object.keys(selecoes).length === 1) quimica += 15; // monoseleção
+    return { somaOvr, quimica, pontuacao: somaOvr + quimica, preenchidos };
+  }, [time]);
+
+  function escolher(id) {
+    const nt = [...time]; nt[slotAberto] = id; setTime(nt); setSlotAberto(null);
+  }
+  function confirmar() {
+    if (!connected) return toast("Conecte sua carteira primeiro");
+    if (preenchidos < 11) return toast("Escale os 11 jogadores");
+    toast(`Time escalado! ${pontuacao} pts`, `escalar() · OVR ${somaOvr} + química ${quimica}`);
+  }
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Fantasy League ⚡</h2>
+      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Escale 11 cartas. Atributos imutáveis + química definem sua pontuação. Mesma seleção e posição certa dão bônus (estilo FIFA UT).</p>
+
+      {/* Placar */}
+      <div className="grid grid-cols-3 gap-2 mb-3">
+        <div className="rounded-xl p-2 text-center" style={{ background: "#FFF8E8", border: "1px solid #E0D2B4" }}>
+          <div className="text-xs" style={{ color: "#8A7A5E" }}>OVR Time</div>
+          <div className="text-lg font-black" style={{ color: "#3A2E1E" }}>{somaOvr}</div>
+        </div>
+        <div className="rounded-xl p-2 text-center" style={{ background: "#EAF5EC", border: "1px solid #9FD3AA" }}>
+          <div className="text-xs" style={{ color: "#5A8A6A" }}>Química</div>
+          <div className="text-lg font-black" style={{ color: "#0A7A3C" }}>+{quimica}</div>
+        </div>
+        <div className="rounded-xl p-2 text-center" style={{ background: "#0A2E22" }}>
+          <div className="text-xs" style={{ color: "#FFDF0099" }}>Pontuação</div>
+          <div className="text-lg font-black" style={{ color: "#FFDF00" }}>{pontuacao}</div>
+        </div>
+      </div>
+
+      {/* Campo */}
+      <div className="rounded-xl p-3 mb-3" style={{ background: "linear-gradient(180deg,#1A7A3C,#0F5A2A)", border: "2px solid #0A4A22" }}>
+        <div className="grid grid-cols-3 gap-2">
+          {FORMACAO.map((slot, i) => {
+            const id = time[i];
+            const f = id ? BY_ID[id] : null;
+            return (
+              <button key={i} onClick={() => setSlotAberto(i)} className="rounded-lg p-1 transition-all" style={{ background: f ? "transparent" : "rgba(255,255,255,.12)", border: f ? "none" : "1.5px dashed rgba(255,255,255,.4)", minHeight: 64 }}>
+                {f ? <Sticker fig={f} /> : (
+                  <div className="flex flex-col items-center justify-center h-full py-2">
+                    <div className="text-xs font-bold" style={{ color: "#fff" }}>{slot.label}</div>
+                    <div className="text-xs" style={{ color: "rgba(255,255,255,.6)" }}>+ add</div>
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <button onClick={confirmar} disabled={preenchidos < 11} className="w-full py-3 rounded-xl font-bold text-sm" style={preenchidos === 11 ? { background: "#FFDF00", color: "#0A2E22" } : { background: "#E0D2B4", color: "#A89878" }}>
+        {preenchidos === 11 ? `Escalar time — ${pontuacao} pts` : `Escale ${11 - preenchidos} jogador(es)`}
+      </button>
+
+      {/* Seletor de carta */}
+      {slotAberto !== null && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center p-4" style={{ background: "rgba(0,0,0,.7)" }} onClick={() => setSlotAberto(null)}>
+          <div className="w-full max-w-sm rounded-2xl p-4 anim-pop max-h-[70vh] overflow-y-auto" style={{ background: "#112A20" }} onClick={(e) => e.stopPropagation()}>
+            <div className="font-bold mb-1" style={{ color: "#F3E9D2", fontFamily: "'Archivo Black'" }}>Escolher {FORMACAO[slotAberto].label}</div>
+            <div className="text-xs mb-3" style={{ color: "rgba(243,233,210,.6)" }}>Cartas na posição certa dão +química</div>
+            {minhas.length === 0 && <div className="text-sm text-center py-6" style={{ color: "rgba(243,233,210,.6)" }}>Você não tem cartas com atributos. Abra pacotes!</div>}
+            <div className="grid grid-cols-3 gap-2">
+              {minhas.filter((id) => !time.includes(id)).map((id) => {
+                const f = BY_ID[id];
+                const certa = f.pos === FORMACAO[slotAberto].pos;
+                return (
+                  <button key={id} onClick={() => escolher(id)} className="relative rounded-lg" style={{ outline: certa ? "2px solid #0A7A3C" : "none" }}>
+                    <Sticker fig={f} count={owned[id]} />
+                    {certa && <div className="absolute -top-1 -right-1 text-xs px-1 rounded-full font-black" style={{ background: "#0A7A3C", color: "#fff", fontSize: 9 }}>✓pos</div>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
