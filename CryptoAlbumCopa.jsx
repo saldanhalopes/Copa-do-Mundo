@@ -60,6 +60,18 @@ const PACKS = [
   { id: 2, nome: "Pacote Lendário", preco: 50, qtd: 10, garantia: 2, desc: "10 figurinhas · ≥1 Épica garantida" },
 ];
 
+const CHAINS = [
+  { id: "polygon", nome: "Polygon", symbol: "POL", cor: "#8247E5", vrf: "Chainlink VRF", market: "OpenSea / Magic Eden", logo: "⬟" },
+  { id: "bnb",     nome: "BNB Chain", symbol: "BNB", cor: "#F0B90B", vrf: "Binance Oracle", market: "Binance NFT Marketplace", logo: "◈" },
+];
+
+const WALLETS = [
+  { id: "metamask",   nome: "MetaMask",    chains: ["polygon","bnb"], logo: "🦊" },
+  { id: "trustwallet",nome: "Trust Wallet",chains: ["polygon","bnb"], logo: "🛡️" },
+  { id: "binance",    nome: "Binance Web3",chains: ["bnb"],           logo: "🔶" },
+  { id: "email",      nome: "Email / Google (sem cripto)", chains: ["polygon","bnb"], logo: "📧" },
+];
+
 // sorteio com a mesma tabela do PackStore.sol (sem mítica no demo)
 function rollRarity(x) {
   if (x < 7000) return 0;
@@ -96,19 +108,23 @@ export default function CryptoAlbumCopa() {
   const [tab, setTab] = useState("album");
   const [teamTab, setTeamTab] = useState("BRA");
   const [connected, setConnected] = useState(false);
+  const [chain, setChain] = useState("polygon");
+  const [showChainModal, setShowChainModal] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [walletType, setWalletType] = useState(null);
   const [pol, setPol] = useState(100);
   const [owned, setOwned] = useState(() => {
     const o = {};
-    // coleção inicial: algumas figurinhas com repetidas
     ["BRA-ESC", "BRA-2", "BRA-2", "BRA-5", "BRA-6", "ARG-3", "ARG-3", "ARG-7", "FRA-4", "ALE-9", "ALE-9"].forEach((id) => (o[id] = (o[id] || 0) + 1));
     return o;
   });
-  const [opening, setOpening] = useState(null); // {fase, pack, ids, flipped}
+  const [opening, setOpening] = useState(null);
   const [toasts, setToasts] = useState([]);
   const [ofertas, setOfertas] = useState(OFERTAS_INICIAIS);
   const [novas, setNovas] = useState(new Set());
   const [trophy, setTrophy] = useState(false);
   const toastId = useRef(0);
+  const activeChain = CHAINS.find(c => c.id === chain);
 
   const unicas = useMemo(() => Object.keys(owned).filter((k) => owned[k] > 0).length, [owned]);
   const repetidas = useMemo(() => Object.values(owned).reduce((a, c) => a + Math.max(0, c - 1), 0), [owned]);
@@ -172,32 +188,75 @@ export default function CryptoAlbumCopa() {
       <style>{FONTS + CSS}</style>
 
       {/* HEADER */}
-      <header className="sticky top-0 z-40 px-4 py-3 flex items-center justify-between gap-2 flex-wrap" style={{ background: "rgba(10,46,34,.92)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(243,233,210,.15)" }}>
+      <header className="sticky top-0 z-40 px-3 py-2.5 flex items-center justify-between gap-2 flex-wrap" style={{ background: "rgba(10,46,34,.95)", backdropFilter: "blur(10px)", borderBottom: "1px solid rgba(243,233,210,.15)" }}>
         <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg" style={{ background: "conic-gradient(#FFDF00, #009C3B, #FFDF00)", boxShadow: "0 0 12px rgba(255,223,0,.35)" }}>⚽</div>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-base" style={{ background: "conic-gradient(#FFDF00,#009C3B,#FFDF00)", boxShadow: "0 0 12px rgba(255,223,0,.35)" }}>⚽</div>
           <div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 15, letterSpacing: ".5px", lineHeight: 1 }}>CRYPTOÁLBUM <span style={{ color: "#FFDF00" }}>COPA</span></div>
-            <div className="text-xs" style={{ color: "rgba(243,233,210,.55)" }}>ERC-1155 · Polygon · Chainlink VRF</div>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 14, letterSpacing: ".5px", lineHeight: 1 }}>CRYPTOÁLBUM <span style={{ color: "#FFDF00" }}>COPA</span></div>
+            <div className="text-xs" style={{ color: "rgba(243,233,210,.5)" }}>ERC-1155 · Multi-chain</div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
+          {/* Chain Selector */}
+          <button onClick={() => setShowChainModal(true)} className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-xl font-bold transition-all" style={{ background: "rgba(243,233,210,.1)", border: `1px solid ${activeChain.cor}55` }}>
+            <span style={{ color: activeChain.cor }}>{activeChain.logo}</span>
+            <span style={{ color: "rgba(243,233,210,.8)" }}>{activeChain.nome}</span>
+          </button>
           {connected && (
-            <button onClick={() => { setPol((p) => p + 100); toast("Faucet: +100 POL de teste"); }} className="text-xs px-2 py-1 rounded-lg" style={{ border: "1px dashed rgba(243,233,210,.4)" }}>
-              + POL teste
+            <button onClick={() => { setPol(p => p + 100); toast(`Faucet: +100 ${activeChain.symbol} de teste`); }} className="text-xs px-2 py-1.5 rounded-xl" style={{ border: "1px dashed rgba(243,233,210,.35)", color: "rgba(243,233,210,.7)" }}>
+              +{activeChain.symbol}
             </button>
           )}
           {connected ? (
-            <div className="text-xs px-3 py-1.5 rounded-xl" style={{ background: "rgba(243,233,210,.1)", border: "1px solid rgba(243,233,210,.2)" }}>
-              <span style={{ color: "#FFDF00", fontWeight: 700 }}>{pol} POL</span>
-              <span className="ml-2" style={{ color: "rgba(243,233,210,.6)" }}>0x9aF2…b41</span>
+            <div className="text-xs px-2.5 py-1.5 rounded-xl flex items-center gap-1.5" style={{ background: "rgba(243,233,210,.1)", border: "1px solid rgba(243,233,210,.18)" }}>
+              <span className="text-base">{WALLETS.find(w => w.id === walletType)?.logo || "💼"}</span>
+              <span style={{ color: "#FFDF00", fontWeight: 700 }}>{pol} {activeChain.symbol}</span>
+              <span style={{ color: "rgba(243,233,210,.5)" }}>0x9aF…b41</span>
             </div>
           ) : (
-            <button onClick={() => { setConnected(true); toast("Carteira conectada", "Polygon PoS · chainId 137"); }} className="text-sm font-bold px-4 py-2 rounded-xl" style={{ background: "#FFDF00", color: "#0A2E22" }}>
-              Conectar carteira
+            <button onClick={() => setShowWalletModal(true)} className="text-sm font-bold px-3 py-2 rounded-xl" style={{ background: "#FFDF00", color: "#0A2E22" }}>
+              Conectar
             </button>
           )}
         </div>
       </header>
+
+      {/* CHAIN SELECTOR MODAL */}
+      {showChainModal && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center p-4" style={{ background: "rgba(0,0,0,.7)" }} onClick={() => setShowChainModal(false)}>
+          <div className="w-full max-w-sm rounded-2xl p-4 anim-pop" style={{ background: "#112A20", border: "1px solid rgba(243,233,210,.2)" }} onClick={e => e.stopPropagation()}>
+            <div className="font-bold mb-3" style={{ color: "#F3E9D2", fontFamily: "'Archivo Black', sans-serif" }}>Escolher rede</div>
+            {CHAINS.map(c => (
+              <button key={c.id} onClick={() => { setChain(c.id); setShowChainModal(false); toast(`Rede: ${c.nome}`, `VRF: ${c.vrf} · Marketplace: ${c.market}`); }} className="w-full flex items-center gap-3 p-3 rounded-xl mb-2 transition-all" style={{ background: chain === c.id ? `${c.cor}22` : "rgba(243,233,210,.05)", border: `2px solid ${chain === c.id ? c.cor : "transparent"}` }}>
+                <span className="text-2xl">{c.logo}</span>
+                <div className="text-left flex-1">
+                  <div className="font-bold" style={{ color: c.cor }}>{c.nome}</div>
+                  <div className="text-xs" style={{ color: "rgba(243,233,210,.55)" }}>VRF: {c.vrf} · {c.market}</div>
+                </div>
+                {chain === c.id && <span style={{ color: c.cor }}>✓</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* WALLET MODAL */}
+      {showWalletModal && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center p-4" style={{ background: "rgba(0,0,0,.7)" }} onClick={() => setShowWalletModal(false)}>
+          <div className="w-full max-w-sm rounded-2xl p-4 anim-pop" style={{ background: "#112A20", border: "1px solid rgba(243,233,210,.2)" }} onClick={e => e.stopPropagation()}>
+            <div className="font-bold mb-1" style={{ color: "#F3E9D2", fontFamily: "'Archivo Black', sans-serif" }}>Conectar carteira</div>
+            <div className="text-xs mb-3" style={{ color: "rgba(243,233,210,.5)" }}>Rede selecionada: <span style={{ color: activeChain.cor }}>{activeChain.nome}</span></div>
+            {WALLETS.filter(w => w.chains.includes(chain)).map(w => (
+              <button key={w.id} onClick={() => { setWalletType(w.id); setConnected(true); setShowWalletModal(false); toast(`${w.nome} conectado`, `${activeChain.nome} · chainId ${chain === "bnb" ? 56 : 137}`); }} className="w-full flex items-center gap-3 p-3 rounded-xl mb-2 transition-all" style={{ background: "rgba(243,233,210,.07)", border: "1px solid rgba(243,233,210,.15)" }}>
+                <span className="text-2xl">{w.logo}</span>
+                <span className="font-bold" style={{ color: "#F3E9D2" }}>{w.nome}</span>
+                {w.id === "binance" && <span className="ml-auto text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: "#F0B90B22", color: "#F0B90B" }}>Nativo BNB</span>}
+                {w.id === "email" && <span className="ml-auto text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: "#009C3B22", color: "#009C3B" }}>Sem cripto</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* PROGRESSO */}
       <div className="px-4 pt-4 max-w-3xl mx-auto">
@@ -228,13 +287,13 @@ export default function CryptoAlbumCopa() {
       <main className="max-w-3xl mx-auto px-4 pb-24">
         <div className="rounded-b-2xl rounded-tr-2xl p-4 paper" style={{ color: "#3A2E1E" }}>
           {tab === "album" && <Album teamTab={teamTab} setTeamTab={setTeamTab} owned={owned} novas={novas} />}
-          {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} />}
+          {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} />}
           {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} />}
         </div>
       </main>
 
       {/* MODAL ABERTURA DE PACOTE */}
-      {opening && <PackModal opening={opening} fechar={fecharPacote} owned={owned} />}
+      {opening && <PackModal opening={opening} fechar={fecharPacote} owned={owned} activeChain={activeChain} />}
 
       {/* MODAL TROFÉU */}
       {trophy && (
@@ -347,28 +406,51 @@ function Sticker({ fig, count = 1, nova, pasted, big }) {
 // ============================================================
 // PACOTES
 // ============================================================
-function Pacotes({ comprar, pol }) {
+function Pacotes({ comprar, pol, activeChain }) {
   return (
     <div>
       <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Banca de pacotes</h2>
-      <p className="text-xs mb-4" style={{ color: "#8A7A5E" }}>Sorteio verificável via Chainlink VRF — probabilidades públicas: Comum 70% · Rara 20% · Épica 8% · Lendária 2%</p>
+      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Sorteio verificável via <b>{activeChain.vrf}</b> · Polygon 70% Comum · 20% Rara · 8% Épica · 2% Lendária</p>
+
+      {/* Marketplace badge */}
+      <div className="flex items-center gap-2 mb-3 p-2.5 rounded-xl" style={{ background: activeChain.id === "bnb" ? "#F0B90B18" : "#8247E518", border: `1px solid ${activeChain.cor}44` }}>
+        <span className="text-xl">{activeChain.logo}</span>
+        <div className="text-xs">
+          <div className="font-bold" style={{ color: activeChain.id === "bnb" ? "#B08A00" : "#5A3A9A" }}>Marketplace: {activeChain.market}</div>
+          <div style={{ color: "#8A7A5E" }}>{activeChain.id === "bnb" ? "Figurinhas também disponíveis como Mystery Boxes na Binance NFT" : "Figurinhas disponíveis na OpenSea e Magic Eden"}</div>
+        </div>
+      </div>
+
       <div className="flex flex-col gap-3">
         {PACKS.map((p) => (
           <div key={p.id} className="rounded-xl p-3 flex items-center gap-3" style={{ background: "#FFF8E8", border: "1px solid #E0D2B4" }}>
-            <div className="w-14 h-18 rounded-lg flex items-center justify-center text-2xl shrink-0 pack-foil" style={{ height: 72 }}>⚽</div>
+            <div className="w-14 rounded-lg flex items-center justify-center text-2xl shrink-0 pack-foil" style={{ height: 72 }}>⚽</div>
             <div className="flex-1 min-w-0">
               <div className="font-bold" style={{ color: "#3A2E1E" }}>{p.nome}</div>
               <div className="text-xs" style={{ color: "#8A7A5E" }}>{p.desc}</div>
-              <div className="text-xs mt-0.5" style={{ color: "#B0A080", fontFamily: "monospace" }}>comprarPacote({p.id}) → VRF</div>
+              <div className="text-xs mt-0.5" style={{ color: "#B0A080", fontFamily: "monospace" }}>comprarPacote({p.id}) → {activeChain.vrf}</div>
             </div>
-            <button onClick={() => comprar(p)} disabled={pol < p.preco} className="px-3 py-2 rounded-xl font-bold text-sm shrink-0 transition-all" style={pol >= p.preco ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
-              {p.preco} POL
-            </button>
+            <div className="flex flex-col gap-1 shrink-0">
+              <button onClick={() => comprar(p)} disabled={pol < p.preco} className="px-3 py-1.5 rounded-xl font-bold text-xs transition-all" style={pol >= p.preco ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
+                {p.preco} {activeChain.symbol}
+              </button>
+              {activeChain.id === "bnb" && (
+                <button onClick={() => comprar(p)} className="px-3 py-1.5 rounded-xl font-bold text-xs" style={{ background: "#F0B90B", color: "#1A1200" }}>
+                  Binance Pay
+                </button>
+              )}
+            </div>
           </div>
         ))}
       </div>
-      <div className="mt-4 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
-        💳 Na versão final, pacotes também podem ser comprados com cartão de crédito (Crossmint) — o usuário nem precisa saber o que é cripto.
+
+      {/* Wallets info */}
+      <div className="mt-3 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
+        {activeChain.id === "bnb" ? (
+          <span>🔶 Aceito via <b>Binance Pay</b>, <b>BNB</b> ou <b>BUSD</b> · Compatível com Trust Wallet e MetaMask</span>
+        ) : (
+          <span>💳 Aceito com cartão de crédito via Crossmint · POL · USDC · Embedded wallet para iniciantes</span>
+        )}
       </div>
     </div>
   );
@@ -377,7 +459,7 @@ function Pacotes({ comprar, pol }) {
 // ============================================================
 // MODAL DE ABERTURA
 // ============================================================
-function PackModal({ opening, fechar, owned }) {
+function PackModal({ opening, fechar, owned, activeChain }) {
   const { fase, pack, ids, flipped } = opening;
   const done = fase === 3 && flipped.length === ids.length;
   return (
@@ -393,9 +475,9 @@ function PackModal({ opening, fechar, owned }) {
         {fase === 2 && (
           <div className="anim-pop">
             <div className="text-5xl mb-4 anim-spin-slow inline-block">🔮</div>
-            <div className="font-bold" style={{ color: "#F3E9D2" }}>Chainlink VRF gerando aleatoriedade…</div>
+            <div className="font-bold" style={{ color: "#F3E9D2" }}>{activeChain?.vrf || "VRF"} gerando aleatoriedade…</div>
             <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.55)" }}>Prova criptográfica on-chain — nem nós podemos manipular o sorteio</div>
-            <div className="text-xs mt-2" style={{ color: "rgba(243,233,210,.4)", fontFamily: "monospace" }}>requestRandomWords · 3 confirmações</div>
+            <div className="text-xs mt-2" style={{ color: "rgba(243,233,210,.4)", fontFamily: "monospace" }}>requestRandomWords · 3 confirmações · {activeChain?.nome}</div>
           </div>
         )}
         {fase === 3 && (
