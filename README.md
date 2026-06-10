@@ -62,3 +62,15 @@ npx hardhat run scripts/deploy-testnet.js --network amoy
 ---
 
 > Jogadores fictícios no demo. Lançamento comercial requer licenciamento FIFA/FIFPro ou arte original.
+
+## 🎮 Cliente Unity (multiplataforma)
+
+Versão em **Unity + ChainSafe Web3.unity** para Android, iOS e PC/WebGL em `unity/`.
+
+- `Data/` — catálogo de 1.352 figurinhas (48 países × 28 + 8 estádios), gerado deterministicamente
+- `Battle/` — motor de batalha PvP (11 jogadores + técnico, bônus de força do técnico)
+- `Web3/` — integração ChainSafe (ler NFTs, comprar pacotes, apostar no PvP)
+- `Game/` — inventário e controlador de partidas
+- `UI/` — componente visual da carta estilo FIFA
+
+Ver `unity/README.md` para setup do ChainSafe e build.
