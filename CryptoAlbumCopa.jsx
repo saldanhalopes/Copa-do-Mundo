@@ -183,6 +183,11 @@ export default function CryptoAlbumCopa() {
     toast(`Troca atômica concluída com ${of.user}`, `safeBatchTransferFrom ×2 · ${hash()}`);
   }
 
+  function criarOferta(da, quer) {
+    setOfertas((o) => [{ id: Date.now(), user: "você", da, quer }, ...o]);
+    toast("Oferta de troca publicada no mural", `criarOferta() · ${hash()}`);
+  }
+
   return (
     <div className="min-h-screen w-full" style={{ background: "#0A2E22", fontFamily: "'Space Grotesk', system-ui, sans-serif", color: "#F3E9D2" }}>
       <style>{FONTS + CSS}</style>
@@ -276,8 +281,8 @@ export default function CryptoAlbumCopa() {
 
       {/* TABS */}
       <nav className="flex gap-1 px-4 pt-4 max-w-3xl mx-auto">
-        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["trocas", "🔄 Trocas"]].map(([k, l]) => (
-          <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 text-sm font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
+        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
+          <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 text-xs sm:text-sm font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
             {l}
           </button>
         ))}
@@ -288,7 +293,8 @@ export default function CryptoAlbumCopa() {
         <div className="rounded-b-2xl rounded-tr-2xl p-4 paper" style={{ color: "#3A2E1E" }}>
           {tab === "album" && <Album teamTab={teamTab} setTeamTab={setTeamTab} owned={owned} novas={novas} />}
           {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} />}
-          {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} />}
+          {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} criarOferta={criarOferta} connected={connected} toast={toast} />}
+          {tab === "vender" && <Vender owned={owned} activeChain={activeChain} connected={connected} toast={toast} />}
         </div>
       </main>
 
@@ -514,21 +520,78 @@ function PackModal({ opening, fechar, owned, activeChain }) {
 // ============================================================
 // TROCAS
 // ============================================================
-function Trocas({ ofertas, owned, aceitar }) {
+function Trocas({ ofertas, owned, aceitar, criarOferta, connected, toast }) {
+  const [criando, setCriando] = useState(false);
+  const [dou, setDou] = useState("");
+  const [quero, setQuero] = useState("");
+
+  // figurinhas repetidas que posso oferecer
+  const repetidas = Object.keys(owned).filter((id) => owned[id] > 1 && BY_ID[id]);
+  // figurinhas que me faltam
+  const faltam = STICKERS.filter((s) => !owned[s.id]).map((s) => s.id);
+
+  function publicar() {
+    if (!connected) return toast("Conecte sua carteira primeiro");
+    if (!dou || !quero) return toast("Escolha as duas figurinhas");
+    criarOferta(dou, quero);
+    setCriando(false); setDou(""); setQuero("");
+  }
+
   return (
     <div>
-      <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Mural de trocas</h2>
-      <p className="text-xs mb-4" style={{ color: "#8A7A5E" }}>Swap atômico via TradeDesk.sol — ou os dois lados recebem, ou nada acontece. Zero risco de golpe.</p>
-      {ofertas.length === 0 && <div className="text-sm text-center py-8" style={{ color: "#8A7A5E" }}>Nenhuma oferta aberta. Crie a sua na versão completa!</div>}
+      <div className="flex items-center justify-between mb-1">
+        <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Mural de trocas</h2>
+        <button onClick={() => setCriando(!criando)} className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: criando ? "#E0D2B4" : "#0A2E22", color: criando ? "#6A5E48" : "#FFDF00" }}>
+          {criando ? "Cancelar" : "+ Criar oferta"}
+        </button>
+      </div>
+      <p className="text-xs mb-4" style={{ color: "#8A7A5E" }}>Swap atômico via TradeDesk.sol — ou os dois lados recebem, ou nada acontece. Troca por figurinha, sem dinheiro.</p>
+
+      {/* CRIAR OFERTA */}
+      {criando && (
+        <div className="rounded-xl p-3 mb-4 anim-pop" style={{ background: "#FFF3D6", border: "2px solid #D4A938" }}>
+          <div className="text-xs font-bold mb-2" style={{ color: "#6A5E48" }}>Crie sua troca:</div>
+          <div className="grid grid-cols-2 gap-2 mb-2">
+            <div>
+              <label className="text-xs block mb-1" style={{ color: "#8A7A5E" }}>Eu dou (repetida):</label>
+              <select value={dou} onChange={(e) => setDou(e.target.value)} className="w-full text-xs p-2 rounded-lg" style={{ background: "#fff", border: "1px solid #E0D2B4", color: "#3A2E1E" }}>
+                <option value="">Escolher…</option>
+                {repetidas.map((id) => <option key={id} value={id}>#{String(BY_ID[id].num).padStart(3, "0")} {BY_ID[id].nome} (×{owned[id]})</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs block mb-1" style={{ color: "#8A7A5E" }}>Eu quero (faltante):</label>
+              <select value={quero} onChange={(e) => setQuero(e.target.value)} className="w-full text-xs p-2 rounded-lg" style={{ background: "#fff", border: "1px solid #E0D2B4", color: "#3A2E1E" }}>
+                <option value="">Escolher…</option>
+                {faltam.map((id) => <option key={id} value={id}>#{String(BY_ID[id].num).padStart(3, "0")} {BY_ID[id].nome}</option>)}
+              </select>
+            </div>
+          </div>
+          {dou && quero && (
+            <div className="flex items-center justify-center gap-2 my-2">
+              <div className="w-16"><Sticker fig={BY_ID[dou]} /></div>
+              <span className="text-xl" style={{ color: "#B0A080" }}>⇄</span>
+              <div className="w-16"><Sticker fig={BY_ID[quero]} /></div>
+            </div>
+          )}
+          {repetidas.length === 0 && <div className="text-xs text-center py-2" style={{ color: "#B05030" }}>Você não tem figurinhas repetidas para oferecer. Abra mais pacotes!</div>}
+          <button onClick={publicar} disabled={!dou || !quero} className="w-full py-2 rounded-lg text-xs font-bold mt-1" style={dou && quero ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
+            Publicar oferta no mural
+          </button>
+        </div>
+      )}
+
+      {ofertas.length === 0 && <div className="text-sm text-center py-8" style={{ color: "#8A7A5E" }}>Nenhuma oferta aberta.</div>}
       <div className="flex flex-col gap-3">
         {ofertas.map((of) => {
           const da = BY_ID[of.da];
           const quer = BY_ID[of.quer];
           const tenho = (owned[of.quer] || 0) > 0;
           const repetida = (owned[of.quer] || 0) > 1;
+          const minha = of.user === "você";
           return (
-            <div key={of.id} className="rounded-xl p-3" style={{ background: "#FFF8E8", border: "1px solid #E0D2B4" }}>
-              <div className="text-xs font-bold mb-2" style={{ color: "#6A5E48" }}>{of.user} oferece:</div>
+            <div key={of.id} className="rounded-xl p-3" style={{ background: minha ? "#EAF5EC" : "#FFF8E8", border: `1px solid ${minha ? "#9FD3AA" : "#E0D2B4"}` }}>
+              <div className="text-xs font-bold mb-2" style={{ color: "#6A5E48" }}>{minha ? "🟢 Sua oferta" : `${of.user} oferece:`}</div>
               <div className="flex items-center gap-2">
                 <div className="w-20 shrink-0"><Sticker fig={da} /></div>
                 <div className="text-2xl shrink-0" style={{ color: "#B0A080" }}>⇄</div>
@@ -536,16 +599,88 @@ function Trocas({ ofertas, owned, aceitar }) {
                 <div className="flex-1 min-w-0 pl-1">
                   <div className="text-xs leading-snug" style={{ color: "#6A5E48" }}>
                     Quer: <b>{quer.nome}</b>
-                    {tenho ? (repetida ? <span style={{ color: "#0A7A3C" }}> — você tem repetida! ✓</span> : <span style={{ color: "#B08018" }}> — você tem só 1</span>) : <span style={{ color: "#B05030" }}> — você não tem</span>}
+                    {!minha && (tenho ? (repetida ? <span style={{ color: "#0A7A3C" }}> — você tem repetida! ✓</span> : <span style={{ color: "#B08018" }}> — você tem só 1</span>) : <span style={{ color: "#B05030" }}> — você não tem</span>)}
                   </div>
-                  <button onClick={() => aceitar(of)} disabled={!tenho} className="mt-2 w-full py-2 rounded-lg text-xs font-bold transition-all" style={tenho ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
-                    {tenho ? "Aceitar troca atômica" : "Indisponível"}
-                  </button>
+                  {!minha && (
+                    <button onClick={() => aceitar(of)} disabled={!tenho} className="mt-2 w-full py-2 rounded-lg text-xs font-bold transition-all" style={tenho ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
+                      {tenho ? "Aceitar troca atômica" : "Indisponível"}
+                    </button>
+                  )}
+                  {minha && <div className="mt-2 text-xs" style={{ color: "#0A7A3C" }}>Aguardando alguém aceitar…</div>}
                 </div>
               </div>
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// VENDER — listagem em marketplace externo (OpenSea / Binance NFT)
+// ============================================================
+function Vender({ owned, activeChain, connected, toast }) {
+  const [preco, setPreco] = useState({});
+  // só figurinhas que possuo (repetidas são as candidatas naturais a vender)
+  const minhas = Object.keys(owned).filter((id) => owned[id] > 0 && BY_ID[id]);
+
+  const marketName = activeChain.id === "bnb" ? "Binance NFT" : "OpenSea";
+  const marketUrl = activeChain.id === "bnb"
+    ? "https://www.binance.com/en/nft/home"
+    : "https://opensea.io";
+
+  function listar(id) {
+    if (!connected) return toast("Conecte sua carteira primeiro");
+    const p = preco[id];
+    if (!p) return toast("Defina um preço");
+    toast(`Listando no ${marketName}…`, `setApprovalForAll → Seaport · ${activeChain.symbol} ${p}`);
+    // Em produção: window.open com deep link de listagem do marketplace
+    setTimeout(() => toast("Figurinha listada!", `Abrindo ${marketName} para confirmar`), 1400);
+  }
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Vender figurinhas</h2>
+      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>
+        Venda por <b>{activeChain.symbol}</b> no <b>{marketName}</b>. A propriedade é sua — o NFT sai da sua carteira só quando alguém compra.
+      </p>
+
+      {/* Banner marketplace */}
+      <div className="flex items-center gap-2 mb-4 p-3 rounded-xl" style={{ background: activeChain.id === "bnb" ? "#F0B90B18" : "#2081E218", border: `1px solid ${activeChain.cor}44` }}>
+        <span className="text-2xl">{activeChain.id === "bnb" ? "◈" : "⛵"}</span>
+        <div className="flex-1 text-xs">
+          <div className="font-bold" style={{ color: "#3A2E1E" }}>Marketplace: {marketName}</div>
+          <div style={{ color: "#8A7A5E" }}>Royalty de 5% aplicado via ERC-2981 · listagem sem custódia (Seaport)</div>
+        </div>
+        <a href={marketUrl} target="_blank" rel="noreferrer" className="text-xs font-bold px-2.5 py-1.5 rounded-lg shrink-0" style={{ background: activeChain.cor, color: "#1A1200" }}>Abrir ↗</a>
+      </div>
+
+      {minhas.length === 0 && <div className="text-sm text-center py-8" style={{ color: "#8A7A5E" }}>Você ainda não tem figurinhas. Abra um pacote!</div>}
+
+      <div className="flex flex-col gap-2">
+        {minhas.map((id) => {
+          const fig = BY_ID[id];
+          const qtd = owned[id];
+          return (
+            <div key={id} className="flex items-center gap-3 p-2.5 rounded-xl" style={{ background: "#FFF8E8", border: "1px solid #E0D2B4" }}>
+              <div className="w-14 shrink-0"><Sticker fig={fig} count={qtd} /></div>
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-bold truncate" style={{ color: "#3A2E1E" }}>{fig.nome}</div>
+                <div className="text-xs" style={{ color: "#8A7A5E" }}>#{String(fig.num).padStart(3, "0")} · {RAR_META[fig.rar].nome} {qtd > 1 && `· ${qtd} cópias`}</div>
+              </div>
+              <div className="flex items-center gap-1 shrink-0">
+                <input type="number" placeholder="0.00" value={preco[id] || ""} onChange={(e) => setPreco({ ...preco, [id]: e.target.value })} className="w-16 text-xs p-1.5 rounded-lg text-right" style={{ background: "#fff", border: "1px solid #E0D2B4", color: "#3A2E1E" }} />
+                <span className="text-xs font-bold" style={{ color: activeChain.cor === "#F0B90B" ? "#B08A00" : "#5A3A9A" }}>{activeChain.symbol}</span>
+                <button onClick={() => listar(id)} className="text-xs font-bold px-2.5 py-1.5 rounded-lg" style={{ background: "#0A2E22", color: "#FFDF00" }}>Listar</button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
+        💡 Dica: venda suas <b>repetidas</b> e use o valor para comprar mais pacotes ou troque diretamente na aba 🔄 Trocas (sem taxas de marketplace).
       </div>
     </div>
   );
