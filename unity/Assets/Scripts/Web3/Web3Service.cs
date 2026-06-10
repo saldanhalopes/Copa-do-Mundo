@@ -190,5 +190,22 @@ namespace CryptoAlbumCopa.Web3Net
             await Task.Delay(100);
             return 1000;
         }
+
+        // ─── Trocas (TradeDesk) ───────────────────────────────────
+        public async Task<string> AcceptTrade(int offerId)
+        {
+            // var tx = await contract.Send("aceitarOferta", new object[]{ offerId });
+            await Task.Delay(300);
+            Debug.Log($"[Web3] AcceptTrade({offerId}) — integrar aceitarOferta (swap atômico)");
+            return "0xstub_trade";
+        }
+
+        public async Task<string> CreateTrade(int[] giveIds, int[] wantIds)
+        {
+            // var tx = await contract.Send("criarOferta", new object[]{ giveIds, qtdsGive, wantIds, qtdsWant, address(0), duracao });
+            await Task.Delay(300);
+            Debug.Log("[Web3] CreateTrade — integrar criarOferta");
+            return "0xstub_create_trade";
+        }
     }
 }

@@ -19,6 +19,93 @@ namespace CryptoAlbumCopa.EditorTools
     /// </summary>
     public static class SceneBuilder
     {
+        [MenuItem("CryptoÁlbum/Construir UI Completa (6 abas)")]
+        public static void BuildFullUI()
+        {
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+
+            var managers = new GameObject("Managers");
+            managers.AddComponent<Web3Service>();
+            managers.AddComponent<PlayerInventory>();
+            managers.AddComponent<DemoSeeder>();
+
+            var canvasGO = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            var canvas = canvasGO.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            var scaler = canvasGO.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1080, 1920);
+
+            if (Object.FindObjectOfType<UnityEngine.EventSystems.EventSystem>() == null)
+                new GameObject("EventSystem",
+                    typeof(UnityEngine.EventSystems.EventSystem),
+                    typeof(UnityEngine.EventSystems.StandaloneInputModule));
+
+            var bg = NewUI("Background", canvasGO.transform);
+            Stretch(bg.GetComponent<RectTransform>());
+            bg.AddComponent<Image>().color = new Color(0.04f, 0.18f, 0.13f);
+
+            var header = NewUI("Header", canvasGO.transform);
+            var headerRt = header.GetComponent<RectTransform>();
+            headerRt.anchorMin = new Vector2(0, 1); headerRt.anchorMax = new Vector2(1, 1);
+            headerRt.pivot = new Vector2(0.5f, 1); headerRt.sizeDelta = new Vector2(0, 140);
+            header.AddComponent<Image>().color = new Color(0.04f, 0.18f, 0.13f, 0.95f);
+
+            var title = MakeText("Title", header.transform, "CRYPTOÁLBUM COPA", 40, new Vector2(0, -50), TextAlignmentOptions.Center);
+            title.color = new Color(1f, 0.87f, 0f);
+
+            var connectBtn = MakeButton("ConnectButton", header.transform, "Conectar", new Vector2(380, -50), new Vector2(200, 70));
+
+            string[] names = { "AlbumPanel", "PacotesPanel", "PartidaPanel", "RankingPanel", "TrocasPanel", "VenderPanel" };
+            var panels = new GameObject[6];
+            for (int i = 0; i < 6; i++)
+            {
+                panels[i] = NewUI(names[i], canvasGO.transform);
+                var rt = panels[i].GetComponent<RectTransform>();
+                rt.anchorMin = new Vector2(0, 0); rt.anchorMax = new Vector2(1, 1);
+                rt.offsetMin = new Vector2(0, 160); rt.offsetMax = new Vector2(0, -150);
+                var ph = MakeText("Placeholder", panels[i].transform, names[i] + "\n(adicione o screen aqui)", 32, Vector2.zero, TextAlignmentOptions.Center);
+                ph.color = new Color(0.95f, 0.91f, 0.82f, 0.7f);
+                panels[i].SetActive(i == 0);
+            }
+
+            var tabBar = NewUI("TabBar", canvasGO.transform);
+            var tabRt = tabBar.GetComponent<RectTransform>();
+            tabRt.anchorMin = new Vector2(0, 0); tabRt.anchorMax = new Vector2(1, 0);
+            tabRt.pivot = new Vector2(0.5f, 0); tabRt.sizeDelta = new Vector2(0, 150);
+            var hlg = tabBar.AddComponent<HorizontalLayoutGroup>();
+            hlg.childControlWidth = true; hlg.childForceExpandWidth = true; hlg.spacing = 4; hlg.padding = new RectOffset(8, 8, 8, 8);
+
+            string[] tabLabels = { "Album", "Pacotes", "Partida", "Ranking", "Trocas", "Vender" };
+            var tabButtons = new Button[6];
+            for (int i = 0; i < 6; i++)
+                tabButtons[i] = MakeButton($"Tab{i}", tabBar.transform, tabLabels[i], Vector2.zero, new Vector2(160, 120)).GetComponent<Button>();
+
+            var nav = header.AddComponent<TabNavigator>();
+            nav.panels = panels;
+            nav.tabButtons = tabButtons;
+            nav.connectButton = connectBtn.GetComponent<Button>();
+            nav.connectButtonText = connectBtn.GetComponentInChildren<TMP_Text>();
+
+            System.IO.Directory.CreateDirectory("Assets/Scenes");
+            EditorSceneManager.SaveScene(scene, "Assets/Scenes/Main.unity");
+            Debug.Log("[SceneBuilder] UI completa criada em Assets/Scenes/Main.unity — adicione os screens aos painéis.");
+        }
+
+        static GameObject MakeButton(string name, Transform parent, string label, Vector2 pos, Vector2 size)
+        {
+            var go = NewUI(name, parent);
+            var img = go.AddComponent<Image>();
+            img.color = new Color(1f, 0.87f, 0f);
+            go.AddComponent<Button>();
+            var rt = go.GetComponent<RectTransform>();
+            rt.anchoredPosition = pos; rt.sizeDelta = size;
+            var t = MakeText("Label", go.transform, label, 28, Vector2.zero, TextAlignmentOptions.Center);
+            t.color = new Color(0.04f, 0.18f, 0.13f);
+            Stretch(t.GetComponent<RectTransform>());
+            return go;
+        }
+
         [MenuItem("CryptoÁlbum/Construir Cena de Demo")]
         public static void BuildDemoScene()
         {
