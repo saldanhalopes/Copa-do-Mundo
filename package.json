@@ -1,0 +1,27 @@
+{
+  "name": "cryptoalbum-copa",
+  "version": "1.0.0",
+  "description": "Plataforma de álbum de figurinhas da Copa em NFT — jogo de cartas PvP",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:amoy": "hardhat run scripts/deploy-multichain.js --network amoy",
+    "deploy:bsctest": "hardhat run scripts/deploy-multichain.js --network bscTestnet",
+    "gen:cards": "cd generator && python3 generate_cards.py"
+  },
+  "devDependencies": {
+    "@chainlink/contracts": "^1.2.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.2",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.0"
+  },
+  "dependencies": {
+    "@ethereumjs/common": "^4.4.0",
+    "@ethereumjs/tx": "^5.4.0",
+    "@ethereumjs/util": "^9.1.0",
+    "@ethereumjs/vm": "^7.2.1",
+    "ethers": "^6.16.0",
+    "solc": "^0.8.24"
+  }
+}

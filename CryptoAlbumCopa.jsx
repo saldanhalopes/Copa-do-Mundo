@@ -156,6 +156,9 @@ export default function CryptoAlbumCopa() {
   const [trophy, setTrophy] = useState(false);
   const toastId = useRef(0);
   const activeChain = CHAINS.find(c => c.id === chain);
+  // ranking / ELO do jogador
+  const [elo, setElo] = useState(1000);
+  const [record, setRecord] = useState({ v: 0, d: 0 });
 
   const unicas = useMemo(() => Object.keys(owned).filter((k) => owned[k] > 0).length, [owned]);
   const repetidas = useMemo(() => Object.values(owned).reduce((a, c) => a + Math.max(0, c - 1), 0), [owned]);
@@ -312,8 +315,8 @@ export default function CryptoAlbumCopa() {
 
       {/* TABS */}
       <nav className="flex gap-1 px-4 pt-4 max-w-3xl mx-auto">
-        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["partida", "⚔️ Partida"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
-          <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 text-xs font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
+        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["partida", "⚔️ Partida"], ["ranking", "🏆 Ranking"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
+          <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 px-0.5 text-xs font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
             {l}
           </button>
         ))}
@@ -324,7 +327,8 @@ export default function CryptoAlbumCopa() {
         <div className="rounded-b-2xl rounded-tr-2xl p-4 paper" style={{ color: "#3A2E1E" }}>
           {tab === "album" && <Album teamTab={teamTab} setTeamTab={setTeamTab} owned={owned} novas={novas} />}
           {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} />}
-          {tab === "partida" && <Partida owned={owned} connected={connected} toast={toast} pol={pol} setPol={setPol} activeChain={activeChain} />}
+          {tab === "partida" && <Partida owned={owned} connected={connected} toast={toast} pol={pol} setPol={setPol} activeChain={activeChain} elo={elo} setElo={setElo} record={record} setRecord={setRecord} />}
+          {tab === "ranking" && <Ranking elo={elo} record={record} />}
           {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} criarOferta={criarOferta} connected={connected} toast={toast} />}
           {tab === "vender" && <Vender owned={owned} activeChain={activeChain} connected={connected} toast={toast} />}
         </div>
@@ -742,6 +746,17 @@ function forcaCarta(fig, attrKey, rand) {
   return fig.attrs.OVR * 2 + (fig.attrs[attrKey] || 0) + rand;
 }
 
+// expectativa ELO (espelha _expectativa no RankingSeasons.sol)
+function expectativaELO(eloA, eloB) {
+  if (eloA >= eloB) {
+    const e = 5000 + ((eloA - eloB) * 4500) / 400;
+    return e > 9500 ? 9500 : e;
+  } else {
+    const e = ((eloB - eloA) * 4500) / 400;
+    return e > 4500 ? 500 : 5000 - e;
+  }
+}
+
 // gera um oponente bot com cartas plausíveis
 function gerarOponente() {
   const candidatos = STICKERS.filter((s) => s.attrs);
@@ -758,11 +773,11 @@ function gerarOponente() {
   ].map((s) => s.id);
 }
 
-function Partida({ owned, connected, toast, pol, setPol, activeChain }) {
+function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setElo, record, setRecord }) {
   const [time, setTime] = useState(Array(5).fill(null));
   const [slotAberto, setSlotAberto] = useState(null);
   const [stake, setStake] = useState(5);
-  const [batalha, setBatalha] = useState(null); // {fase, confrontos, oponente, placar, premio}
+  const [batalha, setBatalha] = useState(null);
 
   const minhas = Object.keys(owned).filter((id) => owned[id] > 0 && BY_ID[id] && BY_ID[id].attrs);
   const preenchidos = time.filter(Boolean).length;
@@ -770,21 +785,31 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain }) {
 
   function escolher(id) { const nt = [...time]; nt[slotAberto] = id; setTime(nt); setSlotAberto(null); }
 
+  // matchmaking: oponente com ELO próximo (±150) e OVR de time parecido
+  function gerarOponenteEquilibrado() {
+    const eloOponente = elo + Math.floor(Math.random() * 300 - 150);
+    const nomes = ["leo.eth", "marta⚽", "0x7aF3…c2", "didico.sol", "cracque.bnb", "10dipaula"];
+    return {
+      time: gerarOponente(),
+      nome: nomes[Math.floor(Math.random() * nomes.length)],
+      elo: Math.max(600, eloOponente),
+    };
+  }
+
   function iniciar() {
     if (!connected) return toast("Conecte sua carteira primeiro");
     if (preenchidos < 5) return toast("Escale as 5 cartas");
     if (pol < stake) return toast("Saldo insuficiente para a aposta");
 
-    setPol((p) => p - stake); // stake travado no escrow
-    const oponente = gerarOponente();
-    setBatalha({ fase: "matchmaking", oponente, confrontos: [], placar: [0, 0] });
+    setPol((p) => p - stake);
+    const op = gerarOponenteEquilibrado();
+    setBatalha({ fase: "matchmaking", oponente: op.time, opNome: op.nome, opElo: op.elo, confrontos: [], placar: [0, 0] });
 
     setTimeout(() => {
-      // resolve confronto a confronto
       let pa = 0, pb = 0;
       const confrontos = time.map((id, i) => {
         const meu = BY_ID[id];
-        const dele = BY_ID[oponente[i]];
+        const dele = BY_ID[op.time[i]];
         const rA = Math.floor(Math.random() * 10);
         const rB = Math.floor(Math.random() * 10);
         const fA = forcaCarta(meu, SLOTS_PARTIDA[i].attr, rA);
@@ -795,16 +820,22 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain }) {
       });
       setBatalha((b) => ({ ...b, fase: "lutando", confrontos, placar: [pa, pb] }));
 
-      // revela um por um
       confrontos.forEach((_, i) => {
         setTimeout(() => setBatalha((b) => b && { ...b, revelados: i + 1 }), 700 + i * 800);
       });
       setTimeout(() => {
         const venci = pa >= pb;
         const pote = stake * 2;
-        const premio = Math.floor(pote * 0.95); // -5% taxa
+        const premio = Math.floor(pote * 0.95);
         if (venci) setPol((p) => p + premio);
-        setBatalha((b) => b && { ...b, fase: "fim", venci, premio });
+
+        // atualiza ELO (espelha RankingSeasons.sol)
+        const exp = expectativaELO(elo, op.elo);
+        const delta = Math.floor((32 * ((venci ? 10000 : 0) - exp)) / 10000);
+        setElo((e) => Math.max(0, e + delta));
+        setRecord((r) => venci ? { ...r, v: r.v + 1 } : { ...r, d: r.d + 1 });
+
+        setBatalha((b) => b && { ...b, fase: "fim", venci, premio, deltaElo: delta });
       }, 700 + confrontos.length * 800 + 400);
     }, 1600);
   }
@@ -888,18 +919,19 @@ function BatalhaModal({ batalha, fechar, stake, activeChain }) {
         {fase === "matchmaking" && (
           <div className="anim-pop">
             <div className="text-5xl mb-4 anim-spin-slow inline-block">⚔️</div>
-            <div className="font-bold" style={{ color: "#F3E9D2" }}>Buscando oponente…</div>
-            <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.55)", fontFamily: "monospace" }}>aceitarPartida() · stake {stake} {activeChain.symbol} travado</div>
+            <div className="font-bold" style={{ color: "#F3E9D2" }}>Pareando oponente equilibrado…</div>
+            <div className="text-xs mt-2" style={{ color: "rgba(243,233,210,.7)" }}>Encontrado: <b>{batalha.opNome}</b> · ELO {batalha.opElo}</div>
+            <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.45)", fontFamily: "monospace" }}>aceitarPartida() · stake {stake} {activeChain.symbol} travado</div>
           </div>
         )}
         {(fase === "lutando" || fase === "fim") && (
           <div>
-            <div className="flex items-center justify-center gap-4 mb-3">
+            <div className="flex items-center justify-center gap-4 mb-1">
               <div className="text-2xl font-black" style={{ color: "#4DFFB8" }}>{placarParcial[0]}</div>
-              <div className="text-xs" style={{ color: "rgba(243,233,210,.6)" }}>VOCÊ vs RIVAL</div>
+              <div className="text-xs" style={{ color: "rgba(243,233,210,.6)" }}>VOCÊ vs {batalha.opNome}</div>
               <div className="text-2xl font-black" style={{ color: "#FF5C8A" }}>{placarParcial[1]}</div>
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5 mt-2">
               {confrontos.slice(0, revelados).map((c, i) => (
                 <div key={i} className="flex items-center gap-2 anim-pop rounded-lg p-1.5" style={{ background: c.ganhei ? "rgba(77,255,184,.12)" : "rgba(255,92,138,.12)", border: `1px solid ${c.ganhei ? "#4DFFB8" : "#FF5C8A"}44` }}>
                   <div className="w-11 shrink-0"><Sticker fig={c.meu} /></div>
@@ -919,12 +951,103 @@ function BatalhaModal({ batalha, fechar, stake, activeChain }) {
                 <div className="text-sm" style={{ color: "rgba(243,233,210,.8)" }}>
                   {batalha.venci ? `Você levou ${batalha.premio} ${activeChain.symbol} do pote!` : `Você perdeu a aposta de ${stake} ${activeChain.symbol}.`}
                 </div>
-                <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.45)", fontFamily: "monospace" }}>resolver() · VRF · placar {placar[0]}–{placar[1]}</div>
+                <div className="text-sm font-bold mt-1" style={{ color: batalha.deltaElo >= 0 ? "#4DFFB8" : "#FF5C8A" }}>
+                  ELO {batalha.deltaElo >= 0 ? "+" : ""}{batalha.deltaElo}
+                </div>
+                <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.45)", fontFamily: "monospace" }}>resolver() + registrarResultado() · VRF · {placar[0]}–{placar[1]}</div>
                 <button onClick={fechar} className="mt-4 px-6 py-2.5 rounded-xl font-bold" style={{ background: "#FFDF00", color: "#0A2E22" }}>Jogar de novo</button>
               </div>
             )}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// RANKING — ELO, temporada e leaderboard
+// ============================================================
+function Ranking({ elo, record }) {
+  // leaderboard fictício + posição do jogador inserida por ELO
+  const bots = [
+    { nome: "cracque.bnb", elo: 1480, v: 87, d: 21 },
+    { nome: "10dipaula", elo: 1390, v: 64, d: 30 },
+    { nome: "marta⚽", elo: 1320, v: 51, d: 28 },
+    { nome: "leo.eth", elo: 1240, v: 44, d: 33 },
+    { nome: "didico.sol", elo: 1150, v: 30, d: 29 },
+    { nome: "0x7aF3…c2", elo: 1080, v: 22, d: 25 },
+  ];
+  const eu = { nome: "VOCÊ", elo, v: record.v, d: record.d, eu: true };
+  const tabela = [...bots, eu].sort((a, b) => b.elo - a.elo);
+  const minhaPos = tabela.findIndex((t) => t.eu) + 1;
+
+  // dias restantes fictícios da temporada
+  const diasRestantes = 12;
+  const fundoPremio = 4850;
+
+  function faixa(elo) {
+    if (elo >= 1400) return { nome: "Lendário", cor: "#B36CF0" };
+    if (elo >= 1250) return { nome: "Diamante", cor: "#4DA6FF" };
+    if (elo >= 1100) return { nome: "Ouro", cor: "#D4A938" };
+    if (elo >= 950) return { nome: "Prata", cor: "#9FB6CC" };
+    return { nome: "Bronze", cor: "#B5793A" };
+  }
+  const minhaFaixa = faixa(elo);
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Ranking 🏆</h2>
+
+      {/* Cartão do jogador */}
+      <div className="rounded-xl p-3 mb-3 flex items-center gap-3" style={{ background: "linear-gradient(135deg,#0A2E22,#14533C)" }}>
+        <div className="text-center px-2">
+          <div className="text-xs" style={{ color: "rgba(243,233,210,.6)" }}>ELO</div>
+          <div className="text-2xl font-black" style={{ color: "#FFDF00" }}>{elo}</div>
+        </div>
+        <div className="flex-1">
+          <div className="text-sm font-bold px-2 py-0.5 rounded-full inline-block" style={{ background: minhaFaixa.cor + "33", color: minhaFaixa.cor }}>{minhaFaixa.nome}</div>
+          <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.75)" }}>
+            {record.v}V · {record.d}D {record.v + record.d > 0 && `· ${Math.round(record.v / (record.v + record.d) * 100)}% vitórias`}
+          </div>
+          <div className="text-xs" style={{ color: "rgba(243,233,210,.55)" }}>Posição #{minhaPos} no ranking</div>
+        </div>
+      </div>
+
+      {/* Temporada */}
+      <div className="rounded-xl p-3 mb-3 flex items-center justify-between" style={{ background: "#FFF3D6", border: "1px solid #D4A938" }}>
+        <div>
+          <div className="text-xs font-bold" style={{ color: "#6A5E48" }}>Temporada 1 · {diasRestantes} dias restantes</div>
+          <div className="text-xs" style={{ color: "#8A7A5E" }}>Top 3 dividem o fundo (50/30/20%)</div>
+        </div>
+        <div className="text-right">
+          <div className="text-xs" style={{ color: "#8A7A5E" }}>Fundo</div>
+          <div className="text-lg font-black" style={{ color: "#B08A00" }}>{fundoPremio}</div>
+        </div>
+      </div>
+
+      {/* Leaderboard */}
+      <div className="flex flex-col gap-1.5">
+        {tabela.map((t, i) => {
+          const f = faixa(t.elo);
+          return (
+            <div key={t.nome} className="flex items-center gap-2 p-2 rounded-lg" style={{ background: t.eu ? "#EAF5EC" : "#FFF8E8", border: `1px solid ${t.eu ? "#9FD3AA" : "#E0D2B4"}` }}>
+              <div className="w-6 text-center font-black text-sm" style={{ color: i < 3 ? "#D4A938" : "#8A7A5E" }}>{i + 1}</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-bold truncate" style={{ color: t.eu ? "#0A7A3C" : "#3A2E1E" }}>{t.nome} {i === 0 && "👑"}</div>
+                <div className="text-xs" style={{ color: "#8A7A5E" }}>{t.v}V · {t.d}D</div>
+              </div>
+              <div className="text-right shrink-0">
+                <div className="text-sm font-black" style={{ color: "#3A2E1E" }}>{t.elo}</div>
+                <div style={{ fontSize: 9, color: f.cor, fontWeight: 700 }}>{f.nome}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-3 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
+        🏆 ELO calculado on-chain via <b>RankingSeasons.sol</b>. Ao fim da temporada, o top 3 recebe automaticamente do fundo (abastecido por taxas de partidas e royalties).
       </div>
     </div>
   );
