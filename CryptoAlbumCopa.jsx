@@ -312,7 +312,7 @@ export default function CryptoAlbumCopa() {
 
       {/* TABS */}
       <nav className="flex gap-1 px-4 pt-4 max-w-3xl mx-auto">
-        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["fantasy", "⚡ Fantasy"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
+        {[["album", "📖 Álbum"], ["pacotes", "✨ Pacotes"], ["partida", "⚔️ Partida"], ["trocas", "🔄 Trocas"], ["vender", "💰 Vender"]].map(([k, l]) => (
           <button key={k} onClick={() => setTab(k)} className="flex-1 py-2.5 text-xs font-bold rounded-t-xl transition-all" style={tab === k ? { background: "#F3E9D2", color: "#0A2E22" } : { background: "rgba(243,233,210,.08)", color: "rgba(243,233,210,.7)" }}>
             {l}
           </button>
@@ -324,7 +324,7 @@ export default function CryptoAlbumCopa() {
         <div className="rounded-b-2xl rounded-tr-2xl p-4 paper" style={{ color: "#3A2E1E" }}>
           {tab === "album" && <Album teamTab={teamTab} setTeamTab={setTeamTab} owned={owned} novas={novas} />}
           {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} />}
-          {tab === "fantasy" && <Fantasy owned={owned} connected={connected} toast={toast} />}
+          {tab === "partida" && <Partida owned={owned} connected={connected} toast={toast} pol={pol} setPol={setPol} activeChain={activeChain} />}
           {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} criarOferta={criarOferta} connected={connected} toast={toast} />}
           {tab === "vender" && <Vender owned={owned} activeChain={activeChain} connected={connected} toast={toast} />}
         </div>
@@ -725,114 +725,207 @@ function Vender({ owned, activeChain, connected, toast }) {
 }
 
 // ============================================================
-// FANTASY — escalar time com atributos e pontuar (química estilo FIFA)
+// PARTIDA — PvP de cartas com aposta (escala + batalha por atributos)
+// MatchEscrow.sol: stake travado, vencedor leva o pote
 // ============================================================
-const FORMACAO = [
-  { pos: "GOL", label: "GOL" }, { pos: "ZAG", label: "ZAG" }, { pos: "ZAG", label: "ZAG" },
-  { pos: "LD", label: "LD" }, { pos: "LE", label: "LE" },
-  { pos: "VOL", label: "VOL" }, { pos: "MEI", label: "MEI" }, { pos: "CAM", label: "CAM" },
-  { pos: "PD", label: "PD" }, { pos: "PE", label: "PE" }, { pos: "MEI", label: "MEI" },
+const SLOTS_PARTIDA = [
+  { pos: "GOL", attr: "DEF", label: "Defesa (GOL/ZAG → DEF)" },
+  { pos: "ZAG", attr: "DEF", label: "Defesa (GOL/ZAG → DEF)" },
+  { pos: "MEI", attr: "PAS", label: "Meio (→ PAS)" },
+  { pos: "PD", attr: "SHO", label: "Ataque (PD/PE/CAM → SHO)" },
+  { pos: "CAM", attr: "SHO", label: "Ataque (PD/PE/CAM → SHO)" },
 ];
 
-function Fantasy({ owned, connected, toast }) {
-  const [time, setTime] = useState(Array(11).fill(null)); // tokenIds
+// força = OVR*2 + atributo decisivo + fator aleatório (espelha _forcaCarta no contrato)
+function forcaCarta(fig, attrKey, rand) {
+  if (!fig?.attrs) return 0;
+  return fig.attrs.OVR * 2 + (fig.attrs[attrKey] || 0) + rand;
+}
+
+// gera um oponente bot com cartas plausíveis
+function gerarOponente() {
+  const candidatos = STICKERS.filter((s) => s.attrs);
+  const pick = (filtro) => {
+    const pool = candidatos.filter(filtro);
+    return pool[Math.floor(Math.random() * pool.length)];
+  };
+  return [
+    pick((s) => s.pos === "GOL"),
+    pick((s) => s.pos === "ZAG"),
+    pick((s) => ["MEI", "VOL"].includes(s.pos)),
+    pick((s) => ["PD", "PE"].includes(s.pos)),
+    pick((s) => s.pos === "CAM"),
+  ].map((s) => s.id);
+}
+
+function Partida({ owned, connected, toast, pol, setPol, activeChain }) {
+  const [time, setTime] = useState(Array(5).fill(null));
   const [slotAberto, setSlotAberto] = useState(null);
+  const [stake, setStake] = useState(5);
+  const [batalha, setBatalha] = useState(null); // {fase, confrontos, oponente, placar, premio}
 
   const minhas = Object.keys(owned).filter((id) => owned[id] > 0 && BY_ID[id] && BY_ID[id].attrs);
+  const preenchidos = time.filter(Boolean).length;
+  const somaOvr = time.reduce((a, id) => a + (id ? BY_ID[id].attrs.OVR : 0), 0);
 
-  // cálculo de OVR + química (espelha FantasyLeague.sol)
-  const { somaOvr, quimica, pontuacao, preenchidos } = useMemo(() => {
-    let somaOvr = 0, quimica = 0, preenchidos = 0;
-    const selecoes = {};
-    time.forEach((id, i) => {
-      if (!id) return;
-      const f = BY_ID[id];
-      preenchidos++;
-      somaOvr += f.attrs.OVR;
-      if (f.pos === FORMACAO[i].pos) quimica += 3; // posição certa
-      selecoes[f.team] = (selecoes[f.team] || 0) + 1;
-    });
-    Object.values(selecoes).forEach((c) => { if (c >= 2) quimica += (c - 1) * 2; });
-    if (preenchidos === 11 && Object.keys(selecoes).length === 1) quimica += 15; // monoseleção
-    return { somaOvr, quimica, pontuacao: somaOvr + quimica, preenchidos };
-  }, [time]);
+  function escolher(id) { const nt = [...time]; nt[slotAberto] = id; setTime(nt); setSlotAberto(null); }
 
-  function escolher(id) {
-    const nt = [...time]; nt[slotAberto] = id; setTime(nt); setSlotAberto(null);
-  }
-  function confirmar() {
+  function iniciar() {
     if (!connected) return toast("Conecte sua carteira primeiro");
-    if (preenchidos < 11) return toast("Escale os 11 jogadores");
-    toast(`Time escalado! ${pontuacao} pts`, `escalar() · OVR ${somaOvr} + química ${quimica}`);
+    if (preenchidos < 5) return toast("Escale as 5 cartas");
+    if (pol < stake) return toast("Saldo insuficiente para a aposta");
+
+    setPol((p) => p - stake); // stake travado no escrow
+    const oponente = gerarOponente();
+    setBatalha({ fase: "matchmaking", oponente, confrontos: [], placar: [0, 0] });
+
+    setTimeout(() => {
+      // resolve confronto a confronto
+      let pa = 0, pb = 0;
+      const confrontos = time.map((id, i) => {
+        const meu = BY_ID[id];
+        const dele = BY_ID[oponente[i]];
+        const rA = Math.floor(Math.random() * 10);
+        const rB = Math.floor(Math.random() * 10);
+        const fA = forcaCarta(meu, SLOTS_PARTIDA[i].attr, rA);
+        const fB = forcaCarta(dele, SLOTS_PARTIDA[i].attr, rB);
+        const ganhei = fA >= fB;
+        if (ganhei) pa++; else pb++;
+        return { meu, dele, fA, fB, ganhei, attr: SLOTS_PARTIDA[i].attr };
+      });
+      setBatalha((b) => ({ ...b, fase: "lutando", confrontos, placar: [pa, pb] }));
+
+      // revela um por um
+      confrontos.forEach((_, i) => {
+        setTimeout(() => setBatalha((b) => b && { ...b, revelados: i + 1 }), 700 + i * 800);
+      });
+      setTimeout(() => {
+        const venci = pa >= pb;
+        const pote = stake * 2;
+        const premio = Math.floor(pote * 0.95); // -5% taxa
+        if (venci) setPol((p) => p + premio);
+        setBatalha((b) => b && { ...b, fase: "fim", venci, premio });
+      }, 700 + confrontos.length * 800 + 400);
+    }, 1600);
   }
+
+  function fechar() { setBatalha(null); setTime(Array(5).fill(null)); }
 
   return (
     <div>
-      <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Fantasy League ⚡</h2>
-      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Escale 11 cartas. Atributos imutáveis + química definem sua pontuação. Mesma seleção e posição certa dão bônus (estilo FIFA UT).</p>
+      <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Partida PvP ⚔️</h2>
+      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Escale 5 cartas, aposte e enfrente outro jogador. Os <b>atributos decidem</b> cada confronto. Vencedor leva o pote. Suas cartas <b>nunca saem</b> da carteira.</p>
 
-      {/* Placar */}
-      <div className="grid grid-cols-3 gap-2 mb-3">
-        <div className="rounded-xl p-2 text-center" style={{ background: "#FFF8E8", border: "1px solid #E0D2B4" }}>
-          <div className="text-xs" style={{ color: "#8A7A5E" }}>OVR Time</div>
-          <div className="text-lg font-black" style={{ color: "#3A2E1E" }}>{somaOvr}</div>
+      {/* Aposta */}
+      <div className="flex items-center gap-2 mb-3 p-3 rounded-xl" style={{ background: "#FFF3D6", border: "1px solid #D4A938" }}>
+        <span className="text-xl">💰</span>
+        <div className="flex-1">
+          <div className="text-xs font-bold" style={{ color: "#6A5E48" }}>Aposta de entrada</div>
+          <div className="text-xs" style={{ color: "#8A7A5E" }}>Vencedor leva {(stake * 2 * 0.95).toFixed(1)} {activeChain.symbol} (pote −5% taxa)</div>
         </div>
-        <div className="rounded-xl p-2 text-center" style={{ background: "#EAF5EC", border: "1px solid #9FD3AA" }}>
-          <div className="text-xs" style={{ color: "#5A8A6A" }}>Química</div>
-          <div className="text-lg font-black" style={{ color: "#0A7A3C" }}>+{quimica}</div>
-        </div>
-        <div className="rounded-xl p-2 text-center" style={{ background: "#0A2E22" }}>
-          <div className="text-xs" style={{ color: "#FFDF0099" }}>Pontuação</div>
-          <div className="text-lg font-black" style={{ color: "#FFDF00" }}>{pontuacao}</div>
+        <div className="flex items-center gap-1">
+          {[5, 10, 25].map((v) => (
+            <button key={v} onClick={() => setStake(v)} className="text-xs font-bold px-2 py-1 rounded-lg" style={stake === v ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#6A5E48" }}>{v}</button>
+          ))}
         </div>
       </div>
 
-      {/* Campo */}
-      <div className="rounded-xl p-3 mb-3" style={{ background: "linear-gradient(180deg,#1A7A3C,#0F5A2A)", border: "2px solid #0A4A22" }}>
-        <div className="grid grid-cols-3 gap-2">
-          {FORMACAO.map((slot, i) => {
-            const id = time[i];
-            const f = id ? BY_ID[id] : null;
-            return (
-              <button key={i} onClick={() => setSlotAberto(i)} className="rounded-lg p-1 transition-all" style={{ background: f ? "transparent" : "rgba(255,255,255,.12)", border: f ? "none" : "1.5px dashed rgba(255,255,255,.4)", minHeight: 64 }}>
-                {f ? <Sticker fig={f} /> : (
-                  <div className="flex flex-col items-center justify-center h-full py-2">
-                    <div className="text-xs font-bold" style={{ color: "#fff" }}>{slot.label}</div>
-                    <div className="text-xs" style={{ color: "rgba(255,255,255,.6)" }}>+ add</div>
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
+      {/* Slots de escalação */}
+      <div className="grid grid-cols-5 gap-1.5 mb-2">
+        {SLOTS_PARTIDA.map((slot, i) => {
+          const id = time[i]; const f = id ? BY_ID[id] : null;
+          return (
+            <button key={i} onClick={() => setSlotAberto(i)} className="rounded-lg p-1 transition-all" style={{ background: f ? "transparent" : "#FFF8E8", border: f ? "none" : "1.5px dashed #D4A938", minHeight: 70 }}>
+              {f ? <Sticker fig={f} /> : (
+                <div className="flex flex-col items-center justify-center h-full py-2">
+                  <div className="text-xs font-bold" style={{ color: "#8A7A5E" }}>{slot.pos}</div>
+                  <div style={{ fontSize: 8, color: "#B0A080" }}>→{slot.attr}</div>
+                </div>
+              )}
+            </button>
+          );
+        })}
       </div>
+      <div className="text-xs text-center mb-3" style={{ color: "#8A7A5E" }}>OVR total do time: <b style={{ color: "#3A2E1E" }}>{somaOvr}</b></div>
 
-      <button onClick={confirmar} disabled={preenchidos < 11} className="w-full py-3 rounded-xl font-bold text-sm" style={preenchidos === 11 ? { background: "#FFDF00", color: "#0A2E22" } : { background: "#E0D2B4", color: "#A89878" }}>
-        {preenchidos === 11 ? `Escalar time — ${pontuacao} pts` : `Escale ${11 - preenchidos} jogador(es)`}
+      <button onClick={iniciar} disabled={preenchidos < 5} className="w-full py-3 rounded-xl font-bold text-sm" style={preenchidos === 5 ? { background: "linear-gradient(90deg,#0A2E22,#1A7A3C)", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
+        {preenchidos === 5 ? `⚔️ Buscar oponente — apostar ${stake} ${activeChain.symbol}` : `Escale ${5 - preenchidos} carta(s)`}
       </button>
+
+      <div className="mt-3 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
+        🔒 Sua aposta fica travada no contrato <b>MatchEscrow.sol</b> até o fim. A aleatoriedade de cada confronto vem do VRF — ninguém pode trapacear.
+      </div>
 
       {/* Seletor de carta */}
       {slotAberto !== null && (
         <div className="fixed inset-0 z-50 flex items-end justify-center p-4" style={{ background: "rgba(0,0,0,.7)" }} onClick={() => setSlotAberto(null)}>
           <div className="w-full max-w-sm rounded-2xl p-4 anim-pop max-h-[70vh] overflow-y-auto" style={{ background: "#112A20" }} onClick={(e) => e.stopPropagation()}>
-            <div className="font-bold mb-1" style={{ color: "#F3E9D2", fontFamily: "'Archivo Black'" }}>Escolher {FORMACAO[slotAberto].label}</div>
-            <div className="text-xs mb-3" style={{ color: "rgba(243,233,210,.6)" }}>Cartas na posição certa dão +química</div>
-            {minhas.length === 0 && <div className="text-sm text-center py-6" style={{ color: "rgba(243,233,210,.6)" }}>Você não tem cartas com atributos. Abra pacotes!</div>}
+            <div className="font-bold" style={{ color: "#F3E9D2", fontFamily: "'Archivo Black'" }}>Slot {slotAberto + 1}: {SLOTS_PARTIDA[slotAberto].pos}</div>
+            <div className="text-xs mb-3" style={{ color: "rgba(243,233,210,.6)" }}>Atributo decisivo: <b style={{ color: "#FFDF00" }}>{SLOTS_PARTIDA[slotAberto].attr}</b></div>
+            {minhas.length === 0 && <div className="text-sm text-center py-6" style={{ color: "rgba(243,233,210,.6)" }}>Sem cartas. Abra pacotes!</div>}
             <div className="grid grid-cols-3 gap-2">
-              {minhas.filter((id) => !time.includes(id)).map((id) => {
-                const f = BY_ID[id];
-                const certa = f.pos === FORMACAO[slotAberto].pos;
-                return (
-                  <button key={id} onClick={() => escolher(id)} className="relative rounded-lg" style={{ outline: certa ? "2px solid #0A7A3C" : "none" }}>
-                    <Sticker fig={f} count={owned[id]} />
-                    {certa && <div className="absolute -top-1 -right-1 text-xs px-1 rounded-full font-black" style={{ background: "#0A7A3C", color: "#fff", fontSize: 9 }}>✓pos</div>}
-                  </button>
-                );
-              })}
+              {minhas.filter((id) => !time.includes(id)).map((id) => (
+                <button key={id} onClick={() => escolher(id)}><Sticker fig={BY_ID[id]} count={owned[id]} /></button>
+              ))}
             </div>
           </div>
         </div>
       )}
+
+      {/* Tela de batalha */}
+      {batalha && <BatalhaModal batalha={batalha} fechar={fechar} stake={stake} activeChain={activeChain} />}
+    </div>
+  );
+}
+
+function BatalhaModal({ batalha, fechar, stake, activeChain }) {
+  const { fase, confrontos = [], revelados = 0, placar = [0, 0] } = batalha;
+  const placarParcial = confrontos.slice(0, revelados).reduce((acc, c) => c.ganhei ? [acc[0] + 1, acc[1]] : [acc[0], acc[1] + 1], [0, 0]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(5,20,15,.95)" }}>
+      <div className="w-full max-w-md text-center">
+        {fase === "matchmaking" && (
+          <div className="anim-pop">
+            <div className="text-5xl mb-4 anim-spin-slow inline-block">⚔️</div>
+            <div className="font-bold" style={{ color: "#F3E9D2" }}>Buscando oponente…</div>
+            <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.55)", fontFamily: "monospace" }}>aceitarPartida() · stake {stake} {activeChain.symbol} travado</div>
+          </div>
+        )}
+        {(fase === "lutando" || fase === "fim") && (
+          <div>
+            <div className="flex items-center justify-center gap-4 mb-3">
+              <div className="text-2xl font-black" style={{ color: "#4DFFB8" }}>{placarParcial[0]}</div>
+              <div className="text-xs" style={{ color: "rgba(243,233,210,.6)" }}>VOCÊ vs RIVAL</div>
+              <div className="text-2xl font-black" style={{ color: "#FF5C8A" }}>{placarParcial[1]}</div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              {confrontos.slice(0, revelados).map((c, i) => (
+                <div key={i} className="flex items-center gap-2 anim-pop rounded-lg p-1.5" style={{ background: c.ganhei ? "rgba(77,255,184,.12)" : "rgba(255,92,138,.12)", border: `1px solid ${c.ganhei ? "#4DFFB8" : "#FF5C8A"}44` }}>
+                  <div className="w-11 shrink-0"><Sticker fig={c.meu} /></div>
+                  <div className="flex-1 text-center">
+                    <div className="text-xs font-bold" style={{ color: c.ganhei ? "#4DFFB8" : "#FF5C8A" }}>{c.fA} {c.ganhei ? "▶" : "◀"} {c.fB}</div>
+                    <div style={{ fontSize: 9, color: "rgba(243,233,210,.5)" }}>{c.attr} · {c.ganhei ? "vitória" : "derrota"}</div>
+                  </div>
+                  <div className="w-11 shrink-0" style={{ filter: "grayscale(.3)" }}><Sticker fig={c.dele} /></div>
+                </div>
+              ))}
+            </div>
+            {fase === "fim" && (
+              <div className="mt-4 anim-pop">
+                <div className="text-3xl font-black mb-1" style={{ color: batalha.venci ? "#FFDF00" : "#FF5C8A", fontFamily: "'Archivo Black'" }}>
+                  {batalha.venci ? "🏆 VITÓRIA!" : "DERROTA"}
+                </div>
+                <div className="text-sm" style={{ color: "rgba(243,233,210,.8)" }}>
+                  {batalha.venci ? `Você levou ${batalha.premio} ${activeChain.symbol} do pote!` : `Você perdeu a aposta de ${stake} ${activeChain.symbol}.`}
+                </div>
+                <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.45)", fontFamily: "monospace" }}>resolver() · VRF · placar {placar[0]}–{placar[1]}</div>
+                <button onClick={fechar} className="mt-4 px-6 py-2.5 rounded-xl font-bold" style={{ background: "#FFDF00", color: "#0A2E22" }}>Jogar de novo</button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
