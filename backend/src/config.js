@@ -22,6 +22,29 @@ export const config = {
   databaseUrl: process.env.DATABASE_URL || "",
   redisUrl: process.env.REDIS_URL || "",
   ipfsApi: process.env.IPFS_API || "http://localhost:5001",
+  JWT_SECRET: process.env.JWT_SECRET || "dev-secret-change-in-production",
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "24h",
+  CORS_ORIGINS: process.env.CORS_ORIGINS || "*",
+  RATE_LIMIT_WINDOW_MS: Number(process.env.RATE_LIMIT_WINDOW_MS || 60000),
+  RATE_LIMIT_MAX: Number(process.env.RATE_LIMIT_MAX || 100),
+  DATABASE_URL: process.env.DATABASE_URL || "",
+  REDIS_URL: process.env.REDIS_URL || "",
+  WASH_TRADING: {
+    roundTripThreshold: Number(process.env.WASH_ROUND_TRIP_THRESHOLD || 3),
+    timeWindowMinutes: Number(process.env.WASH_TIME_WINDOW_MINUTES || 1440),
+    sameIpThreshold: Number(process.env.WASH_SAME_IP_THRESHOLD || 5),
+  },
+  RPC_URLS: {
+    polygon: process.env.RPC_POLYGON || process.env.RPC_AMOY || "",
+    bsc: process.env.RPC_BNB || "",
+  },
+  CONTRACT_ADDRESSES: {
+    PackStore: process.env.ADDR_PACKSTORE || "",
+    MatchEscrow: process.env.ADDR_MATCH || "",
+    Ranking: process.env.ADDR_RANKING || "",
+  },
+  AGE_VERIFIER_PRIVATE_KEY: process.env.AGE_VERIFIER_PRIVATE_KEY || "",
+  MIN_AGE_STAKED_PVP: Number(process.env.MIN_AGE_STAKED_PVP || 18),
 
   // endereços dos contratos (do deploy local ou env)
   contracts: deployments?.contracts || {
@@ -33,6 +56,8 @@ export const config = {
   },
   chainId: deployments?.chainId || 31337,
 };
+
+export default config;
 
 export function logConfig() {
   console.log("[config] ambiente:", config.nodeEnv);

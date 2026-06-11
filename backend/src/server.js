@@ -32,7 +32,6 @@ import { blockPacks, blockStaking, getGeoStatus, getAuditLog } from "./middlewar
 import { getBlockedJurisdictions, reloadJurisdictions, isBlockedForStaking, getCountryName } from "./services/geolocation.js";
 
 const app = express();
->>>>>>> Stashed changes
 const server = http.createServer(app);
 const matchmaker = new Matchmaker();
 
@@ -493,11 +492,11 @@ function gracefulShutdown(signal) {
 process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
 process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 
-server.listen(config.PORT, () => {
-  console.log(`\n⚽ CryptoÁlbum Copa backend rodando na porta ${config.PORT}`);
-  console.log(`   REST:  http://localhost:${config.PORT}/health`);
-  console.log(`   WS:    ws://localhost:${config.PORT} (matchmaking)`);
-  console.log(`   Env:   ${config.NODE_ENV}`);
+server.listen(config.port, () => {
+  console.log(`\n⚽ CryptoÁlbum Copa backend rodando na porta ${config.port}`);
+  console.log(`   REST:  http://localhost:${config.port}/health`);
+  console.log(`   WS:    ws://localhost:${config.port} (matchmaking)`);
+  console.log(`   Env:   ${config.nodeEnv}`);
 });
 
 export { app, server };
