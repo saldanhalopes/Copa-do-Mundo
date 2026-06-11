@@ -1,0 +1,20 @@
+{
+  "name": "De Leeuw",
+  "description": "CryptoÁlbum Copa — Mascote | Holanda | #0251",
+  "external_url": "https://cryptoalbumcopa.io/card/251",
+  "image": "ipfs://__CID_PLACEHOLDER__/0251.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Holanda"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

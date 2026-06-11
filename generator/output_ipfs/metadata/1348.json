@@ -1,0 +1,24 @@
+{
+  "name": "MetLife",
+  "description": "CryptoÁlbum Copa — Estádio | Mundial | #1348",
+  "external_url": "https://cryptoalbumcopa.io/card/1348",
+  "image": "ipfs://__CID_PLACEHOLDER__/1348.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Estádio"
+    },
+    {
+      "trait_type": "País",
+      "value": "Mundial"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Sede da final de 2026."
+    }
+  ]
+}

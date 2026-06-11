@@ -1,0 +1,66 @@
+{
+  "name": "Noé Diallo",
+  "description": "CryptoÁlbum Copa — Jogador | Irã | #0736",
+  "external_url": "https://cryptoalbumcopa.io/card/736",
+  "image": "ipfs://__CID_PLACEHOLDER__/0736.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Irã"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "LD"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 52,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 60,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

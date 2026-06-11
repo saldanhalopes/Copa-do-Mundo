@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Inglaterra",
+  "description": "CryptoÁlbum Copa — Curiosidade | Inglaterra | #0196",
+  "external_url": "https://cryptoalbumcopa.io/card/196",
+  "image": "ipfs://__CID_PLACEHOLDER__/0196.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Inglaterra"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Berço do futebol moderno."
+    }
+  ]
+}

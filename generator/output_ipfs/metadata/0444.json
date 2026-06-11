@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Tariq Santos",
+  "description": "CryptoÁlbum Copa — Técnico | Japão | #0444",
+  "external_url": "https://cryptoalbumcopa.io/card/444",
+  "image": "ipfs://__CID_PLACEHOLDER__/0444.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Japão"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 5,
+      "display_type": "number"
+    }
+  ]
+}

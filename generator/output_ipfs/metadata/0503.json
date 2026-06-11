@@ -1,0 +1,20 @@
+{
+  "name": "Le Lion",
+  "description": "CryptoÁlbum Copa — Mascote | Senegal | #0503",
+  "external_url": "https://cryptoalbumcopa.io/card/503",
+  "image": "ipfs://__CID_PLACEHOLDER__/0503.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

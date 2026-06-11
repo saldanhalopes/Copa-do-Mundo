@@ -1,0 +1,66 @@
+{
+  "name": "Tomás Petrov",
+  "description": "CryptoÁlbum Copa — Jogador | Áustria | #1087",
+  "external_url": "https://cryptoalbumcopa.io/card/1087",
+  "image": "ipfs://__CID_PLACEHOLDER__/1087.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Áustria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "ATA"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 92,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 99,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 98,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 93,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 99,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 89,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

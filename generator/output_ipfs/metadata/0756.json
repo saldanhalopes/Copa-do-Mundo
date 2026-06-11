@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Irã",
+  "description": "CryptoÁlbum Copa — Curiosidade | Irã | #0756",
+  "external_url": "https://cryptoalbumcopa.io/card/756",
+  "image": "ipfs://__CID_PLACEHOLDER__/0756.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Irã"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Potência asiática 'Team Melli'."
+    }
+  ]
+}

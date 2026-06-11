@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Pavel Mendez",
+  "description": "CryptoÁlbum Copa — Técnico | Senegal | #0500",
+  "external_url": "https://cryptoalbumcopa.io/card/500",
+  "image": "ipfs://__CID_PLACEHOLDER__/0500.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 5,
+      "display_type": "number"
+    }
+  ]
+}

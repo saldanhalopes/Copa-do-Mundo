@@ -1,0 +1,287 @@
+[
+  {
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "_figurinhas",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "aceitarOferta",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "cancelarOferta",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "criarOferta",
+    "inputs": [
+      {
+        "name": "idsOferecidos",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "qtdOferecidas",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "idsPedidos",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "qtdPedidas",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "destinatario",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "duracaoSegundos",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "figurinhas",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IERC1155"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "lerOferta",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct TradeDesk.Oferta",
+        "components": [
+          {
+            "name": "criador",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "destinatario",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "idsOferecidos",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          },
+          {
+            "name": "qtdOferecidas",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          },
+          {
+            "name": "idsPedidos",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          },
+          {
+            "name": "qtdPedidas",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          },
+          {
+            "name": "expiraEm",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "ativa",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "ofertas",
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "criador",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "destinatario",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "expiraEm",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "ativa",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "proximaOferta",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "event",
+    "name": "OfertaAceita",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "aceitante",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OfertaCancelada",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OfertaCriada",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "criador",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "da",
+        "type": "uint256[]",
+        "indexed": false,
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "quer",
+        "type": "uint256[]",
+        "indexed": false,
+        "internalType": "uint256[]"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "NaoAutorizado",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "OfertaExpirada",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "OfertaInvalida",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ReentrancyGuardReentrantCall",
+    "inputs": []
+  }
+]

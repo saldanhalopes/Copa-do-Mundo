@@ -1,0 +1,66 @@
+{
+  "name": "Pavel Reyes",
+  "description": "CryptoÁlbum Copa — Jogador | Áustria | #1081",
+  "external_url": "https://cryptoalbumcopa.io/card/1081",
+  "image": "ipfs://__CID_PLACEHOLDER__/1081.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Áustria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "CAM"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 80,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 78,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

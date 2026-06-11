@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Áustria",
+  "description": "CryptoÁlbum Copa — Brasão | Áustria | #1090",
+  "external_url": "https://cryptoalbumcopa.io/card/1090",
+  "image": "ipfs://__CID_PLACEHOLDER__/1090.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Áustria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

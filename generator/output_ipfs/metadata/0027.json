@@ -1,0 +1,20 @@
+{
+  "name": "Canarinho",
+  "description": "CryptoÁlbum Copa — Mascote | Brasil | #0027",
+  "external_url": "https://cryptoalbumcopa.io/card/27",
+  "image": "ipfs://__CID_PLACEHOLDER__/0027.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Brasil"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "El Águila",
+  "description": "CryptoÁlbum Copa — Mascote | México | #0363",
+  "external_url": "https://cryptoalbumcopa.io/card/363",
+  "image": "ipfs://__CID_PLACEHOLDER__/0363.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "México"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

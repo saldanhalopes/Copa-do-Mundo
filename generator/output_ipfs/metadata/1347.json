@@ -1,0 +1,24 @@
+{
+  "name": "Wembley",
+  "description": "CryptoÁlbum Copa — Estádio | Mundial | #1347",
+  "external_url": "https://cryptoalbumcopa.io/card/1347",
+  "image": "ipfs://__CID_PLACEHOLDER__/1347.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Estádio"
+    },
+    {
+      "trait_type": "País",
+      "value": "Mundial"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "O estádio dos sonhos."
+    }
+  ]
+}

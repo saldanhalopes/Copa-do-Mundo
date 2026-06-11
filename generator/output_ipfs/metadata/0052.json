@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Dário Bjørn",
+  "description": "CryptoÁlbum Copa — Técnico | Argentina | #0052",
+  "external_url": "https://cryptoalbumcopa.io/card/52",
+  "image": "ipfs://__CID_PLACEHOLDER__/0052.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argentina"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

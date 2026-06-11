@@ -1,0 +1,66 @@
+{
+  "name": "Diego Costa",
+  "description": "CryptoÁlbum Copa — Jogador | País de Gales | #1123",
+  "external_url": "https://cryptoalbumcopa.io/card/1123",
+  "image": "ipfs://__CID_PLACEHOLDER__/1123.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "País de Gales"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "GOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 58,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 44,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 58,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 47,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 70,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

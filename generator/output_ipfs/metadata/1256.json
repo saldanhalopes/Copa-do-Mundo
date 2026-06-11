@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Léo Laval",
+  "description": "CryptoÁlbum Copa — Técnico | Panamá | #1256",
+  "external_url": "https://cryptoalbumcopa.io/card/1256",
+  "image": "ipfs://__CID_PLACEHOLDER__/1256.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Panamá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 8,
+      "display_type": "number"
+    }
+  ]
+}

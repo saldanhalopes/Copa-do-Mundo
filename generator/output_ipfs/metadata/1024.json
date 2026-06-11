@@ -1,0 +1,66 @@
+{
+  "name": "Nико Laval",
+  "description": "CryptoÁlbum Copa — Jogador | Dinamarca | #1024",
+  "external_url": "https://cryptoalbumcopa.io/card/1024",
+  "image": "ipfs://__CID_PLACEHOLDER__/1024.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Dinamarca"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "MEI"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 62,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 60,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 56,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 67,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 53,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 60,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

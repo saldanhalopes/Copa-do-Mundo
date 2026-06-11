@@ -1,0 +1,66 @@
+{
+  "name": "Dário Bauer",
+  "description": "CryptoÁlbum Copa — Jogador | Bélgica | #0270",
+  "external_url": "https://cryptoalbumcopa.io/card/270",
+  "image": "ipfs://__CID_PLACEHOLDER__/0270.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Bélgica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "PD"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 76,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 70,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 73,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Tariq Rossi",
+  "description": "CryptoÁlbum Copa — Jogador | Senegal | #0492",
+  "external_url": "https://cryptoalbumcopa.io/card/492",
+  "image": "ipfs://__CID_PLACEHOLDER__/0492.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "MEI"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 56,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 57,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 54,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

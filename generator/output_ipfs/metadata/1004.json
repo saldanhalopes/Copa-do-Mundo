@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aki Vidić",
+  "description": "CryptoÁlbum Copa — Técnico | Suíça | #1004",
+  "external_url": "https://cryptoalbumcopa.io/card/1004",
+  "image": "ipfs://__CID_PLACEHOLDER__/1004.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suíça"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Igor Diallo",
+  "description": "CryptoÁlbum Copa — Jogador | Itália | #0149",
+  "external_url": "https://cryptoalbumcopa.io/card/149",
+  "image": "ipfs://__CID_PLACEHOLDER__/0149.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Itália"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "LD"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 67,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 53,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 58,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 62,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

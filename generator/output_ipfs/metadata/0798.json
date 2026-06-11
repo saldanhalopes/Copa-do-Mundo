@@ -1,0 +1,66 @@
+{
+  "name": "Yann Costa",
+  "description": "CryptoÁlbum Copa — Jogador | Colômbia | #0798",
+  "external_url": "https://cryptoalbumcopa.io/card/798",
+  "image": "ipfs://__CID_PLACEHOLDER__/0798.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Colômbia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "MEI"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 62,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 62,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Tariq Silva",
+  "description": "CryptoÁlbum Copa — Jogador | Panamá | #1245",
+  "external_url": "https://cryptoalbumcopa.io/card/1245",
+  "image": "ipfs://__CID_PLACEHOLDER__/1245.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Panamá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "VOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 62,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 73,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

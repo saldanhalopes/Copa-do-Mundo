@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Arábia Saudita",
+  "description": "CryptoÁlbum Copa — Curiosidade | Arábia Saudita | #0728",
+  "external_url": "https://cryptoalbumcopa.io/card/728",
+  "image": "ipfs://__CID_PLACEHOLDER__/0728.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Arábia Saudita"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Os 'Falcões Verdes'."
+    }
+  ]
+}

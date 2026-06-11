@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Argentina",
+  "description": "CryptoÁlbum Copa — Curiosidade | Argentina | #0056",
+  "external_url": "https://cryptoalbumcopa.io/card/56",
+  "image": "ipfs://__CID_PLACEHOLDER__/0056.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argentina"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Terra de craques e do tango."
+    }
+  ]
+}

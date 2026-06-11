@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # instala dependências do projeto de contratos
 COPY package.json package-lock.json* ./
-RUN npm install --legacy-peer-deps
+# install all dependencies (including hardhat-toolbox peer deps)
+RUN npm install
 
 # código dos contratos e scripts
 COPY contracts ./contracts

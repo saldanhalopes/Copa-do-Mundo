@@ -1,0 +1,66 @@
+{
+  "name": "Ivo Cruz",
+  "description": "CryptoÁlbum Copa — Jogador | Portugal | #0214",
+  "external_url": "https://cryptoalbumcopa.io/card/214",
+  "image": "ipfs://__CID_PLACEHOLDER__/0214.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Portugal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "PD"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 76,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 83,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 79,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 77,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

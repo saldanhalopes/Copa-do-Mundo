@@ -1,0 +1,20 @@
+{
+  "name": "La Albirroja",
+  "description": "CryptoÁlbum Copa — Mascote | Paraguai | #0923",
+  "external_url": "https://cryptoalbumcopa.io/card/923",
+  "image": "ipfs://__CID_PLACEHOLDER__/0923.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Paraguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

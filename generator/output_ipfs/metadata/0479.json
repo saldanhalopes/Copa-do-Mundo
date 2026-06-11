@@ -1,0 +1,66 @@
+{
+  "name": "Ivo Costa",
+  "description": "CryptoÁlbum Copa — Jogador | Senegal | #0479",
+  "external_url": "https://cryptoalbumcopa.io/card/479",
+  "image": "ipfs://__CID_PLACEHOLDER__/0479.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "GOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 52,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 42,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 55,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 49,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 70,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

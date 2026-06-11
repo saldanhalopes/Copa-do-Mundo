@@ -1,0 +1,66 @@
+{
+  "name": "Jonas Nilsson",
+  "description": "CryptoÁlbum Copa — Jogador | Croácia | #0282",
+  "external_url": "https://cryptoalbumcopa.io/card/282",
+  "image": "ipfs://__CID_PLACEHOLDER__/0282.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Croácia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "GOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 49,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 49,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 53,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 55,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

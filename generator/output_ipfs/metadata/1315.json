@@ -1,0 +1,20 @@
+{
+  "name": "All White",
+  "description": "CryptoÁlbum Copa — Mascote | Nova Zelândia | #1315",
+  "external_url": "https://cryptoalbumcopa.io/card/1315",
+  "image": "ipfs://__CID_PLACEHOLDER__/1315.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nova Zelândia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Léo Bauer",
+  "description": "CryptoÁlbum Copa — Jogador | Senegal | #0497",
+  "external_url": "https://cryptoalbumcopa.io/card/497",
+  "image": "ipfs://__CID_PLACEHOLDER__/0497.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "PE"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 59,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 62,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

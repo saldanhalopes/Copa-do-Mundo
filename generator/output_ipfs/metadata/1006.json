@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Suíça",
+  "description": "CryptoÁlbum Copa — Brasão | Suíça | #1006",
+  "external_url": "https://cryptoalbumcopa.io/card/1006",
+  "image": "ipfs://__CID_PLACEHOLDER__/1006.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suíça"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

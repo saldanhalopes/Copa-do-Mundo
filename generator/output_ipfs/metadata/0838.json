@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Chile",
+  "description": "CryptoÁlbum Copa — Brasão | Chile | #0838",
+  "external_url": "https://cryptoalbumcopa.io/card/838",
+  "image": "ipfs://__CID_PLACEHOLDER__/0838.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Chile"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

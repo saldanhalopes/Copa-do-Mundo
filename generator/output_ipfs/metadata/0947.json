@@ -1,0 +1,66 @@
+{
+  "name": "Hugo Cruz",
+  "description": "CryptoÁlbum Copa — Jogador | Polônia | #0947",
+  "external_url": "https://cryptoalbumcopa.io/card/947",
+  "image": "ipfs://__CID_PLACEHOLDER__/0947.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Polônia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "ATA"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 92,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 95,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 99,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 87,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 93,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 70,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 83,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

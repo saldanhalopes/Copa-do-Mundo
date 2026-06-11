@@ -1,0 +1,20 @@
+{
+  "name": "Das Team",
+  "description": "CryptoÁlbum Copa — Mascote | Áustria | #1091",
+  "external_url": "https://cryptoalbumcopa.io/card/1091",
+  "image": "ipfs://__CID_PLACEHOLDER__/1091.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Áustria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

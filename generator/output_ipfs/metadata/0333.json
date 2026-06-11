@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Uruguai",
+  "description": "CryptoÁlbum Copa — Bandeira | Uruguai | #0333",
+  "external_url": "https://cryptoalbumcopa.io/card/333",
+  "image": "ipfs://__CID_PLACEHOLDER__/0333.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Uruguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Noé Aguirre",
+  "description": "CryptoÁlbum Copa — Técnico | Gana | #0556",
+  "external_url": "https://cryptoalbumcopa.io/card/556",
+  "image": "ipfs://__CID_PLACEHOLDER__/0556.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Gana"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

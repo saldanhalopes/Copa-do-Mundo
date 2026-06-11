@@ -1,0 +1,66 @@
+{
+  "name": "Caio Santos",
+  "description": "CryptoÁlbum Copa — Jogador | Espanha | #0129",
+  "external_url": "https://cryptoalbumcopa.io/card/129",
+  "image": "ipfs://__CID_PLACEHOLDER__/0129.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Espanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "CAM"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 67,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 76,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 78,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 78,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 60,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 58,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

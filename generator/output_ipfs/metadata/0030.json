@@ -1,0 +1,66 @@
+{
+  "name": "Igor Cruz",
+  "description": "CryptoÁlbum Copa — Jogador | Argentina | #0030",
+  "external_url": "https://cryptoalbumcopa.io/card/30",
+  "image": "ipfs://__CID_PLACEHOLDER__/0030.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argentina"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "GOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 67,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 55,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 49,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 55,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 75,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

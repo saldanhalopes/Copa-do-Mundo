@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Uruguai",
+  "description": "CryptoÁlbum Copa — Brasão | Uruguai | #0334",
+  "external_url": "https://cryptoalbumcopa.io/card/334",
+  "image": "ipfs://__CID_PLACEHOLDER__/0334.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Uruguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

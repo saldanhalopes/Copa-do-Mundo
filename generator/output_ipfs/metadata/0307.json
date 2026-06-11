@@ -1,0 +1,20 @@
+{
+  "name": "Vatreni",
+  "description": "CryptoÁlbum Copa — Mascote | Croácia | #0307",
+  "external_url": "https://cryptoalbumcopa.io/card/307",
+  "image": "ipfs://__CID_PLACEHOLDER__/0307.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Croácia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

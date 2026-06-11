@@ -1,0 +1,66 @@
+{
+  "name": "Bruno Laval",
+  "description": "CryptoÁlbum Copa — Jogador | Argélia | #1317",
+  "external_url": "https://cryptoalbumcopa.io/card/1317",
+  "image": "ipfs://__CID_PLACEHOLDER__/1317.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argélia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "GOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 86,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 77,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 71,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 93,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 91,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

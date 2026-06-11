@@ -1,0 +1,66 @@
+{
+  "name": "Sami Cruz",
+  "description": "CryptoÁlbum Copa — Jogador | Bélgica | #0261",
+  "external_url": "https://cryptoalbumcopa.io/card/261",
+  "image": "ipfs://__CID_PLACEHOLDER__/0261.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Bélgica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "LD"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 51,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 70,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

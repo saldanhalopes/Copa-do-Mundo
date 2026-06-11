@@ -1,0 +1,66 @@
+{
+  "name": "Léo Vidić",
+  "description": "CryptoÁlbum Copa — Jogador | Jamaica | #1272",
+  "external_url": "https://cryptoalbumcopa.io/card/1272",
+  "image": "ipfs://__CID_PLACEHOLDER__/1272.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Jamaica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "VOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 55,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 52,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 59,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 72,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 67,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

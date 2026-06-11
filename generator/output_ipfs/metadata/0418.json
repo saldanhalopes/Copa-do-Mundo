@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Canadá",
+  "description": "CryptoÁlbum Copa — Brasão | Canadá | #0418",
+  "external_url": "https://cryptoalbumcopa.io/card/418",
+  "image": "ipfs://__CID_PLACEHOLDER__/0418.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Canadá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

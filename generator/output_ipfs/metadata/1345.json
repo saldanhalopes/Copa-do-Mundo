@@ -1,0 +1,24 @@
+{
+  "name": "Maracanã",
+  "description": "CryptoÁlbum Copa — Estádio | Mundial | #1345",
+  "external_url": "https://cryptoalbumcopa.io/card/1345",
+  "image": "ipfs://__CID_PLACEHOLDER__/1345.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Estádio"
+    },
+    {
+      "trait_type": "País",
+      "value": "Mundial"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Templo do futebol mundial."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Tomás Vidić",
+  "description": "CryptoÁlbum Copa — Jogador | Estados Unidos | #0375",
+  "external_url": "https://cryptoalbumcopa.io/card/375",
+  "image": "ipfs://__CID_PLACEHOLDER__/0375.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Estados Unidos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "LE"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 53,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 66,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 61,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 63,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

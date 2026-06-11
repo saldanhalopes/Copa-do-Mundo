@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Espanha",
+  "description": "CryptoÁlbum Copa — Bandeira | Espanha | #0137",
+  "external_url": "https://cryptoalbumcopa.io/card/137",
+  "image": "ipfs://__CID_PLACEHOLDER__/0137.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Espanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

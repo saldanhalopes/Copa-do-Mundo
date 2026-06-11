@@ -1,0 +1,66 @@
+{
+  "name": "Nико Petrov",
+  "description": "CryptoÁlbum Copa — Jogador | Alemanha | #0107",
+  "external_url": "https://cryptoalbumcopa.io/card/107",
+  "image": "ipfs://__CID_PLACEHOLDER__/0107.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Alemanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "ATA"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 92,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 99,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 99,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 93,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 95,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 77,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 93,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

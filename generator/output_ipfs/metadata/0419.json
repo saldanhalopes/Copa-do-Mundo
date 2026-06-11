@@ -1,0 +1,20 @@
+{
+  "name": "Le Castor",
+  "description": "CryptoÁlbum Copa — Mascote | Canadá | #0419",
+  "external_url": "https://cryptoalbumcopa.io/card/419",
+  "image": "ipfs://__CID_PLACEHOLDER__/0419.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Canadá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

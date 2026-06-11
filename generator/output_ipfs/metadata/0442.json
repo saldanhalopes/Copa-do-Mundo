@@ -1,0 +1,66 @@
+{
+  "name": "Yann Reyes",
+  "description": "CryptoÁlbum Copa — Jogador | Japão | #0442",
+  "external_url": "https://cryptoalbumcopa.io/card/442",
+  "image": "ipfs://__CID_PLACEHOLDER__/0442.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Japão"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "ATA"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 79,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 86,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 82,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 77,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 85,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 72,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

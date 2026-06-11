@@ -10,3 +10,4 @@ generator/samples_pro/*.png
 out/
 deployments/
 generator/output/metadata/
+*.db

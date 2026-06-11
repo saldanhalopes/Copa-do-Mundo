@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Brasil",
+  "description": "CryptoÁlbum Copa — Brasão | Brasil | #0026",
+  "external_url": "https://cryptoalbumcopa.io/card/26",
+  "image": "ipfs://__CID_PLACEHOLDER__/0026.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Brasil"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

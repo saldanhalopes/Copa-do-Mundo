@@ -1,0 +1,66 @@
+{
+  "name": "Tomás Park",
+  "description": "CryptoÁlbum Copa — Jogador | Camarões | #0610",
+  "external_url": "https://cryptoalbumcopa.io/card/610",
+  "image": "ipfs://__CID_PLACEHOLDER__/0610.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Camarões"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "ATA"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 75,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 75,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 79,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 75,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 72,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 56,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 77,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

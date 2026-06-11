@@ -1,0 +1,66 @@
+{
+  "name": "Yann Costa",
+  "description": "CryptoÁlbum Copa — Jogador | Japão | #0432",
+  "external_url": "https://cryptoalbumcopa.io/card/432",
+  "image": "ipfs://__CID_PLACEHOLDER__/0432.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Japão"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "VOL"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 58,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 55,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 74,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 75,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 68,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

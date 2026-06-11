@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Sérvia",
+  "description": "CryptoÁlbum Copa — Bandeira | Sérvia | #0977",
+  "external_url": "https://cryptoalbumcopa.io/card/977",
+  "image": "ipfs://__CID_PLACEHOLDER__/0977.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Sérvia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

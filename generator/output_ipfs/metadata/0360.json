@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Nико Petrov",
+  "description": "CryptoÁlbum Copa — Técnico | México | #0360",
+  "external_url": "https://cryptoalbumcopa.io/card/360",
+  "image": "ipfs://__CID_PLACEHOLDER__/0360.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "México"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 3,
+      "display_type": "number"
+    }
+  ]
+}

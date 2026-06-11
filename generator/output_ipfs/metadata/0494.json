@@ -1,0 +1,66 @@
+{
+  "name": "Rui Nilsson",
+  "description": "CryptoÁlbum Copa — Jogador | Senegal | #0494",
+  "external_url": "https://cryptoalbumcopa.io/card/494",
+  "image": "ipfs://__CID_PLACEHOLDER__/0494.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "PD"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 79,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 85,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 80,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 79,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 80,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 70,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 73,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

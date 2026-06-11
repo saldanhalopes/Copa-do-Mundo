@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Dário Nilsson",
+  "description": "CryptoÁlbum Copa — Técnico | Egito | #0640",
+  "external_url": "https://cryptoalbumcopa.io/card/640",
+  "image": "ipfs://__CID_PLACEHOLDER__/0640.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Egito"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

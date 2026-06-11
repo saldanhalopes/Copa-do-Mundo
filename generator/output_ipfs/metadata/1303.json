@@ -1,0 +1,66 @@
+{
+  "name": "Kael Reyes",
+  "description": "CryptoÁlbum Copa — Jogador | Nova Zelândia | #1303",
+  "external_url": "https://cryptoalbumcopa.io/card/1303",
+  "image": "ipfs://__CID_PLACEHOLDER__/1303.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nova Zelândia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "MEI"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 76,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 78,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 77,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 79,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 69,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 72,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Samurai Blue",
+  "description": "CryptoÁlbum Copa — Mascote | Japão | #0447",
+  "external_url": "https://cryptoalbumcopa.io/card/447",
+  "image": "ipfs://__CID_PLACEHOLDER__/0447.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Japão"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

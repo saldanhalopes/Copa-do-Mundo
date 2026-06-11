@@ -1,0 +1,20 @@
+{
+  "name": "Super Eagle",
+  "description": "CryptoÁlbum Copa — Mascote | Nigéria | #0587",
+  "external_url": "https://cryptoalbumcopa.io/card/587",
+  "image": "ipfs://__CID_PLACEHOLDER__/0587.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nigéria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

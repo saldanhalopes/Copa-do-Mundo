@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Ze Adeyemi",
+  "description": "CryptoÁlbum Copa — Técnico | Espanha | #0136",
+  "external_url": "https://cryptoalbumcopa.io/card/136",
+  "image": "ipfs://__CID_PLACEHOLDER__/0136.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Espanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

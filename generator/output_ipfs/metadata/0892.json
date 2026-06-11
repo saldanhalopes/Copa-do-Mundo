@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Luca Toth",
+  "description": "CryptoÁlbum Copa — Técnico | Equador | #0892",
+  "external_url": "https://cryptoalbumcopa.io/card/892",
+  "image": "ipfs://__CID_PLACEHOLDER__/0892.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Equador"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

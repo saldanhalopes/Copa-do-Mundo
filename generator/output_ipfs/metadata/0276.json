@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Luca Lund",
+  "description": "CryptoÁlbum Copa — Técnico | Bélgica | #0276",
+  "external_url": "https://cryptoalbumcopa.io/card/276",
+  "image": "ipfs://__CID_PLACEHOLDER__/0276.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Bélgica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 4,
+      "display_type": "number"
+    }
+  ]
+}

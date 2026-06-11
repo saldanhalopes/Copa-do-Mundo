@@ -1,0 +1,20 @@
+{
+  "name": "La Sele",
+  "description": "CryptoÁlbum Copa — Mascote | Costa Rica | #1231",
+  "external_url": "https://cryptoalbumcopa.io/card/1231",
+  "image": "ipfs://__CID_PLACEHOLDER__/1231.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa Rica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

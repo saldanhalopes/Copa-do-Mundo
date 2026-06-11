@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Peru",
+  "description": "CryptoÁlbum Copa — Bandeira | Peru | #0865",
+  "external_url": "https://cryptoalbumcopa.io/card/865",
+  "image": "ipfs://__CID_PLACEHOLDER__/0865.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Peru"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

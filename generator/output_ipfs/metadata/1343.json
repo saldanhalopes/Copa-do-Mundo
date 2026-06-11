@@ -1,0 +1,20 @@
+{
+  "name": "Fennec",
+  "description": "CryptoÁlbum Copa — Mascote | Argélia | #1343",
+  "external_url": "https://cryptoalbumcopa.io/card/1343",
+  "image": "ipfs://__CID_PLACEHOLDER__/1343.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argélia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

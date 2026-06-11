@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aki Vidić",
+  "description": "CryptoÁlbum Copa — Técnico | Escócia | #1172",
+  "external_url": "https://cryptoalbumcopa.io/card/1172",
+  "image": "ipfs://__CID_PLACEHOLDER__/1172.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Escócia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 4,
+      "display_type": "number"
+    }
+  ]
+}

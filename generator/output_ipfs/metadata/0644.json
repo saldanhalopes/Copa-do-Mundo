@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Egito",
+  "description": "CryptoÁlbum Copa — Curiosidade | Egito | #0644",
+  "external_url": "https://cryptoalbumcopa.io/card/644",
+  "image": "ipfs://__CID_PLACEHOLDER__/0644.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Egito"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Recordista de títulos africanos."
+    }
+  ]
+}

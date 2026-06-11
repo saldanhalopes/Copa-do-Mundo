@@ -1,0 +1,20 @@
+{
+  "name": "La Marea",
+  "description": "CryptoÁlbum Copa — Mascote | Panamá | #1259",
+  "external_url": "https://cryptoalbumcopa.io/card/1259",
+  "image": "ipfs://__CID_PLACEHOLDER__/1259.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Panamá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

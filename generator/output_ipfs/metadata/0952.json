@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Polônia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Polônia | #0952",
+  "external_url": "https://cryptoalbumcopa.io/card/952",
+  "image": "ipfs://__CID_PLACEHOLDER__/0952.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Polônia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "As 'Águias Brancas'."
+    }
+  ]
+}

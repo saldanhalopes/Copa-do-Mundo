@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Camarões",
+  "description": "CryptoÁlbum Copa — Brasão | Camarões | #0614",
+  "external_url": "https://cryptoalbumcopa.io/card/614",
+  "image": "ipfs://__CID_PLACEHOLDER__/0614.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Camarões"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

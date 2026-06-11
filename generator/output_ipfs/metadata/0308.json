@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Croácia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Croácia | #0308",
+  "external_url": "https://cryptoalbumcopa.io/card/308",
+  "image": "ipfs://__CID_PLACEHOLDER__/0308.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Croácia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Vice-campeã em 2018, time xadrez."
+    }
+  ]
+}

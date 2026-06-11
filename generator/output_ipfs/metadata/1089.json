@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Áustria",
+  "description": "CryptoÁlbum Copa — Bandeira | Áustria | #1089",
+  "external_url": "https://cryptoalbumcopa.io/card/1089",
+  "image": "ipfs://__CID_PLACEHOLDER__/1089.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Áustria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

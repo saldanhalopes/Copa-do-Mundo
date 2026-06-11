@@ -1,0 +1,96 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: PackStore
+    network: ethereum
+    source:
+      address: "0x0000000000000000000000000000000000000001"
+      abi: PackStore
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Player
+        - PackOpened
+      abis:
+        - name: PackStore
+          file: ./abis/PackStore.json
+      eventHandlers:
+        - event: PacoteAberto(indexed address comprador, uint256 requestId, uint256[] ids)
+          handler: handlePacoteAberto
+      file: ./src/pack-store.ts
+
+  - kind: ethereum/contract
+    name: MatchEscrow
+    network: ethereum
+    source:
+      address: "0x0000000000000000000000000000000000000001"
+      abi: MatchEscrow
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Player
+        - Match
+      abis:
+        - name: MatchEscrow
+          file: ./abis/MatchEscrow.json
+        - name: RankingSeasons
+          file: ./abis/RankingSeasons.json
+      eventHandlers:
+        - event: PartidaResolvida(indexed uint256 id, indexed address vencedor, uint256 premio, uint8 placarA, uint8 placarB)
+          handler: handlePartidaResolvida
+        - event: PartidaCriada(indexed uint256 id, indexed address jogadorA, uint256 stake)
+          handler: handlePartidaCriada
+        - event: PartidaAceita(indexed uint256 id, indexed address jogadorB)
+          handler: handlePartidaAceita
+      file: ./src/match-escrow.ts
+
+  - kind: ethereum/contract
+    name: RankingSeasons
+    network: ethereum
+    source:
+      address: "0x0000000000000000000000000000000000000001"
+      abi: RankingSeasons
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Player
+        - RankingSnapshot
+      abis:
+        - name: RankingSeasons
+          file: ./abis/RankingSeasons.json
+      eventHandlers:
+        - event: EloAtualizado(indexed address jogador, uint256 novoElo, bool venceu)
+          handler: handleEloAtualizado
+      file: ./src/ranking.ts
+
+  - kind: ethereum/contract
+    name: FantasyLeague
+    network: ethereum
+    source:
+      address: "0x0000000000000000000000000000000000000001"
+      abi: FantasyLeague
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Performance
+      abis:
+        - name: FantasyLeague
+          file: ./abis/FantasyLeague.json
+      eventHandlers:
+        - event: DesempenhoRegistrado(indexed uint256 tokenId, uint64 rodada, int256 pontos)
+          handler: handleDesempenhoRegistrado
+      file: ./src/fantasy.ts

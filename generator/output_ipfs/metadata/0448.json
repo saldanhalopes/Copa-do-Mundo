@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Japão",
+  "description": "CryptoÁlbum Copa — Curiosidade | Japão | #0448",
+  "external_url": "https://cryptoalbumcopa.io/card/448",
+  "image": "ipfs://__CID_PLACEHOLDER__/0448.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Japão"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Disciplina dos 'Samurais Azuis'."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Alemanha",
+  "description": "CryptoÁlbum Copa — Bandeira | Alemanha | #0109",
+  "external_url": "https://cryptoalbumcopa.io/card/109",
+  "image": "ipfs://__CID_PLACEHOLDER__/0109.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Alemanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

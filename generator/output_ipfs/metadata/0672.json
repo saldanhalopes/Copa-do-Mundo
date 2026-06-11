@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Costa do Marfim",
+  "description": "CryptoÁlbum Copa — Curiosidade | Costa do Marfim | #0672",
+  "external_url": "https://cryptoalbumcopa.io/card/672",
+  "image": "ipfs://__CID_PLACEHOLDER__/0672.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa do Marfim"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Os 'Elefantes'."
+    }
+  ]
+}

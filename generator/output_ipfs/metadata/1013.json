@@ -1,0 +1,66 @@
+{
+  "name": "Aron Rossi",
+  "description": "CryptoÁlbum Copa — Jogador | Dinamarca | #1013",
+  "external_url": "https://cryptoalbumcopa.io/card/1013",
+  "image": "ipfs://__CID_PLACEHOLDER__/1013.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Jogador"
+    },
+    {
+      "trait_type": "País",
+      "value": "Dinamarca"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    },
+    {
+      "trait_type": "Posição",
+      "value": "ZAG"
+    },
+    {
+      "trait_type": "Overall",
+      "value": 65,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAC",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "SHO",
+      "value": 56,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PAS",
+      "value": 52,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DRI",
+      "value": 60,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "DEF",
+      "value": 72,
+      "max_value": 99,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "PHY",
+      "value": 64,
+      "max_value": 99,
+      "display_type": "number"
+    }
+  ]
+}

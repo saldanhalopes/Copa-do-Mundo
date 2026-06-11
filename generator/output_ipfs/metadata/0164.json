@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aki Rossi",
+  "description": "CryptoÁlbum Copa — Técnico | Itália | #0164",
+  "external_url": "https://cryptoalbumcopa.io/card/164",
+  "image": "ipfs://__CID_PLACEHOLDER__/0164.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Itália"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

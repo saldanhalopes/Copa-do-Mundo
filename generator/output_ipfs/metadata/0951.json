@@ -1,0 +1,20 @@
+{
+  "name": "Orzel",
+  "description": "CryptoÁlbum Copa — Mascote | Polônia | #0951",
+  "external_url": "https://cryptoalbumcopa.io/card/951",
+  "image": "ipfs://__CID_PLACEHOLDER__/0951.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Polônia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

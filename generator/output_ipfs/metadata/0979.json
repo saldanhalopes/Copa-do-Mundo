@@ -1,0 +1,20 @@
+{
+  "name": "Orlovi",
+  "description": "CryptoÁlbum Copa — Mascote | Sérvia | #0979",
+  "external_url": "https://cryptoalbumcopa.io/card/979",
+  "image": "ipfs://__CID_PLACEHOLDER__/0979.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Sérvia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

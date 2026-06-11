@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Caio Santos",
+  "description": "CryptoÁlbum Copa — Técnico | Canadá | #0416",
+  "external_url": "https://cryptoalbumcopa.io/card/416",
+  "image": "ipfs://__CID_PLACEHOLDER__/0416.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Canadá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

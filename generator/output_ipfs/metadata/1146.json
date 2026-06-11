@@ -1,0 +1,20 @@
+{
+  "name": "Brasão País de Gales",
+  "description": "CryptoÁlbum Copa — Brasão | País de Gales | #1146",
+  "external_url": "https://cryptoalbumcopa.io/card/1146",
+  "image": "ipfs://__CID_PLACEHOLDER__/1146.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "País de Gales"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

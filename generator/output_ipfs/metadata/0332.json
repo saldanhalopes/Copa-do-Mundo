@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Ze Okafor",
+  "description": "CryptoÁlbum Copa — Técnico | Uruguai | #0332",
+  "external_url": "https://cryptoalbumcopa.io/card/332",
+  "image": "ipfs://__CID_PLACEHOLDER__/0332.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Uruguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 3,
+      "display_type": "number"
+    }
+  ]
+}

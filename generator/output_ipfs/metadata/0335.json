@@ -1,0 +1,20 @@
+{
+  "name": "La Garra",
+  "description": "CryptoÁlbum Copa — Mascote | Uruguai | #0335",
+  "external_url": "https://cryptoalbumcopa.io/card/335",
+  "image": "ipfs://__CID_PLACEHOLDER__/0335.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Uruguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

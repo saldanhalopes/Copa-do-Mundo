@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Pavel Bjørn",
+  "description": "CryptoÁlbum Copa — Técnico | Suécia | #1060",
+  "external_url": "https://cryptoalbumcopa.io/card/1060",
+  "image": "ipfs://__CID_PLACEHOLDER__/1060.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suécia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 5,
+      "display_type": "number"
+    }
+  ]
+}

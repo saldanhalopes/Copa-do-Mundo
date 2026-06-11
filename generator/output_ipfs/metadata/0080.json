@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aron Müller",
+  "description": "CryptoÁlbum Copa — Técnico | França | #0080",
+  "external_url": "https://cryptoalbumcopa.io/card/80",
+  "image": "ipfs://__CID_PLACEHOLDER__/0080.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "França"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 3,
+      "display_type": "number"
+    }
+  ]
+}

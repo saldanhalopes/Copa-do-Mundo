@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Gana",
+  "description": "CryptoÁlbum Copa — Curiosidade | Gana | #0560",
+  "external_url": "https://cryptoalbumcopa.io/card/560",
+  "image": "ipfs://__CID_PLACEHOLDER__/0560.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Gana"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "As 'Estrelas Negras'."
+    }
+  ]
+}

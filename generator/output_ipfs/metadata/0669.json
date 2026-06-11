@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Costa do Marfim",
+  "description": "CryptoÁlbum Copa — Bandeira | Costa do Marfim | #0669",
+  "external_url": "https://cryptoalbumcopa.io/card/669",
+  "image": "ipfs://__CID_PLACEHOLDER__/0669.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa do Marfim"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

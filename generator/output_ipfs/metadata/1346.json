@@ -1,0 +1,24 @@
+{
+  "name": "Azteca",
+  "description": "CryptoÁlbum Copa — Estádio | Mundial | #1346",
+  "external_url": "https://cryptoalbumcopa.io/card/1346",
+  "image": "ipfs://__CID_PLACEHOLDER__/1346.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Estádio"
+    },
+    {
+      "trait_type": "País",
+      "value": "Mundial"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Palco de Pelé e Maradona."
+    }
+  ]
+}

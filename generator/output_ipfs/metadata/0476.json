@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Coreia do Sul",
+  "description": "CryptoÁlbum Copa — Curiosidade | Coreia do Sul | #0476",
+  "external_url": "https://cryptoalbumcopa.io/card/476",
+  "image": "ipfs://__CID_PLACEHOLDER__/0476.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Coreia do Sul"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Semifinalista em casa, 2002."
+    }
+  ]
+}

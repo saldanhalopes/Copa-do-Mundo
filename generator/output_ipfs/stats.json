@@ -1,0 +1,19 @@
+{
+  "total": 1352,
+  "by_rarity": {
+    "\u00c9PICA": 144,
+    "COMUM": 912,
+    "RARA": 240,
+    "LEND\u00c1RIA": 56
+  },
+  "by_type": {
+    "Jogador": 1104,
+    "T\u00e9cnico": 48,
+    "Bandeira": 48,
+    "Bras\u00e3o": 48,
+    "Mascote": 48,
+    "Curiosidade": 48,
+    "Est\u00e1dio": 8
+  },
+  "countries": 48
+}

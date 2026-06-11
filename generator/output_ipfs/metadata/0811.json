@@ -1,0 +1,20 @@
+{
+  "name": "El Cóndor",
+  "description": "CryptoÁlbum Copa — Mascote | Colômbia | #0811",
+  "external_url": "https://cryptoalbumcopa.io/card/811",
+  "image": "ipfs://__CID_PLACEHOLDER__/0811.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Colômbia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Tomás Bjørn",
+  "description": "CryptoÁlbum Copa — Técnico | Coreia do Sul | #0472",
+  "external_url": "https://cryptoalbumcopa.io/card/472",
+  "image": "ipfs://__CID_PLACEHOLDER__/0472.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Coreia do Sul"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

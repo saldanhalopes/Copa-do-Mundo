@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Bélgica",
+  "description": "CryptoÁlbum Copa — Bandeira | Bélgica | #0277",
+  "external_url": "https://cryptoalbumcopa.io/card/277",
+  "image": "ipfs://__CID_PLACEHOLDER__/0277.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Bélgica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

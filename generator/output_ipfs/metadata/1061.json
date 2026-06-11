@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Suécia",
+  "description": "CryptoÁlbum Copa — Bandeira | Suécia | #1061",
+  "external_url": "https://cryptoalbumcopa.io/card/1061",
+  "image": "ipfs://__CID_PLACEHOLDER__/1061.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suécia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

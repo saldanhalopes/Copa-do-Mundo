@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Portugal",
+  "description": "CryptoÁlbum Copa — Bandeira | Portugal | #0221",
+  "external_url": "https://cryptoalbumcopa.io/card/221",
+  "image": "ipfs://__CID_PLACEHOLDER__/0221.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Portugal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

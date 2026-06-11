@@ -1,0 +1,20 @@
+{
+  "name": "Ay-Yildiz",
+  "description": "CryptoÁlbum Copa — Mascote | Turquia | #1119",
+  "external_url": "https://cryptoalbumcopa.io/card/1119",
+  "image": "ipfs://__CID_PLACEHOLDER__/1119.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Turquia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

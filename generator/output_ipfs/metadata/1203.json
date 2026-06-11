@@ -1,0 +1,20 @@
+{
+  "name": "Zhovto",
+  "description": "CryptoÁlbum Copa — Mascote | Ucrânia | #1203",
+  "external_url": "https://cryptoalbumcopa.io/card/1203",
+  "image": "ipfs://__CID_PLACEHOLDER__/1203.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Ucrânia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

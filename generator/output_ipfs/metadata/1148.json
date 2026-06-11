@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? País de Gales",
+  "description": "CryptoÁlbum Copa — Curiosidade | País de Gales | #1148",
+  "external_url": "https://cryptoalbumcopa.io/card/1148",
+  "image": "ipfs://__CID_PLACEHOLDER__/1148.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "País de Gales"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "O 'Dragão Vermelho'."
+    }
+  ]
+}

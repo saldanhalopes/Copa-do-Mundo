@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Rui Costa",
+  "description": "CryptoÁlbum Copa — Técnico | Arábia Saudita | #0724",
+  "external_url": "https://cryptoalbumcopa.io/card/724",
+  "image": "ipfs://__CID_PLACEHOLDER__/0724.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Arábia Saudita"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 8,
+      "display_type": "number"
+    }
+  ]
+}

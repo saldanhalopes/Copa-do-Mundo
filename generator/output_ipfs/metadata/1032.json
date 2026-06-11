@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Diego Mendez",
+  "description": "CryptoÁlbum Copa — Técnico | Dinamarca | #1032",
+  "external_url": "https://cryptoalbumcopa.io/card/1032",
+  "image": "ipfs://__CID_PLACEHOLDER__/1032.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Dinamarca"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Camarões",
+  "description": "CryptoÁlbum Copa — Bandeira | Camarões | #0613",
+  "external_url": "https://cryptoalbumcopa.io/card/613",
+  "image": "ipfs://__CID_PLACEHOLDER__/0613.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Camarões"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

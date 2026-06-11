@@ -1,0 +1,20 @@
+{
+  "name": "Reggae Boy",
+  "description": "CryptoÁlbum Copa — Mascote | Jamaica | #1287",
+  "external_url": "https://cryptoalbumcopa.io/card/1287",
+  "image": "ipfs://__CID_PLACEHOLDER__/1287.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Jamaica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

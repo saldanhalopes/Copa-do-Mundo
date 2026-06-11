@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Jamaica",
+  "description": "CryptoÁlbum Copa — Bandeira | Jamaica | #1285",
+  "external_url": "https://cryptoalbumcopa.io/card/1285",
+  "image": "ipfs://__CID_PLACEHOLDER__/1285.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Jamaica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

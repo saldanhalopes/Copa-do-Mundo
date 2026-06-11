@@ -1,0 +1,20 @@
+{
+  "name": "El Inca",
+  "description": "CryptoÁlbum Copa — Mascote | Peru | #0867",
+  "external_url": "https://cryptoalbumcopa.io/card/867",
+  "image": "ipfs://__CID_PLACEHOLDER__/0867.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Peru"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

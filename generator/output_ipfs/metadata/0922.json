@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Paraguai",
+  "description": "CryptoÁlbum Copa — Brasão | Paraguai | #0922",
+  "external_url": "https://cryptoalbumcopa.io/card/922",
+  "image": "ipfs://__CID_PLACEHOLDER__/0922.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Paraguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

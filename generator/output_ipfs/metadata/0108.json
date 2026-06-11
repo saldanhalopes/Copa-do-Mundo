@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Yann Cruz",
+  "description": "CryptoÁlbum Copa — Técnico | Alemanha | #0108",
+  "external_url": "https://cryptoalbumcopa.io/card/108",
+  "image": "ipfs://__CID_PLACEHOLDER__/0108.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Alemanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

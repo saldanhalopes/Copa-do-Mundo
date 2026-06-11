@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Argélia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Argélia | #1344",
+  "external_url": "https://cryptoalbumcopa.io/card/1344",
+  "image": "ipfs://__CID_PLACEHOLDER__/1344.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argélia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "As 'Raposas do Deserto'."
+    }
+  ]
+}

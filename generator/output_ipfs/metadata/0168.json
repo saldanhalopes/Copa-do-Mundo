@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Itália",
+  "description": "CryptoÁlbum Copa — Curiosidade | Itália | #0168",
+  "external_url": "https://cryptoalbumcopa.io/card/168",
+  "image": "ipfs://__CID_PLACEHOLDER__/0168.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Itália"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Defesa lendária, o 'catenaccio'."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Gana",
+  "description": "CryptoÁlbum Copa — Brasão | Gana | #0558",
+  "external_url": "https://cryptoalbumcopa.io/card/558",
+  "image": "ipfs://__CID_PLACEHOLDER__/0558.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Gana"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

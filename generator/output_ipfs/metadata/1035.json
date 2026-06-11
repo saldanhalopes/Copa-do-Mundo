@@ -1,0 +1,20 @@
+{
+  "name": "De Rod",
+  "description": "CryptoÁlbum Copa — Mascote | Dinamarca | #1035",
+  "external_url": "https://cryptoalbumcopa.io/card/1035",
+  "image": "ipfs://__CID_PLACEHOLDER__/1035.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Dinamarca"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

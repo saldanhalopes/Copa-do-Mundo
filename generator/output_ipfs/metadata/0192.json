@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aron Diallo",
+  "description": "CryptoÁlbum Copa — Técnico | Inglaterra | #0192",
+  "external_url": "https://cryptoalbumcopa.io/card/192",
+  "image": "ipfs://__CID_PLACEHOLDER__/0192.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Inglaterra"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 8,
+      "display_type": "number"
+    }
+  ]
+}

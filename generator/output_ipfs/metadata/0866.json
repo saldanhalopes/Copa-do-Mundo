@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Peru",
+  "description": "CryptoÁlbum Copa — Brasão | Peru | #0866",
+  "external_url": "https://cryptoalbumcopa.io/card/866",
+  "image": "ipfs://__CID_PLACEHOLDER__/0866.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Peru"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

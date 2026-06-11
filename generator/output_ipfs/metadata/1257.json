@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Panamá",
+  "description": "CryptoÁlbum Copa — Bandeira | Panamá | #1257",
+  "external_url": "https://cryptoalbumcopa.io/card/1257",
+  "image": "ipfs://__CID_PLACEHOLDER__/1257.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Panamá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

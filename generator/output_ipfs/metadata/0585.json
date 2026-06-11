@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Nigéria",
+  "description": "CryptoÁlbum Copa — Bandeira | Nigéria | #0585",
+  "external_url": "https://cryptoalbumcopa.io/card/585",
+  "image": "ipfs://__CID_PLACEHOLDER__/0585.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nigéria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

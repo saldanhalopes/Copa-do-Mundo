@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Bélgica",
+  "description": "CryptoÁlbum Copa — Curiosidade | Bélgica | #0280",
+  "external_url": "https://cryptoalbumcopa.io/card/280",
+  "image": "ipfs://__CID_PLACEHOLDER__/0280.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Bélgica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "A 'Geração de Ouro'."
+    }
+  ]
+}

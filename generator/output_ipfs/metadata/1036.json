@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Dinamarca",
+  "description": "CryptoÁlbum Copa — Curiosidade | Dinamarca | #1036",
+  "external_url": "https://cryptoalbumcopa.io/card/1036",
+  "image": "ipfs://__CID_PLACEHOLDER__/1036.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Dinamarca"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "A 'Dinamite Dinamarquesa'."
+    }
+  ]
+}

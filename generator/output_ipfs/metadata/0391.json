@@ -1,0 +1,20 @@
+{
+  "name": "The Eagle",
+  "description": "CryptoÁlbum Copa — Mascote | Estados Unidos | #0391",
+  "external_url": "https://cryptoalbumcopa.io/card/391",
+  "image": "ipfs://__CID_PLACEHOLDER__/0391.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Estados Unidos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

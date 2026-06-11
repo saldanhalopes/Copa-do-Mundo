@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Polônia",
+  "description": "CryptoÁlbum Copa — Bandeira | Polônia | #0949",
+  "external_url": "https://cryptoalbumcopa.io/card/949",
+  "image": "ipfs://__CID_PLACEHOLDER__/0949.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Polônia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "La Nati",
+  "description": "CryptoÁlbum Copa — Mascote | Suíça | #1007",
+  "external_url": "https://cryptoalbumcopa.io/card/1007",
+  "image": "ipfs://__CID_PLACEHOLDER__/1007.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suíça"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

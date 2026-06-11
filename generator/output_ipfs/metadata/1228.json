@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Dário Bauer",
+  "description": "CryptoÁlbum Copa — Técnico | Costa Rica | #1228",
+  "external_url": "https://cryptoalbumcopa.io/card/1228",
+  "image": "ipfs://__CID_PLACEHOLDER__/1228.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa Rica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 8,
+      "display_type": "number"
+    }
+  ]
+}

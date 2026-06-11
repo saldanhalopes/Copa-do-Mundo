@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Equador",
+  "description": "CryptoÁlbum Copa — Bandeira | Equador | #0893",
+  "external_url": "https://cryptoalbumcopa.io/card/893",
+  "image": "ipfs://__CID_PLACEHOLDER__/0893.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Equador"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

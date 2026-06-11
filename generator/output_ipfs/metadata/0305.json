@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Croácia",
+  "description": "CryptoÁlbum Copa — Bandeira | Croácia | #0305",
+  "external_url": "https://cryptoalbumcopa.io/card/305",
+  "image": "ipfs://__CID_PLACEHOLDER__/0305.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Croácia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

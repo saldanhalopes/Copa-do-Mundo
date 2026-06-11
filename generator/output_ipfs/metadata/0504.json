@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Senegal",
+  "description": "CryptoÁlbum Copa — Curiosidade | Senegal | #0504",
+  "external_url": "https://cryptoalbumcopa.io/card/504",
+  "image": "ipfs://__CID_PLACEHOLDER__/0504.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Os 'Leões de Teranga'."
+    }
+  ]
+}

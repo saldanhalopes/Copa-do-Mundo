@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aron Vidić",
+  "description": "CryptoÁlbum Copa — Técnico | País de Gales | #1144",
+  "external_url": "https://cryptoalbumcopa.io/card/1144",
+  "image": "ipfs://__CID_PLACEHOLDER__/1144.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "País de Gales"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 3,
+      "display_type": "number"
+    }
+  ]
+}

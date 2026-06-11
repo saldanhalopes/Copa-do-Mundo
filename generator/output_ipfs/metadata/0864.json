@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Yann Nilsson",
+  "description": "CryptoÁlbum Copa — Técnico | Peru | #0864",
+  "external_url": "https://cryptoalbumcopa.io/card/864",
+  "image": "ipfs://__CID_PLACEHOLDER__/0864.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Peru"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

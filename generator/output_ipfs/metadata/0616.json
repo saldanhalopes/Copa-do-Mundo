@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Camarões",
+  "description": "CryptoÁlbum Copa — Curiosidade | Camarões | #0616",
+  "external_url": "https://cryptoalbumcopa.io/card/616",
+  "image": "ipfs://__CID_PLACEHOLDER__/0616.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Camarões"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Os 'Leões Indomáveis'."
+    }
+  ]
+}

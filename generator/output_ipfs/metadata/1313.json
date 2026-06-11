@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Nova Zelândia",
+  "description": "CryptoÁlbum Copa — Bandeira | Nova Zelândia | #1313",
+  "external_url": "https://cryptoalbumcopa.io/card/1313",
+  "image": "ipfs://__CID_PLACEHOLDER__/1313.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nova Zelândia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

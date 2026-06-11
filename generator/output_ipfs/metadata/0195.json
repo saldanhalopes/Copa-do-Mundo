@@ -1,0 +1,20 @@
+{
+  "name": "The Lion",
+  "description": "CryptoÁlbum Copa — Mascote | Inglaterra | #0195",
+  "external_url": "https://cryptoalbumcopa.io/card/195",
+  "image": "ipfs://__CID_PLACEHOLDER__/0195.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Inglaterra"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

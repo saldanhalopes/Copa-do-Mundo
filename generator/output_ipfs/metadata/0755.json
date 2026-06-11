@@ -1,0 +1,20 @@
+{
+  "name": "Team Melli",
+  "description": "CryptoÁlbum Copa — Mascote | Irã | #0755",
+  "external_url": "https://cryptoalbumcopa.io/card/755",
+  "image": "ipfs://__CID_PLACEHOLDER__/0755.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Irã"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

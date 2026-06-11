@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Equador",
+  "description": "CryptoÁlbum Copa — Brasão | Equador | #0894",
+  "external_url": "https://cryptoalbumcopa.io/card/894",
+  "image": "ipfs://__CID_PLACEHOLDER__/0894.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Equador"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

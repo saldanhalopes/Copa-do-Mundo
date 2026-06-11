@@ -1,0 +1,43 @@
+type Player @entity {
+  id: ID!
+  elo: BigInt!
+  wins: Int!
+  losses: Int!
+  matches: [Match!]!
+  rankingHistory: [RankingSnapshot!]! @derivedFrom(field: "player")
+}
+
+type PackOpened @entity {
+  id: ID!
+  buyer: Player!
+  tokenIds: [BigInt!]!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Match @entity {
+  id: ID!
+  playerA: Player!
+  playerB: Player!
+  winner: Player
+  stake: BigInt!
+  scoreA: Int!
+  scoreB: Int!
+  timestamp: BigInt!
+}
+
+type RankingSnapshot @entity {
+  id: ID!
+  player: Player!
+  elo: BigInt!
+  won: Boolean!
+  timestamp: BigInt!
+}
+
+type Performance @entity {
+  id: ID!
+  tokenId: BigInt!
+  rodada: BigInt!
+  pontos: BigInt!
+  timestamp: BigInt!
+}

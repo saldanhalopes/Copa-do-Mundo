@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Hugo Reyes",
+  "description": "CryptoÁlbum Copa — Técnico | Costa do Marfim | #0668",
+  "external_url": "https://cryptoalbumcopa.io/card/668",
+  "image": "ipfs://__CID_PLACEHOLDER__/0668.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa do Marfim"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 5,
+      "display_type": "number"
+    }
+  ]
+}

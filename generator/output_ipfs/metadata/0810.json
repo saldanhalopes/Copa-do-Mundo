@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Colômbia",
+  "description": "CryptoÁlbum Copa — Brasão | Colômbia | #0810",
+  "external_url": "https://cryptoalbumcopa.io/card/810",
+  "image": "ipfs://__CID_PLACEHOLDER__/0810.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Colômbia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

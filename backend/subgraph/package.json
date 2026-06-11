@@ -1,0 +1,17 @@
+{
+  "name": "cryptoalbum-copa-subgraph",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --product hosted-service cryptoalbum-copa/copa-do-mundo"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-ts": "^0.35.1"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.70.0",
+    "typescript": "^5.3.3"
+  }
+}

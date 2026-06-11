@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Estados Unidos",
+  "description": "CryptoÁlbum Copa — Brasão | Estados Unidos | #0390",
+  "external_url": "https://cryptoalbumcopa.io/card/390",
+  "image": "ipfs://__CID_PLACEHOLDER__/0390.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Estados Unidos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

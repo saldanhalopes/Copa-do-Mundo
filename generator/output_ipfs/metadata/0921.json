@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Paraguai",
+  "description": "CryptoÁlbum Copa — Bandeira | Paraguai | #0921",
+  "external_url": "https://cryptoalbumcopa.io/card/921",
+  "image": "ipfs://__CID_PLACEHOLDER__/0921.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Paraguai"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

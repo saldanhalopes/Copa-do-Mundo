@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Bruno Bauer",
+  "description": "CryptoÁlbum Copa — Técnico | Turquia | #1116",
+  "external_url": "https://cryptoalbumcopa.io/card/1116",
+  "image": "ipfs://__CID_PLACEHOLDER__/1116.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Turquia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 7,
+      "display_type": "number"
+    }
+  ]
+}

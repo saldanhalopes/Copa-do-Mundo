@@ -1,0 +1,20 @@
+{
+  "name": "Le Diable",
+  "description": "CryptoÁlbum Copa — Mascote | Bélgica | #0279",
+  "external_url": "https://cryptoalbumcopa.io/card/279",
+  "image": "ipfs://__CID_PLACEHOLDER__/0279.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Bélgica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

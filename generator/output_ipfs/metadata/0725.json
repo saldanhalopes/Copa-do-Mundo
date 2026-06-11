@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Arábia Saudita",
+  "description": "CryptoÁlbum Copa — Bandeira | Arábia Saudita | #0725",
+  "external_url": "https://cryptoalbumcopa.io/card/725",
+  "image": "ipfs://__CID_PLACEHOLDER__/0725.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Arábia Saudita"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

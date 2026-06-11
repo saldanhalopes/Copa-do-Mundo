@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Chile",
+  "description": "CryptoÁlbum Copa — Curiosidade | Chile | #0840",
+  "external_url": "https://cryptoalbumcopa.io/card/840",
+  "image": "ipfs://__CID_PLACEHOLDER__/0840.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Chile"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Bicampeã da Copa América."
+    }
+  ]
+}

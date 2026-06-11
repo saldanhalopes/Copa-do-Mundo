@@ -1,0 +1,20 @@
+{
+  "name": "Blagult",
+  "description": "CryptoÁlbum Copa — Mascote | Suécia | #1063",
+  "external_url": "https://cryptoalbumcopa.io/card/1063",
+  "image": "ipfs://__CID_PLACEHOLDER__/1063.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suécia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

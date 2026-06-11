@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Igor Silva",
+  "description": "CryptoÁlbum Copa — Técnico | Chile | #0836",
+  "external_url": "https://cryptoalbumcopa.io/card/836",
+  "image": "ipfs://__CID_PLACEHOLDER__/0836.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Chile"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 5,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "blockedForPacks": ["BE", "NL"],
+  "blockedForStaking": [],
+  "countryNames": {
+    "BE": "Belgium",
+    "NL": "Netherlands",
+    "US": "United States",
+    "GB": "United Kingdom",
+    "JP": "Japan",
+    "AU": "Australia",
+    "DE": "Germany",
+    "FR": "France"
+  },
+  "minAges": {
+    "US": 21,
+    "JP": 20
+  },
+  "riskFlags": {
+    "defaultVPNThreshold": 30,
+    "requireKYCForPacks": ["US", "GB"],
+    "requireKYCForStaking": ["ALL"]
+  },
+  "contractOverrides": {
+    "PackStore": {
+      "default": "",
+      "jurisdictions": {}
+    },
+    "MatchEscrow": {
+      "default": "",
+      "jurisdictions": {}
+    }
+  }
+}

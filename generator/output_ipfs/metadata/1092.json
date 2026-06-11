@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Áustria",
+  "description": "CryptoÁlbum Copa — Curiosidade | Áustria | #1092",
+  "external_url": "https://cryptoalbumcopa.io/card/1092",
+  "image": "ipfs://__CID_PLACEHOLDER__/1092.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Áustria"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Tradição do futebol europeu."
+    }
+  ]
+}

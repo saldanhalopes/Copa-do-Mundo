@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Colômbia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Colômbia | #0812",
+  "external_url": "https://cryptoalbumcopa.io/card/812",
+  "image": "ipfs://__CID_PLACEHOLDER__/0812.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Colômbia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "O ritmo e a alegria cafeteira."
+    }
+  ]
+}

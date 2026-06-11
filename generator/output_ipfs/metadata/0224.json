@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Portugal",
+  "description": "CryptoÁlbum Copa — Curiosidade | Portugal | #0224",
+  "external_url": "https://cryptoalbumcopa.io/card/224",
+  "image": "ipfs://__CID_PLACEHOLDER__/0224.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Portugal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Os Navegadores do futebol."
+    }
+  ]
+}

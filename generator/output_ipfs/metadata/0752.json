@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Bruno Haidar",
+  "description": "CryptoÁlbum Copa — Técnico | Irã | #0752",
+  "external_url": "https://cryptoalbumcopa.io/card/752",
+  "image": "ipfs://__CID_PLACEHOLDER__/0752.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Irã"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 8,
+      "display_type": "number"
+    }
+  ]
+}

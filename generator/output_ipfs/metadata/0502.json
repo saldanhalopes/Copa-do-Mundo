@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Senegal",
+  "description": "CryptoÁlbum Copa — Brasão | Senegal | #0502",
+  "external_url": "https://cryptoalbumcopa.io/card/502",
+  "image": "ipfs://__CID_PLACEHOLDER__/0502.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Senegal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

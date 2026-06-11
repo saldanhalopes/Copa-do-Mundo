@@ -1,0 +1,20 @@
+{
+  "name": "Pharaoh",
+  "description": "CryptoÁlbum Copa — Mascote | Egito | #0643",
+  "external_url": "https://cryptoalbumcopa.io/card/643",
+  "image": "ipfs://__CID_PLACEHOLDER__/0643.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Egito"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

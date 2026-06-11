@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Argentina",
+  "description": "CryptoÁlbum Copa — Brasão | Argentina | #0054",
+  "external_url": "https://cryptoalbumcopa.io/card/54",
+  "image": "ipfs://__CID_PLACEHOLDER__/0054.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argentina"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

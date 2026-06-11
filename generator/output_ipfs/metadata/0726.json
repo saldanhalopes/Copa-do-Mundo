@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Arábia Saudita",
+  "description": "CryptoÁlbum Copa — Brasão | Arábia Saudita | #0726",
+  "external_url": "https://cryptoalbumcopa.io/card/726",
+  "image": "ipfs://__CID_PLACEHOLDER__/0726.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Arábia Saudita"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

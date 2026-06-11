@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Turquia",
+  "description": "CryptoÁlbum Copa — Bandeira | Turquia | #1117",
+  "external_url": "https://cryptoalbumcopa.io/card/1117",
+  "image": "ipfs://__CID_PLACEHOLDER__/1117.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Turquia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

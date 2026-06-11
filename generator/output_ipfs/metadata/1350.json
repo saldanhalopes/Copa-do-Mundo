@@ -1,0 +1,24 @@
+{
+  "name": "Santiago Bernabéu",
+  "description": "CryptoÁlbum Copa — Estádio | Mundial | #1350",
+  "external_url": "https://cryptoalbumcopa.io/card/1350",
+  "image": "ipfs://__CID_PLACEHOLDER__/1350.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Estádio"
+    },
+    {
+      "trait_type": "País",
+      "value": "Mundial"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Casa de gigantes."
+    }
+  ]
+}

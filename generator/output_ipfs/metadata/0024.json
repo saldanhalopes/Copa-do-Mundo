@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Caio Laval",
+  "description": "CryptoÁlbum Copa — Técnico | Brasil | #0024",
+  "external_url": "https://cryptoalbumcopa.io/card/24",
+  "image": "ipfs://__CID_PLACEHOLDER__/0024.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Brasil"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 5,
+      "display_type": "number"
+    }
+  ]
+}

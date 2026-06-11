@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Aron Reyes",
+  "description": "CryptoÁlbum Copa — Técnico | Jamaica | #1284",
+  "external_url": "https://cryptoalbumcopa.io/card/1284",
+  "image": "ipfs://__CID_PLACEHOLDER__/1284.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Jamaica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 8,
+      "display_type": "number"
+    }
+  ]
+}

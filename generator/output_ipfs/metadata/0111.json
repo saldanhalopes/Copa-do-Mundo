@@ -1,0 +1,20 @@
+{
+  "name": "Der Adler",
+  "description": "CryptoÁlbum Copa — Mascote | Alemanha | #0111",
+  "external_url": "https://cryptoalbumcopa.io/card/111",
+  "image": "ipfs://__CID_PLACEHOLDER__/0111.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Alemanha"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

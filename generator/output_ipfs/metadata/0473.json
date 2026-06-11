@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Coreia do Sul",
+  "description": "CryptoÁlbum Copa — Bandeira | Coreia do Sul | #0473",
+  "external_url": "https://cryptoalbumcopa.io/card/473",
+  "image": "ipfs://__CID_PLACEHOLDER__/0473.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Coreia do Sul"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

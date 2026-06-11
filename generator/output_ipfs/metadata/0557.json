@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Gana",
+  "description": "CryptoÁlbum Copa — Bandeira | Gana | #0557",
+  "external_url": "https://cryptoalbumcopa.io/card/557",
+  "image": "ipfs://__CID_PLACEHOLDER__/0557.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Gana"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

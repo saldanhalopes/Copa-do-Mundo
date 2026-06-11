@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Ucrânia",
+  "description": "CryptoÁlbum Copa — Bandeira | Ucrânia | #1201",
+  "external_url": "https://cryptoalbumcopa.io/card/1201",
+  "image": "ipfs://__CID_PLACEHOLDER__/1201.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Ucrânia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

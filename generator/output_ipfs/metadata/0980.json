@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Sérvia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Sérvia | #0980",
+  "external_url": "https://cryptoalbumcopa.io/card/980",
+  "image": "ipfs://__CID_PLACEHOLDER__/0980.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Sérvia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "As 'Águias' dos Bálcãs."
+    }
+  ]
+}

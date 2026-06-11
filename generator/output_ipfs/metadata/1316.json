@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Nova Zelândia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Nova Zelândia | #1316",
+  "external_url": "https://cryptoalbumcopa.io/card/1316",
+  "image": "ipfs://__CID_PLACEHOLDER__/1316.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nova Zelândia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Os 'All Whites'."
+    }
+  ]
+}

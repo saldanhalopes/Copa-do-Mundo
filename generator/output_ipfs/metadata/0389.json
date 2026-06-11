@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Estados Unidos",
+  "description": "CryptoÁlbum Copa — Bandeira | Estados Unidos | #0389",
+  "external_url": "https://cryptoalbumcopa.io/card/389",
+  "image": "ipfs://__CID_PLACEHOLDER__/0389.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Estados Unidos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

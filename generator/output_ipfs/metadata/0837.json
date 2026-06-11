@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Chile",
+  "description": "CryptoÁlbum Copa — Bandeira | Chile | #0837",
+  "external_url": "https://cryptoalbumcopa.io/card/837",
+  "image": "ipfs://__CID_PLACEHOLDER__/0837.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Chile"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

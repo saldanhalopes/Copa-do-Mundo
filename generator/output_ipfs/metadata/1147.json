@@ -1,0 +1,20 @@
+{
+  "name": "Y Ddraig",
+  "description": "CryptoÁlbum Copa — Mascote | País de Gales | #1147",
+  "external_url": "https://cryptoalbumcopa.io/card/1147",
+  "image": "ipfs://__CID_PLACEHOLDER__/1147.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "País de Gales"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Costa Rica",
+  "description": "CryptoÁlbum Copa — Bandeira | Costa Rica | #1229",
+  "external_url": "https://cryptoalbumcopa.io/card/1229",
+  "image": "ipfs://__CID_PLACEHOLDER__/1229.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa Rica"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

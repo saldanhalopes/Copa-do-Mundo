@@ -1,0 +1,24 @@
+{
+  "name": "Lusail",
+  "description": "CryptoÁlbum Copa — Estádio | Mundial | #1349",
+  "external_url": "https://cryptoalbumcopa.io/card/1349",
+  "image": "ipfs://__CID_PLACEHOLDER__/1349.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Estádio"
+    },
+    {
+      "trait_type": "País",
+      "value": "Mundial"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "LENDÁRIA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Sede da final de 2022."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Costa do Marfim",
+  "description": "CryptoÁlbum Copa — Brasão | Costa do Marfim | #0670",
+  "external_url": "https://cryptoalbumcopa.io/card/670",
+  "image": "ipfs://__CID_PLACEHOLDER__/0670.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Costa do Marfim"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

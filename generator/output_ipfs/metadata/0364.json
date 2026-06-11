@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? México",
+  "description": "CryptoÁlbum Copa — Curiosidade | México | #0364",
+  "external_url": "https://cryptoalbumcopa.io/card/364",
+  "image": "ipfs://__CID_PLACEHOLDER__/0364.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "México"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Sede de duas finais de Copa."
+    }
+  ]
+}

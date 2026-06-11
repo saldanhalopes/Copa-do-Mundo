@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Escócia",
+  "description": "CryptoÁlbum Copa — Curiosidade | Escócia | #1176",
+  "external_url": "https://cryptoalbumcopa.io/card/1176",
+  "image": "ipfs://__CID_PLACEHOLDER__/1176.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Escócia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Berço de rivalidades históricas."
+    }
+  ]
+}

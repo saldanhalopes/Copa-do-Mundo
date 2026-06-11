@@ -1,0 +1,20 @@
+{
+  "name": "Le Coq",
+  "description": "CryptoÁlbum Copa — Mascote | França | #0083",
+  "external_url": "https://cryptoalbumcopa.io/card/83",
+  "image": "ipfs://__CID_PLACEHOLDER__/0083.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "França"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Nova Zelândia",
+  "description": "CryptoÁlbum Copa — Brasão | Nova Zelândia | #1314",
+  "external_url": "https://cryptoalbumcopa.io/card/1314",
+  "image": "ipfs://__CID_PLACEHOLDER__/1314.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Nova Zelândia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

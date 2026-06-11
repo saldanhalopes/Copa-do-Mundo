@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Noé Lund",
+  "description": "CryptoÁlbum Copa — Técnico | Portugal | #0220",
+  "external_url": "https://cryptoalbumcopa.io/card/220",
+  "image": "ipfs://__CID_PLACEHOLDER__/0220.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Portugal"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

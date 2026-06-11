@@ -1,0 +1,20 @@
+{
+  "name": "La Roja",
+  "description": "CryptoÁlbum Copa — Mascote | Chile | #0839",
+  "external_url": "https://cryptoalbumcopa.io/card/839",
+  "image": "ipfs://__CID_PLACEHOLDER__/0839.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Chile"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

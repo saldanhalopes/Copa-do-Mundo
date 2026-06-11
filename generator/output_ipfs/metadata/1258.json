@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Panamá",
+  "description": "CryptoÁlbum Copa — Brasão | Panamá | #1258",
+  "external_url": "https://cryptoalbumcopa.io/card/1258",
+  "image": "ipfs://__CID_PLACEHOLDER__/1258.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Panamá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

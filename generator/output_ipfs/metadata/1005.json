@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Suíça",
+  "description": "CryptoÁlbum Copa — Bandeira | Suíça | #1005",
+  "external_url": "https://cryptoalbumcopa.io/card/1005",
+  "image": "ipfs://__CID_PLACEHOLDER__/1005.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Suíça"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

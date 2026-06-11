@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira País de Gales",
+  "description": "CryptoÁlbum Copa — Bandeira | País de Gales | #1145",
+  "external_url": "https://cryptoalbumcopa.io/card/1145",
+  "image": "ipfs://__CID_PLACEHOLDER__/1145.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "País de Gales"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

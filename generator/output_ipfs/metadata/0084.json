@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? França",
+  "description": "CryptoÁlbum Copa — Curiosidade | França | #0084",
+  "external_url": "https://cryptoalbumcopa.io/card/84",
+  "image": "ipfs://__CID_PLACEHOLDER__/0084.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "França"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Bicampeã mundial em 1998 e 2018."
+    }
+  ]
+}

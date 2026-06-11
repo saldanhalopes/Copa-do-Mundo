@@ -1,0 +1,20 @@
+{
+  "name": "La Tri",
+  "description": "CryptoÁlbum Copa — Mascote | Equador | #0895",
+  "external_url": "https://cryptoalbumcopa.io/card/895",
+  "image": "ipfs://__CID_PLACEHOLDER__/0895.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Equador"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

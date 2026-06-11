@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Ivo Haidar",
+  "description": "CryptoÁlbum Copa — Técnico | Estados Unidos | #0388",
+  "external_url": "https://cryptoalbumcopa.io/card/388",
+  "image": "ipfs://__CID_PLACEHOLDER__/0388.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Estados Unidos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 3,
+      "display_type": "number"
+    }
+  ]
+}

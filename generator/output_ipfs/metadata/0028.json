@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Brasil",
+  "description": "CryptoÁlbum Copa — Curiosidade | Brasil | #0028",
+  "external_url": "https://cryptoalbumcopa.io/card/28",
+  "image": "ipfs://__CID_PLACEHOLDER__/0028.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Brasil"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "Único país a vencer 5 Copas do Mundo."
+    }
+  ]
+}

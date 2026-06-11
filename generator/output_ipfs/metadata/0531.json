@@ -1,0 +1,20 @@
+{
+  "name": "Atlas",
+  "description": "CryptoÁlbum Copa — Mascote | Marrocos | #0531",
+  "external_url": "https://cryptoalbumcopa.io/card/531",
+  "image": "ipfs://__CID_PLACEHOLDER__/0531.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Marrocos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

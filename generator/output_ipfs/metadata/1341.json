@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Argélia",
+  "description": "CryptoÁlbum Copa — Bandeira | Argélia | #1341",
+  "external_url": "https://cryptoalbumcopa.io/card/1341",
+  "image": "ipfs://__CID_PLACEHOLDER__/1341.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Argélia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Você sabia? Panamá",
+  "description": "CryptoÁlbum Copa — Curiosidade | Panamá | #1260",
+  "external_url": "https://cryptoalbumcopa.io/card/1260",
+  "image": "ipfs://__CID_PLACEHOLDER__/1260.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Curiosidade"
+    },
+    {
+      "trait_type": "País",
+      "value": "Panamá"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    },
+    {
+      "trait_type": "Descrição",
+      "value": "A 'Maré Vermelha'."
+    }
+  ]
+}

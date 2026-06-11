@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Bruno Park",
+  "description": "CryptoÁlbum Copa — Técnico | Marrocos | #0528",
+  "external_url": "https://cryptoalbumcopa.io/card/528",
+  "image": "ipfs://__CID_PLACEHOLDER__/0528.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Marrocos"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 6,
+      "display_type": "number"
+    }
+  ]
+}

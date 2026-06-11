@@ -52,7 +52,7 @@ services:
     container_name: copa-ipfs
     ports:
       - "5001:5001"          # API
-      - "8080:8080"          # Gateway
+      - "8081:8080"          # Gateway (8080 is taken by ecs-backend)
     networks: [copa]
     volumes:
       - ipfs_data:/data/ipfs
@@ -113,7 +113,7 @@ services:
       IPFS_API: "http://ipfs:5001"
       DEPLOYMENTS_PATH: "/app/deployments/local.json"
     ports:
-      - "3001:3001"
+      - "3003:3001"          # 3001 is taken by ecs-frontend-device
     networks: [copa]
     volumes:
       - deployments:/app/deployments:ro   # lê endereços dos contratos

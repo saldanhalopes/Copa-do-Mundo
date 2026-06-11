@@ -1,0 +1,20 @@
+{
+  "name": "Brasão França",
+  "description": "CryptoÁlbum Copa — Brasão | França | #0082",
+  "external_url": "https://cryptoalbumcopa.io/card/82",
+  "image": "ipfs://__CID_PLACEHOLDER__/0082.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "França"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

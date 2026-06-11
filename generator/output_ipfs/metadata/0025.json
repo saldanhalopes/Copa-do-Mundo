@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Brasil",
+  "description": "CryptoÁlbum Copa — Bandeira | Brasil | #0025",
+  "external_url": "https://cryptoalbumcopa.io/card/25",
+  "image": "ipfs://__CID_PLACEHOLDER__/0025.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Brasil"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

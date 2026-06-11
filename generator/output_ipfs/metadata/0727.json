@@ -1,0 +1,20 @@
+{
+  "name": "El Halcón",
+  "description": "CryptoÁlbum Copa — Mascote | Arábia Saudita | #0727",
+  "external_url": "https://cryptoalbumcopa.io/card/727",
+  "image": "ipfs://__CID_PLACEHOLDER__/0727.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Mascote"
+    },
+    {
+      "trait_type": "País",
+      "value": "Arábia Saudita"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    }
+  ]
+}

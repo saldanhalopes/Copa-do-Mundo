@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Catar",
+  "description": "CryptoÁlbum Copa — Brasão | Catar | #0782",
+  "external_url": "https://cryptoalbumcopa.io/card/782",
+  "image": "ipfs://__CID_PLACEHOLDER__/0782.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Catar"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}

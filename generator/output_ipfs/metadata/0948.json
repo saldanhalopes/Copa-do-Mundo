@@ -1,0 +1,25 @@
+{
+  "name": "Téc. Kael Laval",
+  "description": "CryptoÁlbum Copa — Técnico | Polônia | #0948",
+  "external_url": "https://cryptoalbumcopa.io/card/948",
+  "image": "ipfs://__CID_PLACEHOLDER__/0948.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Técnico"
+    },
+    {
+      "trait_type": "País",
+      "value": "Polônia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "ÉPICA"
+    },
+    {
+      "trait_type": "Bônus",
+      "value": 3,
+      "display_type": "number"
+    }
+  ]
+}

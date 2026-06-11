@@ -1,0 +1,20 @@
+{
+  "name": "Bandeira Escócia",
+  "description": "CryptoÁlbum Copa — Bandeira | Escócia | #1173",
+  "external_url": "https://cryptoalbumcopa.io/card/1173",
+  "image": "ipfs://__CID_PLACEHOLDER__/1173.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Bandeira"
+    },
+    {
+      "trait_type": "País",
+      "value": "Escócia"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "COMUM"
+    }
+  ]
+}

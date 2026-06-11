@@ -1,0 +1,66 @@
+{
+  "name": "CryptoÁlbum Copa",
+  "description": "1.352 cartas colecionáveis NFT da Copa do Mundo — Jogadores, Técnicos, Bandeiras, Brasões, Mascotes, Curiosidades e Estádios. ERC-1155 com atributos on-chain. 5 raridades: Comum, Rara, Épica, Lendária, Mítica.",
+  "image": "ipfs://__CID_PLACEHOLDER__/logo.png",
+  "external_link": "https://cryptoalbumcopa.io",
+  "seller_fee_basis_points": 500,
+  "fee_recipient": "0x0000000000000000000000000000000000000000",
+  "total_supply": 1352,
+  "countries": 48,
+  "players_per_country": 23,
+  "rarities": [
+    {
+      "name": "Comum",
+      "count": 0,
+      "color": "#5C4026"
+    },
+    {
+      "name": "Rara",
+      "count": 0,
+      "color": "#B4BECD"
+    },
+    {
+      "name": "Épica",
+      "count": 0,
+      "color": "#D4A846"
+    },
+    {
+      "name": "Lendária",
+      "count": 0,
+      "color": "#8250C8"
+    },
+    {
+      "name": "Mítica",
+      "count": 0,
+      "color": "#FF5A8C"
+    }
+  ],
+  "attributes": {
+    "types": [
+      "Jogador",
+      "Técnico",
+      "Bandeira",
+      "Brasão",
+      "Mascote",
+      "Curiosidade",
+      "Estádio"
+    ],
+    "positions": [
+      "GOL",
+      "ZAG",
+      "LD",
+      "LE",
+      "VOL",
+      "MEI",
+      "PD",
+      "PE",
+      "CAM",
+      "ATA"
+    ]
+  },
+  "contract": {
+    "network": "Polygon",
+    "standard": "ERC-1155",
+    "royalties": "ERC-2981 5%"
+  }
+}

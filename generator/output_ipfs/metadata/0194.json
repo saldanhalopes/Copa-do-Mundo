@@ -1,0 +1,20 @@
+{
+  "name": "Brasão Inglaterra",
+  "description": "CryptoÁlbum Copa — Brasão | Inglaterra | #0194",
+  "external_url": "https://cryptoalbumcopa.io/card/194",
+  "image": "ipfs://__CID_PLACEHOLDER__/0194.png",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Brasão"
+    },
+    {
+      "trait_type": "País",
+      "value": "Inglaterra"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "RARA"
+    }
+  ]
+}
