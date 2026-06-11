@@ -5,7 +5,9 @@
 ## Posição atual
 
 - **Fase 0 (Fundação):** ✅ concluída
-- **Próxima fase:** Fase 1 — Hardening dos Contratos
+- **Fase 1 — Hardening dos Contratos:** 🟡 em andamento
+  - **01-01 (Suíte Foundry):** ✅ concluída (commit `fa89b54`)
+  - **01-02 (Auditoria + Multisig):** ⏳ pendente
 - **Próximo comando GSD:** `/gsd-discuss-phase 1`
 
 ## Marcos concluídos (Fase 0)
@@ -32,8 +34,11 @@
 ## Bloqueios conhecidos
 
 - **Fase 1 (auditoria)** é o gargalo antes de qualquer dinheiro real.
+  - 01-01 (testes Foundry) ✅ concluído — 52 testes passando
+  - 01-02 (auditoria + multisig) ⏳ pendente — precisa de Slither, SCOPE.md, Gnosis Safe setup
 - **Fase 6 (jurídico)** tem lead time longo — começar cedo.
 - Integração ChainSafe real exige Unity aberto + contratos deployados.
+- **Paperclip API** (192.168.15.59:3300) offline — heartbeat comments não postados.
 
 ## Notas de ambiente
 

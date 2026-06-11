@@ -5,7 +5,10 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x" + "1".repeat(64);
 module.exports = {
   solidity: {
     version: "0.8.24",
-    settings: { optimizer: { enabled: true, runs: 200 } },
+    settings: {
+      viaIR: true,
+      optimizer: { enabled: true, runs: 200 },
+    },
   },
   networks: {
     amoy:       { url: process.env.RPC_AMOY || "https://rpc-amoy.polygon.technology", chainId: 80002, accounts: [PRIVATE_KEY] },
