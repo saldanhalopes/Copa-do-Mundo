@@ -1,0 +1,15 @@
+{
+  "project": "CryptoÁlbum Copa",
+  "framework": "GSD Core (open-gsd) — estrutura de spec-driven development",
+  "gsd_version_referenced": "@opengsd/gsd-core",
+  "note": "Artefatos gerados seguindo as convenções do GSD Core. O pacote npm NÃO foi instalado e nenhum token foi utilizado (ver aviso da comunidade sobre o $GSD).",
+  "workflow": {
+    "mode": "milestone",
+    "granularity": "standard",
+    "research_agents": 4,
+    "parallel_waves": true,
+    "fresh_context_per_executor": true
+  },
+  "runtime": "Claude Code (compatível: Codex, Gemini CLI, Cursor, Copilot)",
+  "phase_loop": ["discuss", "plan", "execute", "verify", "ship"]
+}
