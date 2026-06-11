@@ -31,6 +31,14 @@ Mapa completo de toda a documentação do projeto.
 | [SECURITY-OPS.md](SECURITY-OPS.md) | Threat model, multisig, runbook, monitoramento |
 | [JURIDICO-CONFORMIDADE.md](../JURIDICO-CONFORMIDADE.md) | IP, loot boxes, securities, KYC, LGPD |
 
+## Execução Autônoma (para IA)
+| Doc | Conteúdo |
+|---|---|
+| [../AGENTS.md](../AGENTS.md) | Ponto de entrada para IA-agente |
+| [../RUNBOOK.md](../RUNBOOK.md) | Passo a passo executável (zero → funcionando) |
+| [TROUBLESHOOTING-AGENT.md](TROUBLESHOOTING-AGENT.md) | Resolução de problemas |
+| [AI-IMPLEMENTATION-GUIDE.md](AI-IMPLEMENTATION-GUIDE.md) | Código exato p/ sair dos stubs |
+
 ## Planejamento (GSD)
 | Doc | Conteúdo |
 |---|---|
