@@ -21,6 +21,7 @@ Mapa completo de toda a documentação do projeto.
 | [../unity/UNITY-SPEC.md](../unity/UNITY-SPEC.md) | Especificação técnica Unity |
 | [../unity/SETUP-EDITOR.md](../unity/SETUP-EDITOR.md) | Guia passo a passo do editor Unity |
 | [../backend/README.md](../backend/README.md) | Backend (matchmaking/indexer/oráculo) |
+| [DOCKER-DEPLOY.md](DOCKER-DEPLOY.md) | Deploy local com Docker (compose, blockchain, IPFS, DB) |
 | [BINANCE-INTEGRACAO.md](../BINANCE-INTEGRACAO.md) | BNB Chain, Binance Pay, Trust Wallet |
 
 ## Qualidade & Operações
