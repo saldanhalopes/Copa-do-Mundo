@@ -4,12 +4,15 @@ import cors from "cors";
 import { WebSocketServer } from "ws";
 import http from "http";
 import { Matchmaker } from "./matchmaking/Matchmaker.js";
+import { config, logConfig } from "./config.js";
 // import { Indexer } from "./indexer/Indexer.js"; // ativar com endereços reais
 
-const PORT = process.env.PORT || 3001;
+const PORT = config.port;
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+logConfig();
 
 const matchmaker = new Matchmaker();
 // processa a fila a cada 2s (para pares que só ficam válidos ao expandir a faixa de ELO)
@@ -25,6 +28,9 @@ setInterval(() => matchmaker.tick(), 2000);
 // ─── REST API ─────────────────────────────────────────────────────
 
 app.get("/health", (_, res) => res.json({ ok: true, ...matchmaker.stats() }));
+
+// Endereços dos contratos (do deploy local) — útil para o cliente
+app.get("/contracts", (_, res) => res.json({ chainId: config.chainId, contracts: config.contracts }));
 
 // Ranking (do indexer; aqui um stub)
 app.get("/leaderboard", (req, res) => {

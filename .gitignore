@@ -8,3 +8,5 @@ backend/node_modules/
 generator/output_pro/
 generator/samples_pro/*.png
 out/
+deployments/
+generator/output/metadata/

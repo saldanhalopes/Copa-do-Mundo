@@ -1,0 +1,130 @@
+# docker-compose.yml — Ambiente de desenvolvimento local completo
+# CryptoÁlbum Copa
+#
+# Sobe: nó blockchain (Hardhat) + deploy dos contratos + IPFS + PostgreSQL
+#       + Redis + backend (matchmaking/API).
+#
+# Uso:
+#   docker compose up -d          # sobe tudo
+#   docker compose logs -f backend
+#   docker compose down           # derruba
+#   docker compose down -v        # derruba + apaga volumes
+
+version: "3.9"
+
+services:
+  # ── Nó blockchain local (Hardhat) ────────────────────────────
+  hardhat:
+    build:
+      context: .
+      dockerfile: docker/hardhat.Dockerfile
+    container_name: copa-hardhat
+    ports:
+      - "8545:8545"          # RPC JSON
+    networks: [copa]
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "-X", "POST", "-H", "Content-Type: application/json",
+             "--data", '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}',
+             "http://localhost:8545"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # ── Deploy dos contratos (roda uma vez, depois encerra) ──────
+  deployer:
+    build:
+      context: .
+      dockerfile: docker/hardhat.Dockerfile
+    container_name: copa-deployer
+    depends_on:
+      hardhat:
+        condition: service_healthy
+    networks: [copa]
+    volumes:
+      - deployments:/app/deployments
+    command: >
+      npx hardhat run scripts/deploy-local.js --network localhost
+    restart: "no"
+
+  # ── IPFS (Kubo) — metadados e arte local ─────────────────────
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: copa-ipfs
+    ports:
+      - "5001:5001"          # API
+      - "8080:8080"          # Gateway
+    networks: [copa]
+    volumes:
+      - ipfs_data:/data/ipfs
+
+  # ── PostgreSQL — mural de trocas, usuários ───────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: copa-postgres
+    environment:
+      POSTGRES_USER: copa
+      POSTGRES_PASSWORD: copa_dev_pw
+      POSTGRES_DB: cryptoalbum
+    ports:
+      - "5432:5432"
+    networks: [copa]
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U copa -d cryptoalbum"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # ── Redis — matchmaking, cache, sessões ──────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: copa-redis
+    ports:
+      - "6379:6379"
+    networks: [copa]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # ── Backend (API + WebSocket matchmaking) ────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: copa-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      hardhat:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: "3001"
+      RPC_LOCAL: "http://hardhat:8545"
+      DATABASE_URL: "postgresql://copa:copa_dev_pw@postgres:5432/cryptoalbum"
+      REDIS_URL: "redis://redis:6379"
+      IPFS_API: "http://ipfs:5001"
+      DEPLOYMENTS_PATH: "/app/deployments/local.json"
+    ports:
+      - "3001:3001"
+    networks: [copa]
+    volumes:
+      - deployments:/app/deployments:ro   # lê endereços dos contratos
+    restart: unless-stopped
+
+networks:
+  copa:
+    driver: bridge
+
+volumes:
+  deployments:
+  ipfs_data:
+  pg_data:
+  redis_data:
