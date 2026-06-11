@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 using UnityEngine;
 using CryptoAlbumCopa.Data;
 
-// ChainSafe Web3.unity SDK
-// Instalar via Package Manager: https://github.com/ChainSafe/web3.unity
-// using ChainSafe.Gaming.Web3;
-// using ChainSafe.Gaming.Web3.Build;
-// using ChainSafe.Gaming.Evm.Contracts;
-// using ChainSafe.Gaming.UnityPackage;
+// ChainSafe web3.unity SDK v3.x
+// Instalar via Package Manager → Add via Git URL:
+//   https://github.com/ChainSafe/web3.unity.git?path=/Packages/io.chainsafe.web3-unity
+// Doc oficial: https://docs.gaming.chainsafe.io/
+//
+// v3 API (mudou em relação a v1/v2):
+//   using ChainSafe.Gaming.UnityPackage;   // Web3Unity (antes: Web3Accessor)
+//   using ChainSafe.Gaming.Web3;
+//   using ChainSafe.Gaming.Evm.Contracts;
+//   - signer.PublicAddress é SÍNCRONO (antes: await GetAddress())
+//   - carteiras unificadas em um único modal
+//   - classe EVM removida; usar web3.ErcXX.* ou ContractBuilder
 
 namespace CryptoAlbumCopa.Web3Net
 {
@@ -99,19 +105,14 @@ namespace CryptoAlbumCopa.Web3Net
             DontDestroyOnLoad(gameObject);
         }
 
-        // ─── Conexão de carteira ──────────────────────────────────
+        // ─── Conexão de carteira (ChainSafe v3) ───────────────────
         public async Task<bool> ConnectWallet()
         {
             try
             {
-                // var web3Builder = new Web3Builder(projectConfig)
-                //     .Configure(services => {
-                //         services.UseUnityEnvironment();
-                //         services.UseWalletConnect(...); // MetaMask, Trust Wallet, Binance Web3
-                //         services.UseRpcProvider(ActiveNetwork.Rpc);
-                //     });
-                // _web3 = await web3Builder.LaunchAsync();
-                // ConnectedAddress = _web3.Signer.PublicAddress;
+                // v3: Web3Unity é o ponto de entrada; modal unificado de carteira
+                // _web3 = await Web3Unity.Instance.Connect();
+                // ConnectedAddress = _web3.Signer.PublicAddress; // síncrono na v3
 
                 await Task.Delay(400); // stub
                 ConnectedAddress = "0x9aF2...b41"; // placeholder até integrar SDK
