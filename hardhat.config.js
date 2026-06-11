@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("@nomicfoundation/hardhat-toolbox");
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x" + "1".repeat(64);
 

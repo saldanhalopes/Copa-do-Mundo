@@ -8,7 +8,9 @@
 // em produção rode localmente após `npm install`. Os endereços VRF abaixo são
 // os oficiais da testnet Amoy.
 
-const hre = require("hardhat");
+const { ethers, network } = require("hardhat");
+const fs = require("fs");
+const path = require("path");
 
 const VRF = {
   amoy: {
@@ -26,9 +28,9 @@ const VRF = {
 };
 
 async function main() {
-  const net = hre.network.name;
+  const net = network.name;
   const cfg = VRF[net] || VRF.amoy;
-  const [deployer] = await hre.ethers.getSigners();
+  const [deployer] = await ethers.getSigners();
   const tesouro = process.env.TREASURY_ADDRESS || deployer.address;
   const subId = process.env.CHAINLINK_SUB_ID_POLYGON || 1;
 
@@ -36,48 +38,48 @@ async function main() {
   console.log(`   Deployer: ${deployer.address}\n`);
 
   // 1. Coleção ERC-1155
-  const Fig = await hre.ethers.getContractFactory("FigurinhasCopa");
+  const Fig = await ethers.getContractFactory("FigurinhasCopa");
   const fig = await Fig.deploy("ipfs://PLACEHOLDER/{id}.json", deployer.address, tesouro);
   await fig.waitForDeployment();
   const figAddr = await fig.getAddress();
   console.log("1. FigurinhasCopa:", figAddr);
 
   // 2. Atributos das cartas
-  const Stats = await hre.ethers.getContractFactory("CardStats");
+  const Stats = await ethers.getContractFactory("CardStats");
   const stats = await Stats.deploy(deployer.address);
   await stats.waitForDeployment();
   const statsAddr = await stats.getAddress();
   console.log("2. CardStats:", statsAddr);
 
   // 3. Loja de pacotes (VRF)
-  const Pack = await hre.ethers.getContractFactory("PackStore");
+  const Pack = await ethers.getContractFactory("PackStore");
   const pack = await Pack.deploy(cfg.coordinator, subId, cfg.keyHash, figAddr, tesouro);
   await pack.waitForDeployment();
   const packAddr = await pack.getAddress();
   console.log("3. PackStore:", packAddr);
 
   // 4. Trocas P2P
-  const Trade = await hre.ethers.getContractFactory("TradeDesk");
+  const Trade = await ethers.getContractFactory("TradeDesk");
   const trade = await Trade.deploy(figAddr);
   await trade.waitForDeployment();
   console.log("4. TradeDesk:", await trade.getAddress());
 
   // 5. Ranking e temporadas
-  const Rank = await hre.ethers.getContractFactory("RankingSeasons");
+  const Rank = await ethers.getContractFactory("RankingSeasons");
   const rank = await Rank.deploy(deployer.address);
   await rank.waitForDeployment();
   const rankAddr = await rank.getAddress();
   console.log("5. RankingSeasons:", rankAddr);
 
   // 6. PvP com aposta
-  const Match = await hre.ethers.getContractFactory("MatchEscrow");
+  const Match = await ethers.getContractFactory("MatchEscrow");
   const match = await Match.deploy(figAddr, statsAddr, tesouro, deployer.address);
   await match.waitForDeployment();
   const matchAddr = await match.getAddress();
   console.log("6. MatchEscrow:", matchAddr);
 
   // 7. Fantasy
-  const Fantasy = await hre.ethers.getContractFactory("FantasyLeague");
+  const Fantasy = await ethers.getContractFactory("FantasyLeague");
   const fantasy = await Fantasy.deploy(figAddr, statsAddr, deployer.address);
   await fantasy.waitForDeployment();
   console.log("7. FantasyLeague:", await fantasy.getAddress());
@@ -91,6 +93,34 @@ async function main() {
   const MATCH_ROLE = await rank.MATCH_ROLE();
   await (await rank.grantRole(MATCH_ROLE, matchAddr)).wait();
   console.log("   MATCH_ROLE → MatchEscrow (atualiza ELO)");
+
+  // ── Output JSON ────────────────────────────────────────────────
+  const deployment = {
+    network: net,
+    chainId: network.config.chainId,
+    deployer: deployer.address,
+    treasury: tesouro,
+    vrfCoordinator: cfg.coordinator,
+    chainlinkSubscriptionId: subId,
+    contracts: {
+      FigurinhasCopa: figAddr,
+      CardStats: statsAddr,
+      PackStore: packAddr,
+      TradeDesk: await trade.getAddress(),
+      RankingSeasons: rankAddr,
+      MatchEscrow: matchAddr,
+      FantasyLeague: await fantasy.getAddress(),
+    },
+    roles: {
+      MINTER_ROLE_assignedTo: "PackStore",
+      MATCH_ROLE_assignedTo: "MatchEscrow",
+    },
+    deployedAt: new Date().toISOString(),
+  };
+  const outDir = path.resolve(__dirname, "..", "deployments");
+  fs.mkdirSync(outDir, { recursive: true });
+  fs.writeFileSync(path.join(outDir, `${net}.json`), JSON.stringify(deployment, null, 2));
+  console.log(`\n📄 Output salvo em deployments/${net}.json`);
 
   console.log("\n✅ Deploy completo!");
   console.log("\n📋 Próximos passos:");

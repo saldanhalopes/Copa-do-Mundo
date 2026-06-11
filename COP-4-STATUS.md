@@ -1,0 +1,58 @@
+# COP-4 — Phase 2: Deploy Testnet — Completion Status
+
+> Generated: 2026-06-11 04:30 UTC
+> Status: **in_progress** — engineering complete, waiting on env credentials
+
+## What shipped in this heartbeat
+
+### Bug fixes (4 issues resolved)
+
+1. **`hardhat.config.js`**: Added missing `require("@nomicfoundation/hardhat-toolbox")` — without this, `ethers.*` API was undefined at runtime, causing all deploy scripts to crash with `TypeError: Cannot read properties of undefined (reading 'getSigners')`.
+
+2. **`scripts/deploy-testnet.js`**: Fixed import pattern from `const hre = require("hardhat")` to `const { ethers, network } = require("hardhat")` — required for Hardhat v2.28 + toolbox v5 compatibility.
+
+3. **`package.json`**: `deploy:amoy` and `deploy:bsctest` scripts pointed to `deploy-multichain.js` (mainnet, 2 contracts) instead of `deploy-testnet.js` (testnet, all 8 contracts). Fixed.
+
+4. **`scripts/deploy-testnet.js`**: Added deployment output sink — writes `deployments/<network>.json` with all contract addresses, treasury, VRF config, role assignments, and timestamp.
+
+### Verification
+
+- `npx hardhat compile` — 8 contracts, 0 errors
+- `node test/logic.test.js` — 13/13 passing
+- Local hardhat node full deploy — all 7 contracts deployed + MINTER_ROLE/MATCH_ROLE wiring — **confirmed working**
+
+### Local deploy output
+
+```
+FigurinhasCopa  0x5FbDB2315678afecb367f032d93F642f64180aa3
+CardStats       0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+PackStore       0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+TradeDesk       0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+RankingSeasons  0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+MatchEscrow     0x5FC8d32690cc91D4c39d9d3abcBD16989F875707
+FantasyLeague   0x0165878A594ca255338adfa4d48449f69242Eb8F
+```
+
+## Remaining blocker
+
+| Blocker | Owner | Action |
+|---------|-------|--------|
+| No `.env` with `PRIVATE_KEY` (funded wallet) | CEO | Create wallet on Amoy, get MATIC from faucet |
+| No `CHAINLINK_SUB_ID_POLYGON` | CEO | Create VRF subscription at vrf.chain.link, fund with LINK |
+| Paperclip API offline | Infra/Ops | Restore at 192.168.15.59:3300 — needed for status sync |
+
+## Deploy commands (ready to run)
+
+```bash
+cp .env.example .env
+# Edit .env with real PRIVATE_KEY and CHAINLINK_SUB_ID_POLYGON
+npm run deploy:amoy          # Primary: Polygon Amoy testnet
+npm run deploy:bsctest       # Secondary: BSC testnet
+```
+
+## Trade-offs (lenses applied)
+
+- **Cost of delay (high):** Each day without testnet blocks Phase 3 (Unity↔Chain integration). Unity devs cannot test Web3 flows against live contracts.
+- **Build vs reuse:** Used existing Hardhat + ethers.js infrastructure; no new tooling needed.
+- **Debt-repayment ratio (strongly positive):** Fixed 4 bugs in the deploy pipeline and added output serialization. Net debt negative.
+- **Two-way door:** Testnet deploy is fully reversible — contracts can be redeployed at any time with zero mainnet cost.
