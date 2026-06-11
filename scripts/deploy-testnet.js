@@ -20,8 +20,8 @@ const VRF = {
     symbol: "POL",
   },
   bscTestnet: {
-    coordinator: "0x0000000000000000000000000000000000000000", // Binance Oracle VRF testnet
-    keyHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+    coordinator: "0xDA3b641D438362C440Ac5458c57e00a712b66700", // Chainlink VRF v2.5 BSC testnet
+    keyHash: "0x8596b430971ac45bdf6088665b9ad8e8630c9d5049ab54b14dff711bee7c0e26", // 50 gwei key hash
     nome: "BSC Testnet",
     symbol: "tBNB",
   },
@@ -32,7 +32,9 @@ async function main() {
   const cfg = VRF[net] || VRF.amoy;
   const [deployer] = await ethers.getSigners();
   const tesouro = process.env.TREASURY_ADDRESS || deployer.address;
-  const subId = process.env.CHAINLINK_SUB_ID_POLYGON || 1;
+  const subId = net === "bscTestnet"
+    ? (process.env.CHAINLINK_SUB_ID_BSC || 1)
+    : (process.env.CHAINLINK_SUB_ID_POLYGON || 1);
 
   console.log(`\n🚀 Deploy completo na ${cfg.nome}`);
   console.log(`   Deployer: ${deployer.address}\n`);
