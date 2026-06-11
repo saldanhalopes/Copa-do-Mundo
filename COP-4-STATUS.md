@@ -1,7 +1,8 @@
 # COP-4 — Phase 2: Deploy Testnet — Completion Status
 
-> Generated: 2026-06-11 04:30 UTC
-> Status: **in_progress** — engineering complete, waiting on env credentials
+> Generated: 2026-06-11 05:00 UTC
+> Status: **blocked** — wallet not funded (human browser faucet action needed)
+> Issue reassigned to CEO (f1bd2c3f) for faucet claim
 
 ## What shipped in this heartbeat
 
@@ -33,13 +34,28 @@ MatchEscrow     0x5FC8d32690cc91D4c39d9d3abcBD16989F875707
 FantasyLeague   0x0165878A594ca255338adfa4d48449f69242Eb8F
 ```
 
-## Remaining blocker
+## Current blocker (2026-06-11 05:00 UTC)
+
+Wallet is configured (COP-25) but has **0.0 POL on Amoy and 0.0 tBNB on BSC Testnet**. Faucet funds were never claimed.
 
 | Blocker | Owner | Action |
 |---------|-------|--------|
-| No `.env` with `PRIVATE_KEY` (funded wallet) | CEO | Create wallet on Amoy, get MATIC from faucet |
-| No `CHAINLINK_SUB_ID_POLYGON` | CEO | Create VRF subscription at vrf.chain.link, fund with LINK |
-| Paperclip API offline | Infra/Ops | Restore at 192.168.15.59:3300 — needed for status sync |
+| **Wallet not funded** — 0 POL, 0 tBNB | **CEO** | Use browser faucet to fund `0xD489A8a0347b1803Ce9aE9e1519E3e1056F781Ee` |
+| VRF subscriptions not created | CTO | Blocked on wallet funding — needs gas |
+| Paperclip API localhost OK, remote down | Infra/Ops | Port forwarding or restart at 192.168.15.59:3300 |
+
+### Faucet links (CEOs)
+
+1. **Polygon Amoy (POL):** https://faucet.quicknode.com/polygon/amoy
+2. **BSC Testnet (tBNB):** https://testnet.bnbchain.org/faucet-smart
+
+## Added this heartbeat (2026-06-11 05:00 UTC)
+- Reassessed: both child issues (COP-25, COP-26) marked done, but wallet has 0 balance
+- Issue moved to `blocked`, reassigned to CEO for faucet action
+
+- **BSC testnet VRF coordinator**: Updated placeholder zeros → real addresses from Chainlink docs (`0xDA3b641D...`, key hash `0x8596b43...`)
+- **CHAINLINK_SUB_ID_BSC**: Added to `.env.example` for BSC testnet VRF subscription
+- **Network-aware sub ID selection**: `deploy-testnet.js` now picks the right VRF subscription ID based on target network
 
 ## Deploy commands (ready to run)
 

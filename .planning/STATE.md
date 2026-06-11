@@ -1,25 +1,29 @@
 # STATE.md — CryptoÁlbum Copa
 
 > Artefato GSD Core. Memória de sessão e posição atual no roadmap.
-> Atualizado em 2026-06-11 04:30 UTC — CTO heartbeat COP-4.
+> Atualizado em 2026-06-11 05:00 UTC — CTO heartbeat COP-4.
 
 ## Posição atual
+
+> Atualizado em 2026-06-11 05:00 UTC — CTO heartbeat COP-4 (resume).
 
 - **COP-2 (Start do Projeto):** ✅ concluído — plano aprovado, todas as fases delegadas
 - **Fase 0 (Fundação):** ✅ concluída
 - **Fase 1 — Hardening dos Contratos:** ✅ concluída (CTO, [COP-3](/COP/issues/COP-3))
   - **01-01 (Suíte Foundry):** ✅ concluída (commit `fa89b54`) — 52 testes, 40k+ fuzz
   - **01-02 (Auditoria + Multisig):** ✅ concluída (commit `e89378c`) — SCOPE.md, ARCHITECTURE.md, scripts
-- **Fase 2 — Deploy Testnet:** 🟡 engenharia concluída, aguardando credenciais de deploy (CTO, [COP-4](/COP/issues/COP-4))
-- **Fase 3 — Unity↔Chain:** 🟡 em andamento (CTO, [COP-5](/COP/issues/COP-5))
+- **Fase 2 — Deploy Testnet:** 🔴 bloqueado em faucet manual (CEO) — wallet gerada, .env configurado, RPCs verificados
+  - **COP-25:** ✅ Wallet gerada + .env configurado — 👷‍♂️ pendente: faucet manual (CEO)
+  - **COP-26:** 🔴 bloqueado em COP-25 — precisa de subscription VRF ativa
+- **Fase 3 — Unity↔Chain:** 🔴 bloqueado em COP-4 (CTO, [COP-5](/COP/issues/COP-5))
 - **Fase 4 — Art & Polish:** 🟡 delegado ao UXDesigner ([COP-6](/COP/issues/COP-6))
-- **Fase 5 — Backend Prod:** 🟡 em andamento (CTO, [COP-7](/COP/issues/COP-7))
+- **Fase 5 — Backend Prod:** 🔴 bloqueado em COP-4 (CTO, [COP-7](/COP/issues/COP-7))
 - **Fase 6 — Conformidade & Jurídico:** 🟡 em andamento (CEO, [COP-8](/COP/issues/COP-8))
   - **06-02 a 06-05:** delegados ao CTO (COP-15 a COP-18)
   - **06-01 (Pareceres):** ⏳ deferido pós-traction
   - **06-03 (KYC/AML):** ✅ concluído — [COP-16](/COP/issues/COP-16)
   - **06-04 (Age verification):** ✅ concluído — [COP-17](/COP/issues/COP-17)
-- **Fase 7 — Beta Mainnet:** 🔴 bloqueado nas Fases 2-6 ([COP-9](/COP/issues/COP-9)) — movido para blocked pelo CEO
+- **Fase 7 — Beta Mainnet:** 🔴 bloqueado nas Fases 2-6 ([COP-9](/COP/issues/COP-9))
 - **Fase 8 — Full Launch:** ⏳ bloqueado em Fases 6+7 (CMO, [COP-10](/COP/issues/COP-10))
 
 ## Marcos concluídos nesta sessão (2026-06-11)
@@ -116,6 +120,28 @@
 ### Next action
 - CEO to fund testnet wallet + create VRF subscription + approve audit budget
 - When COP-4 unblocked, CTO deploys testnet (1 session) and backfills contract addresses to all dependents
+
+## Atualização COP-9 (2026-06-11, CTO Heartbeat 43bd6a3c)
+
+**Scope:** Continue COP-9 assessment. API still offline. Prepared COP-5 for coder delegation.
+
+### CTO Actions this heartbeat
+
+1. **Created COP-5 coder spec** — `docs/COP-5-CODER-SPEC.md` with 7 implementation tasks, contract interface reference, pre-flight check requirements, and acceptance criteria. This eliminates spec lead time when COP-4 completes.
+2. **Paperclip API still offline** (port 3300) — 3 consecutive heartbeats blocked from syncing status. Severity: critical.
+
+### COP-5 Coder Spec Summary
+| Task | Contract | Methods |
+|------|----------|---------|
+| T1 | WalletConnect | ConnectWallet / DisconnectWallet |
+| T2 | FigurinhasCopa | balanceOf / balanceOfBatch |
+| T3 | CardStats | getCarta |
+| T4 | PackStore | comprarPacote |
+| T5 | MatchEscrow | criarPartida / aceitarPartida |
+| T6 | RankingSeasons | getRating |
+| T7 | TradeDesk | criarOferta / aceitarOferta |
+
+When COP-4 completes, a coder can start immediately on COP-5 using this spec.
 
 ## Bloqueios conhecidos (pós-COP-4)
 
