@@ -1,29 +1,124 @@
-// src/oracle/SportsOracle.js
-// Oráculo de desempenho real: busca resultados de jogos de uma API esportiva
-// e converte em pontos para o modo Fantasy e o "álbum vivo" (estrelas nas cartas
-// de jogadores que se destacam no torneio real).
-//
-// Em produção, a fonte seria uma API licenciada (ex.: Sportradar, API-Football)
-// e os pontos seriam injetados on-chain via Chainlink Functions ->
-// FantasyLeague.registrarDesempenho().
+import config from "../config.js";
+
+const PROVIDER_CONFIGS = {
+  football: {
+    baseUrl: config.ORACLE_API_URLS.football,
+    apiKey: config.ORACLE_API_KEYS.football,
+    headers: { "x-rapidapi-key": "", "x-rapidapi-host": "v3.football.api-sports.io" },
+  },
+  sportradar: {
+    baseUrl: config.ORACLE_API_URLS.sportradar,
+    apiKey: config.ORACLE_API_KEYS.sportradar,
+    headers: {},
+  },
+};
 
 export class SportsOracle {
-  constructor({ apiKey, registrarDesempenhoFn } = {}) {
+  constructor({
+    apiKey,
+    registrarDesempenhoFn,
+    provider = "football",
+    cacheTtlMs = 300000,
+    maxRetries = 3,
+  } = {}) {
     this.apiKey = apiKey;
-    this.registrar = registrarDesempenhoFn; // callback que escreve on-chain
+    this.registrar = registrarDesempenhoFn;
+    this.providerName = provider;
+
+    const providerConfig = PROVIDER_CONFIGS[provider] || PROVIDER_CONFIGS.football;
+    this.baseUrl = providerConfig.baseUrl;
+    this.apiKey = this.apiKey || providerConfig.apiKey;
+    this.headers = { ...providerConfig.headers };
+    if (this.apiKey) {
+      this.headers["x-rapidapi-key"] = this.apiKey;
+    }
+
+    this.cache = new Map();
+    this.cacheTtlMs = cacheTtlMs;
+    this.maxRetries = maxRetries;
+
+    this._rateLimitTokens = 10;
+    this._rateLimitMax = 10;
+    this._rateLimitInterval = 1000;
+    this._lastRateLimitRefill = Date.now();
   }
 
-  /**
-   * Pontuação de desempenho (regras estilo Cartola):
-   *  gol marcado          = +5 (atacante/meia), +8 (defensor/goleiro)
-   *  assistência          = +3
-   *  jogo sem sofrer gol  = +4 (goleiro/zagueiro)
-   *  defesa difícil       = +1.5
-   *  cartão amarelo       = -1
-   *  cartão vermelho      = -3
-   *  gol contra           = -3
-   *  pênalti perdido      = -2
-   */
+  _checkRateLimit() {
+    const now = Date.now();
+    if (now - this._lastRateLimitRefill > this._rateLimitInterval) {
+      this._rateLimitTokens = this._rateLimitMax;
+      this._lastRateLimitRefill = now;
+    }
+    if (this._rateLimitTokens <= 0) {
+      return false;
+    }
+    this._rateLimitTokens--;
+    return true;
+  }
+
+  _getCache(key) {
+    const entry = this.cache.get(key);
+    if (!entry) return null;
+    if (Date.now() - entry.ts > this.cacheTtlMs) {
+      this.cache.delete(key);
+      return null;
+    }
+    return entry.data;
+  }
+
+  _setCache(key, data) {
+    this.cache.set(key, { data, ts: Date.now() });
+  }
+
+  async _fetchWithRetry(url, options = {}, retries = this.maxRetries) {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      if (!this._checkRateLimit()) {
+        await new Promise((r) => setTimeout(r, this._rateLimitInterval));
+        continue;
+      }
+
+      try {
+        const response = await fetch(url, {
+          headers: { ...this.headers, ...options.headers },
+          ...options,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        return await response.json();
+      } catch (err) {
+        if (attempt < retries) {
+          const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+          console.warn(`[Oracle] Fetch attempt ${attempt + 1} failed, retrying in ${delay}ms: ${err.message}`);
+          await new Promise((r) => setTimeout(r, delay));
+          continue;
+        }
+        throw err;
+      }
+    }
+  }
+
+  async fetchFixtures({ league, season, date, live = false } = {}) {
+    const cacheKey = `fixtures:${league}:${season}:${date}:${live}`;
+    const cached = this._getCache(cacheKey);
+    if (cached) return cached;
+
+    let url;
+    if (live) {
+      url = `${this.baseUrl}/fixtures?live=all`;
+    } else if (date) {
+      url = `${this.baseUrl}/fixtures?date=${date}`;
+    } else {
+      url = `${this.baseUrl}/fixtures?league=${league || ""}&season=${season || ""}`;
+    }
+
+    const data = await this._fetchWithRetry(url);
+    this._setCache(cacheKey, data);
+    return data;
+  }
+
   computePoints(playerStats, position) {
     const isDefender = position === "GOL" || position === "ZAG" || position.startsWith("L");
     let pts = 0;
@@ -38,12 +133,6 @@ export class SportsOracle {
     return Math.round(pts * 10) / 10;
   }
 
-  /**
-   * Processa uma rodada: mapeia tokenIds das cartas para jogadores reais,
-   * calcula pontos e os injeta on-chain.
-   * @param {Array} fixtures resultados dos jogos
-   * @param {Map} tokenToPlayer  tokenId -> { apiPlayerId, position }
-   */
   async processRound(fixtures, tokenToPlayer) {
     const tokenIds = [];
     const points = [];
@@ -53,12 +142,12 @@ export class SportsOracle {
       if (!stats) continue;
       const pts = this.computePoints(stats, info.position);
       tokenIds.push(tokenId);
-      points.push(Math.round(pts * 100)); // pontos em centésimos (int para on-chain)
+      points.push(Math.round(pts * 100));
     }
 
     if (this.registrar && tokenIds.length > 0) {
       await this.registrar(tokenIds, points);
-      console.log(`[Oracle] ${tokenIds.length} desempenhos registrados on-chain`);
+      console.log(`[Oracle] ${tokenIds.length} performances registered on-chain`);
     }
     return { tokenIds, points };
   }
@@ -71,10 +160,6 @@ export class SportsOracle {
     return null;
   }
 
-  /**
-   * Determina quais cartas ganham "estrela" no álbum vivo
-   * (jogadores que se destacaram: 2+ gols, ou nota alta).
-   */
   starsForRound(fixtures) {
     const stars = [];
     for (const fx of fixtures) {
@@ -86,5 +171,9 @@ export class SportsOracle {
       }
     }
     return stars;
+  }
+
+  clearCache() {
+    this.cache.clear();
   }
 }

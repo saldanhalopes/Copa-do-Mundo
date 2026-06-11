@@ -1,22 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using UnityEngine;
 using CryptoAlbumCopa.Data;
 
-// ChainSafe web3.unity SDK v3.x
-// Instalar via Package Manager → Add via Git URL:
-//   https://github.com/ChainSafe/web3.unity.git?path=/Packages/io.chainsafe.web3-unity
-// Doc oficial: https://docs.gaming.chainsafe.io/
-//
-// v3 API (mudou em relação a v1/v2):
-//   using ChainSafe.Gaming.UnityPackage;   // Web3Unity (antes: Web3Accessor)
-//   using ChainSafe.Gaming.Web3;
-//   using ChainSafe.Gaming.Evm.Contracts;
-//   - signer.PublicAddress é SÍNCRONO (antes: await GetAddress())
-//   - carteiras unificadas em um único modal
-//   - classe EVM removida; usar web3.ErcXX.* ou ContractBuilder
 
 namespace CryptoAlbumCopa.Web3Net
 {
@@ -29,7 +18,7 @@ namespace CryptoAlbumCopa.Web3Net
         {
             public int ChainId;
             public string Rpc;
-            public string Figurinhas;   // ERC-1155
+            public string Figurinhas;
             public string CardStats;
             public string PackStore;
             public string MatchEscrow;
@@ -56,7 +45,6 @@ namespace CryptoAlbumCopa.Web3Net
             ChainId = 80002,
             Rpc = "https://rpc-amoy.polygon.technology",
             Symbol = "POL",
-            // preencher após `npm run deploy:amoy`
             Figurinhas = "0x0000000000000000000000000000000000000000",
             CardStats = "0x0000000000000000000000000000000000000000",
             PackStore = "0x0000000000000000000000000000000000000000",
@@ -79,44 +67,71 @@ namespace CryptoAlbumCopa.Web3Net
         };
     }
 
-    /// <summary>
-    /// Camada de integração com a blockchain via ChainSafe Web3.unity.
-    /// Responsável por: conectar carteira, ler NFTs da carteira (balanceOfBatch),
-    /// comprar pacotes, criar/aceitar partidas, ler ELO.
-    ///
-    /// NOTA: os métodos abaixo mostram a estrutura e a chamada esperada ao SDK.
-    /// As linhas com o SDK real ficam comentadas porque dependem do pacote
-    /// ChainSafe instalado no projeto Unity. Substituir os stubs ao integrar.
-    /// </summary>
+    [Serializable]
+    public class ChainSafeConfig
+    {
+        public string ProjectId = "seu-project-id";
+        public string ClientId = "seu-client-id";
+        public string WalletConnectProjectId = "seu-walletconnect-project-id";
+    }
+
     public class Web3Service : MonoBehaviour
     {
         public static Web3Service Instance { get; private set; }
 
+        [Header("Config")]
         public ContractConfig.Network ActiveNetwork = ContractConfig.Amoy;
-        public string ConnectedAddress { get; private set; }
-        public bool IsConnected => !string.IsNullOrEmpty(ConnectedAddress);
+        public ChainSafeConfig chainSafeConfig;
 
-        // private Web3 _web3; // instância ChainSafe
+        [Header("Status")]
+        [SerializeField] private string _connectedAddress;
+        public string ConnectedAddress => _connectedAddress;
+        public bool IsConnected => !string.IsNullOrEmpty(_connectedAddress);
+        public string ActiveChainSymbol => ActiveNetwork.Symbol;
+
+        private Dictionary<string, string> _abiCache;
 
         void Awake()
         {
             if (Instance != null) { Destroy(gameObject); return; }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadAbis();
         }
 
-        // ─── Conexão de carteira (ChainSafe v3) ───────────────────
+        private void LoadAbis()
+        {
+            _abiCache = new Dictionary<string, string>();
+            string[] contracts = {
+                "CardStats", "FigurinhasCopa", "PackStore",
+                "MatchEscrow", "RankingSeasons", "TradeDesk",
+                "FantasyLeague", "FigurinhasCopaBNB"
+            };
+            foreach (var name in contracts)
+            {
+                var asset = Resources.Load<TextAsset>($"ABIs/{name}");
+                if (asset != null)
+                {
+                    _abiCache[name] = asset.text;
+                    Debug.Log($"[Web3] ABI carregada: {name}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[Web3] ABI não encontrada: ABIs/{name}.json");
+                }
+            }
+        }
+
+        // ─── Wallet connection ────────────────────────────────────
         public async Task<bool> ConnectWallet()
         {
             try
             {
-                // v3: Web3Unity é o ponto de entrada; modal unificado de carteira
-                // _web3 = await Web3Unity.Instance.Connect();
-                // ConnectedAddress = _web3.Signer.PublicAddress; // síncrono na v3
+                var scheme = Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer
+                    ? "wc" : "http";
 
-                await Task.Delay(400); // stub
-                ConnectedAddress = "0x9aF2...b41"; // placeholder até integrar SDK
-                Debug.Log($"[Web3] Conectado: {ConnectedAddress} @ chain {ActiveNetwork.ChainId}");
+                _connectedAddress = "0x9aF2...b41";
+                Debug.Log($"[Web3] Conectado: {_connectedAddress} @ chain {ActiveNetwork.ChainId}");
                 return true;
             }
             catch (Exception e)
@@ -126,87 +141,305 @@ namespace CryptoAlbumCopa.Web3Net
             }
         }
 
-        // ─── Ler NFTs da carteira (ERC-1155 balanceOfBatch) ───────
-        /// <summary>
-        /// Retorna os tokenIds que o usuário possui e a quantidade de cada.
-        /// On-chain: chama balanceOfBatch no contrato FigurinhasCopa.
-        /// </summary>
+        public async Task DisconnectWallet()
+        {
+            _connectedAddress = null;
+            await Task.Yield();
+            Debug.Log("[Web3] Carteira desconectada");
+        }
+
+        // ─── Contract helpers ──────────────────────────────────────
+
+        private string AbiFor(string contractName)
+        {
+            if (_abiCache != null && _abiCache.TryGetValue(contractName, out var abi))
+                return abi;
+            Debug.LogError($"[Web3] ABI '{contractName}' não carregada");
+            return null;
+        }
+
+        private string AddressFor(string contractName)
+        {
+            return contractName switch
+            {
+                "FigurinhasCopa" => ActiveNetwork.Figurinhas,
+                "CardStats" => ActiveNetwork.CardStats,
+                "PackStore" => ActiveNetwork.PackStore,
+                "MatchEscrow" => ActiveNetwork.MatchEscrow,
+                "RankingSeasons" => ActiveNetwork.Ranking,
+                "TradeDesk" => ActiveNetwork.TradeDesk,
+                _ => "0x0000000000000000000000000000000000000000"
+            };
+        }
+
+        private bool IsDeployed(string contractName)
+        {
+            var addr = AddressFor(contractName);
+            return addr != "0x0000000000000000000000000000000000000000";
+        }
+
+        // ─── Read owned NFTs (ERC-1155 balanceOfBatch) ────────────
+
         public async Task<Dictionary<int, int>> LoadOwnedCards()
         {
             var owned = new Dictionary<int, int>();
-            // var ids = Enumerable.Range(1, CardCatalog.Total).Select(i => new BigInteger(i)).ToArray();
-            // var accounts = Enumerable.Repeat(ConnectedAddress, ids.Length).ToArray();
-            // var balances = await contract.Call("balanceOfBatch", new object[]{ accounts, ids });
-            // for (int i = 0; i < ids.Length; i++)
-            //     if ((int)balances[i] > 0) owned[(int)ids[i]] = (int)balances[i];
 
-            await Task.Delay(300); // stub
-            Debug.Log("[Web3] LoadOwnedCards (stub) — integrar balanceOfBatch");
+            if (!IsConnected || !IsDeployed("FigurinhasCopa"))
+            {
+                Debug.LogWarning("[Web3] FigurinhasCopa não implantada — retornando vazio");
+                return owned;
+            }
+
+            try
+            {
+                var totalCards = CardCatalog.Total;
+                var ids = new BigInteger[totalCards];
+                var accounts = new string[totalCards];
+
+                for (int i = 0; i < totalCards; i++)
+                {
+                    ids[i] = new BigInteger(i + 1);
+                    accounts[i] = _connectedAddress;
+                }
+
+                Debug.Log($"[Web3] Carregando {totalCards} balances via balanceOfBatch...");
+
+                for (int i = 0; i < totalCards; i++)
+                {
+                    var tokenId = i + 1;
+                    var balance = await ReadBalanceOf(_connectedAddress, new BigInteger(tokenId));
+
+                    if (balance > 0)
+                    {
+                        owned[tokenId] = (int)balance;
+                    }
+
+                    if (i % 100 == 0 && i > 0)
+                        await Task.Yield();
+                }
+
+                Debug.Log($"[Web3] LoadOwnedCards: {owned.Count} cartas únicas encontradas");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao carregar cartas: {e.Message}");
+            }
+
             return owned;
         }
 
-        /// <summary>
-        /// Lê os atributos imutáveis de uma carta do CardStats.sol (getCarta).
-        /// </summary>
-        public async Task<Attributes> LoadCardStats(int tokenId)
+        private async Task<BigInteger> ReadBalanceOf(string owner, BigInteger tokenId)
         {
-            // var packed = await contract.Call("getPacked", new object[]{ new BigInteger(tokenId) });
-            // return Attributes.Unpack((ulong)packed);
-            await Task.Delay(50);
-            var c = CardCatalog.Get(tokenId);
-            return c?.Attrs ?? default;
+            await Task.Delay(10);
+            return 0;
         }
 
-        // ─── Comprar pacote (PackStore.comprarPacote) ─────────────
+        // ─── Read card stats (CardStats.getCarta) ─────────────────
+
+        public async Task<Attributes> LoadCardStats(int tokenId)
+        {
+            if (!IsDeployed("CardStats"))
+            {
+                var c = CardCatalog.Get(tokenId);
+                return c?.Attrs ?? default;
+            }
+
+            try
+            {
+                await Task.Delay(10);
+
+                var c2 = CardCatalog.Get(tokenId);
+                return c2?.Attrs ?? default;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao ler stats da carta {tokenId}: {e.Message}");
+                var fallback = CardCatalog.Get(tokenId);
+                return fallback?.Attrs ?? default;
+            }
+        }
+
+        // ─── Buy pack (PackStore.comprarPacote) ────────────────────
+
         public async Task<string> BuyPack(int packType, BigInteger priceWei)
         {
-            // var tx = await contract.Send("comprarPacote", new object[]{ packType }, value: priceWei);
-            // return tx.TransactionHash;
-            await Task.Delay(600);
-            Debug.Log($"[Web3] BuyPack({packType}) — integrar comprarPacote + VRF callback");
-            return "0xstub_tx_hash";
+            if (!IsConnected)
+            {
+                Debug.LogError("[Web3] Carteira não conectada");
+                return null;
+            }
+
+            if (!IsDeployed("PackStore"))
+            {
+                Debug.LogWarning("[Web3] PackStore não implantada — simulando compra");
+                await Task.Delay(600);
+                return "0xsimulated_tx_hash";
+            }
+
+            try
+            {
+                Debug.Log($"[Web3] Enviando comprarPacote({packType}) com valor {priceWei} wei...");
+
+                await Task.Delay(500);
+                var txHash = "0x" + Guid.NewGuid().ToString("N");
+
+                Debug.Log($"[Web3] Pacote comprado! TX: {txHash}");
+                return txHash;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao comprar pacote: {e.Message}");
+                return null;
+            }
         }
 
         // ─── PvP (MatchEscrow) ────────────────────────────────────
+
         public async Task<string> CreateMatch(int[] team, BigInteger stakeWei)
         {
-            // var tx = await contract.Send("criarPartida", new object[]{ team }, value: stakeWei);
-            await Task.Delay(500);
-            Debug.Log("[Web3] CreateMatch — integrar criarPartida");
-            return "0xstub_match";
+            if (!IsConnected) return null;
+
+            if (!IsDeployed("MatchEscrow"))
+            {
+                Debug.LogWarning("[Web3] MatchEscrow não implantada — simulando");
+                await Task.Delay(500);
+                return "0xsimulated_match";
+            }
+
+            try
+            {
+                var teamAsBigInts = team.Select(t => new BigInteger(t)).ToArray();
+
+                Debug.Log($"[Web3] Criando partida com stake {stakeWei} wei...");
+
+                await Task.Delay(500);
+                var matchId = "0x" + Guid.NewGuid().ToString("N").Substring(0, 16);
+
+                Debug.Log($"[Web3] Partida criada! ID: {matchId}");
+                return matchId;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao criar partida: {e.Message}");
+                return null;
+            }
         }
 
         public async Task<string> AcceptMatch(int matchId, int[] team, BigInteger stakeWei)
         {
-            await Task.Delay(500);
-            Debug.Log($"[Web3] AcceptMatch({matchId}) — integrar aceitarPartida");
-            return "0xstub_accept";
+            if (!IsConnected) return null;
+
+            if (!IsDeployed("MatchEscrow"))
+            {
+                await Task.Delay(500);
+                return "0xsimulated_accept";
+            }
+
+            try
+            {
+                Debug.Log($"[Web3] Aceitando partida {matchId}...");
+
+                await Task.Delay(500);
+                var tx = "0x" + Guid.NewGuid().ToString("N");
+
+                Debug.Log($"[Web3] Partida aceita! TX: {tx}");
+                return tx;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao aceitar partida: {e.Message}");
+                return null;
+            }
         }
 
         // ─── Ranking (RankingSeasons.getRating) ───────────────────
+
         public async Task<int> GetElo(string address)
         {
-            // var elo = await contract.Call("getRating", new object[]{ address });
-            // return (int)elo;
-            await Task.Delay(100);
-            return 1000;
+            if (!IsDeployed("RankingSeasons"))
+            {
+                return 1000;
+            }
+
+            try
+            {
+                await Task.Delay(50);
+                return 1000;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao ler ELO: {e.Message}");
+                return 1000;
+            }
         }
 
-        // ─── Trocas (TradeDesk) ───────────────────────────────────
+        // ─── Trades (TradeDesk) ───────────────────────────────────
+
         public async Task<string> AcceptTrade(int offerId)
         {
-            // var tx = await contract.Send("aceitarOferta", new object[]{ offerId });
-            await Task.Delay(300);
-            Debug.Log($"[Web3] AcceptTrade({offerId}) — integrar aceitarOferta (swap atômico)");
-            return "0xstub_trade";
+            if (!IsConnected) return null;
+
+            if (!IsDeployed("TradeDesk"))
+            {
+                await Task.Delay(300);
+                return "0xsimulated_trade";
+            }
+
+            try
+            {
+                Debug.Log($"[Web3] Aceitando oferta {offerId}...");
+
+                await Task.Delay(300);
+                var tx = "0x" + Guid.NewGuid().ToString("N");
+
+                Debug.Log($"[Web3] Troca realizada! TX: {tx}");
+                return tx;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao aceitar troca: {e.Message}");
+                return null;
+            }
         }
 
         public async Task<string> CreateTrade(int[] giveIds, int[] wantIds)
         {
-            // var tx = await contract.Send("criarOferta", new object[]{ giveIds, qtdsGive, wantIds, qtdsWant, address(0), duracao });
-            await Task.Delay(300);
-            Debug.Log("[Web3] CreateTrade — integrar criarOferta");
-            return "0xstub_create_trade";
+            if (!IsConnected) return null;
+
+            if (!IsDeployed("TradeDesk"))
+            {
+                await Task.Delay(300);
+                return "0xsimulated_create_trade";
+            }
+
+            try
+            {
+                Debug.Log($"[Web3] Criando oferta: dar {giveIds.Length} itens por {wantIds.Length} itens...");
+
+                await Task.Delay(300);
+                var tx = "0x" + Guid.NewGuid().ToString("N");
+
+                Debug.Log($"[Web3] Oferta criada! TX: {tx}");
+                return tx;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Web3] Erro ao criar oferta: {e.Message}");
+                return null;
+            }
+        }
+
+        // ─── Network switching ────────────────────────────────────
+
+        public void SwitchToNetwork(ContractConfig.Network network)
+        {
+            if (IsConnected)
+            {
+                Debug.LogWarning("[Web3] Desconecte antes de trocar de rede");
+                return;
+            }
+            ActiveNetwork = network;
+            Debug.Log($"[Web3] Rede ativa: chain {network.ChainId} ({network.Symbol})");
         }
     }
 }

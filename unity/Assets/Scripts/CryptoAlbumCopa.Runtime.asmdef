@@ -2,7 +2,9 @@
     "name": "CryptoAlbumCopa.Runtime",
     "rootNamespace": "CryptoAlbumCopa",
     "references": [
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "ChainSafe.Gaming",
+        "ChainSafe.Gaming.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

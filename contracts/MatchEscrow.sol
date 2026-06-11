@@ -16,14 +16,17 @@ interface ICardStats {
 
 /**
  * @title MatchEscrow
- * @notice PvP de cartas com aposta (stake). O vencedor leva o pote.
+ * @notice PvP de cartas com aposta (stake) ou partidas casuais (stake = 0).
+ *         O vencedor leva o pote apenas em partidas com stake > 0.
+ *         Partidas com stake = 0: sem entrada, sem prêmio financeiro,
+ *         apenas ELO/Ranking (via RankingSeasons.sol).
  *
  *  FLUXO:
- *   1. Jogador A cria a partida com um stake (deposita POL/BNB) e seu time (5 cartas)
- *   2. Jogador B entra pagando o mesmo stake e enviando seu time
+ *   1. Jogador A cria a partida com stake (0 = casual) e seu time (5 cartas)
+ *   2. Jogador B entra (se stake > 0 paga o mesmo valor) e envia seu time
  *   3. O resolvedor (com VRF) processa a batalha: 5 confrontos carta-a-carta
  *      decididos por atributos (OVR + atributo relevante da posição) + fator VRF
- *   4. quem vencer mais confrontos leva o pote (menos a taxa da casa)
+ *   4. Quem vencer mais confrontos leva o pote (stake > 0) ou apenas ELO (stake = 0)
  *
  *  ANTI-TRAPAÇA:
  *   - Posse das cartas verificada on-chain (balanceOf)
@@ -33,12 +36,18 @@ interface ICardStats {
  */
 contract MatchEscrow is ReentrancyGuard, AccessControl {
     bytes32 public constant RESOLVER_ROLE = keccak256("RESOLVER_ROLE");
+    bytes32 public constant AGE_VERIFIER_ROLE = keccak256("AGE_VERIFIER_ROLE");
 
     IERC1155   public immutable figurinhas;
     ICardStats public immutable stats;
 
     uint16 public taxaCasaBps = 500;     // 5% de taxa sobre o pote
     address public tesouro;
+
+    uint8 public minAgeStakedPvP = 18;
+    mapping(address => bool) public ageVerified;
+    mapping(address => bool) public blockedWallets;
+    mapping(bytes32 => uint8) public jurisdictionMinAge;
 
     uint8 public constant CARTAS_POR_TIME = 5;
 
@@ -70,6 +79,12 @@ contract MatchEscrow is ReentrancyGuard, AccessControl {
     error NaoPossuiCarta(uint256 tokenId);
     error StakeIncorreto();
     error EstadoInvalido();
+    error IdadeNaoVerificada();
+    error WalletBlocked();
+    modifier apenasMaiorIdade(uint256 stake) {
+        if (stake > 0 && !ageVerified[msg.sender]) revert IdadeNaoVerificada();
+        _;
+    }
 
     constructor(address _figurinhas, address _stats, address _tesouro, address admin) {
         figurinhas = IERC1155(_figurinhas);
@@ -77,14 +92,15 @@ contract MatchEscrow is ReentrancyGuard, AccessControl {
         tesouro    = _tesouro;
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
         _grantRole(RESOLVER_ROLE, admin);
+        _grantRole(AGE_VERIFIER_ROLE, admin);
     }
 
-    // ─── Criar partida (jogador A deposita stake + envia time) ────
+    // ─── Criar partida (stake = 0 casual; stake > 0 com aposta) ──
 
     function criarPartida(uint256[CARTAS_POR_TIME] calldata time)
-        external payable nonReentrant returns (uint256 id)
+        external payable nonReentrant apenasMaiorIdade(msg.value) returns (uint256 id)
     {
-        require(msg.value > 0, "stake > 0");
+        if (blockedWallets[msg.sender]) revert WalletBlocked();
         _verificarPosse(msg.sender, time);
 
         id = proximaPartida++;
@@ -98,14 +114,19 @@ contract MatchEscrow is ReentrancyGuard, AccessControl {
         emit PartidaCriada(id, msg.sender, msg.value);
     }
 
-    // ─── Aceitar partida (jogador B paga o mesmo stake) ───────────
+    // ─── Aceitar partida (stake = 0 sem pagamento; stake > 0 igual) ─
 
     function aceitarPartida(uint256 id, uint256[CARTAS_POR_TIME] calldata time)
         external payable nonReentrant
     {
         Partida storage p = partidas[id];
         if (p.estado != Estado.Aberta) revert EstadoInvalido();
-        if (msg.value != p.stake) revert StakeIncorreto();
+        if (blockedWallets[msg.sender]) revert WalletBlocked();
+        if (p.stake > 0) {
+            if (msg.value != p.stake) revert StakeIncorreto();
+            if (!ageVerified[msg.sender]) revert IdadeNaoVerificada();
+        }
+        if (p.stake == 0 && msg.value > 0) revert StakeIncorreto();
         require(msg.sender != p.jogadorA, "nao pode jogar contra si");
         _verificarPosse(msg.sender, time);
 
@@ -139,17 +160,21 @@ contract MatchEscrow is ReentrancyGuard, AccessControl {
         p.vencedor = vencedor;
         p.estado   = Estado.Resolvida;
 
-        // Distribuição do pote
-        uint256 pote = p.stake * 2;
-        uint256 taxa = (pote * taxaCasaBps) / 10000;
-        uint256 premio = pote - taxa;
+        // Distribuição do pote (apenas se houver stake)
+        if (p.stake > 0) {
+            uint256 pote = p.stake * 2;
+            uint256 taxa = (pote * taxaCasaBps) / 10000;
+            uint256 premio = pote - taxa;
 
-        (bool t,) = tesouro.call{value: taxa}("");
-        require(t, "taxa");
-        (bool w,) = vencedor.call{value: premio}("");
-        require(w, "premio");
+            (bool t,) = tesouro.call{value: taxa}("");
+            require(t, "taxa");
+            (bool w,) = vencedor.call{value: premio}("");
+            require(w, "premio");
 
-        emit PartidaResolvida(id, vencedor, premio, placarA, placarB);
+            emit PartidaResolvida(id, vencedor, premio, placarA, placarB);
+        } else {
+            emit PartidaResolvida(id, vencedor, 0, placarA, placarB);
+        }
     }
 
     /// @dev Força de uma carta = OVR + atributo relevante da posição + fator VRF (0–9).
@@ -180,8 +205,10 @@ contract MatchEscrow is ReentrancyGuard, AccessControl {
         require(block.timestamp > p.criadaEm + TIMEOUT, "aguarde timeout");
 
         p.estado = Estado.Cancelada;
-        (bool ok,) = p.jogadorA.call{value: p.stake}("");
-        require(ok, "reembolso");
+        if (p.stake > 0) {
+            (bool ok,) = p.jogadorA.call{value: p.stake}("");
+            require(ok, "reembolso");
+        }
         emit PartidaCancelada(id);
     }
 
@@ -200,5 +227,35 @@ contract MatchEscrow is ReentrancyGuard, AccessControl {
     function setTaxa(uint16 bps) external onlyRole(DEFAULT_ADMIN_ROLE) {
         require(bps <= 1000, "max 10%");
         taxaCasaBps = bps;
+    }
+
+    function setMinAgeStakedPvP(uint8 _minAge) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(_minAge > 0, "minAge must be > 0");
+        minAgeStakedPvP = _minAge;
+    }
+
+    function setJurisdictionMinAge(bytes32 jurisdictionCode, uint8 _minAge)
+        external onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(_minAge > 0, "minAge must be > 0");
+        jurisdictionMinAge[jurisdictionCode] = _minAge;
+    }
+
+    function setAgeVerified(address wallet, bool verified) external onlyRole(AGE_VERIFIER_ROLE) {
+        ageVerified[wallet] = verified;
+    }
+
+    function setBlockedWallet(address wallet, bool blocked) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        blockedWallets[wallet] = blocked;
+    }
+
+    function isEligibleForStakedPvP(address wallet) external view returns (bool) {
+        return ageVerified[wallet];
+    }
+
+    function getEffectiveMinAge(bytes32 jurisdictionCode) external view returns (uint8) {
+        uint8 jurMin = jurisdictionMinAge[jurisdictionCode];
+        if (jurMin > 0) return jurMin;
+        return minAgeStakedPvP;
     }
 }

@@ -12,9 +12,10 @@
 - **Fase 1 — Hardening dos Contratos:** ✅ concluída (CTO, [COP-3](/COP/issues/COP-3))
   - **01-01 (Suíte Foundry):** ✅ concluída (commit `fa89b54`) — 52 testes, 40k+ fuzz
   - **01-02 (Auditoria + Multisig):** ✅ concluída (commit `e89378c`) — SCOPE.md, ARCHITECTURE.md, scripts
-- **Fase 2 — Deploy Testnet:** 🔴 bloqueado em faucet manual (CEO) — wallet gerada, .env configurado, RPCs verificados
-  - **COP-25:** ✅ Wallet gerada + .env configurado — 👷‍♂️ pendente: faucet manual (CEO)
+- **Fase 2 — Deploy Testnet:** 🔴 bloqueado em faucet manual (board) — wallet gerada, .env configurado, RPCs verificados, engenharia concluída
+  - **COP-25:** ✅ Wallet gerada + .env configurado
   - **COP-26:** 🔴 bloqueado em COP-25 — precisa de subscription VRF ativa
+  - **COP-32:** 🔴 bloqueado — wallet `0xD489A8a0347b1803Ce9aE9e1519E3e1056F781Ee` com 0 POL/0 tBNB. Requer humano com browser (faucets). CTO exauriu todas opções programáticas.
 - **Fase 3 — Unity↔Chain:** 🔴 bloqueado em COP-4 (CTO, [COP-5](/COP/issues/COP-5))
 - **Fase 4 — Art & Polish:** 🟡 delegado ao UXDesigner ([COP-6](/COP/issues/COP-6))
 - **Fase 5 — Backend Prod:** 🔴 bloqueado em COP-4 (CTO, [COP-7](/COP/issues/COP-7))
@@ -149,7 +150,7 @@ When COP-4 completes, a coder can start immediately on COP-5 using this spec.
 |---------|---------|------|------|
 | **Paperclip API offline** (`192.168.15.59:3300`) | Não é possível sincronizar status, criar subtarefas, ou comentar via API | Infra/Ops | Restaurar servidor da API Paperclip — gerou falso positivo de produtividade no COP-21 |
 | **Auditoria não contratada** | Não pode ir para mainnet sem auditoria | CEO/Board | Aprovar budget Code4rena (~$30k) + Trail of Bits (~$80k) |
-| **Testnet deploy sem credenciais** | Fase 2 não pode finalizar sem wallet fundada | CEO | Criar wallet na Amoy, conseguir MATIC de faucet, fornecer PRIVATE_KEY + CHAINLINK_SUB_ID_POLYGON |
+| **Testnet wallet sem fundos (COP-32)** | Fase 2 não pode finalizar — wallet `0xD489A8a0347b1803Ce9aE9e1519E3e1056F781Ee` com 0 POL/0 tBNB. Engenharia concluída, faucets exigem humano com browser + captcha. | **Board** | Visitar https://faucets.chain.link/polygon-amoy e https://testnet.bnbchain.org/faucet-smart (~2 min). Depois CTO executa deploy (~5 min). |
 | Slither/Mythril não rodados | Análise estática não gerada | CTO | `bash scripts/slither-report.sh` em ambiente com Python |
 | **Nenhum coder agent disponível** | Todo trabalho executado pelo CTO | CEO | Criar Coder agent para implementação delegada |
 

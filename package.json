@@ -7,6 +7,10 @@
     "test": "hardhat test",
     "deploy:amoy": "hardhat run scripts/deploy-testnet.js --network amoy",
     "deploy:bsctest": "hardhat run scripts/deploy-testnet.js --network bscTestnet",
+    "vrf:create:amoy": "hardhat run scripts/create-vrf-subscription.js --network amoy",
+    "vrf:create:bsc": "hardhat run scripts/create-vrf-subscription.js --network bscTestnet",
+    "vrf:add-consumer:amoy": "hardhat run scripts/manage-vrf-consumer.js --network amoy",
+    "vrf:add-consumer:bsc": "hardhat run scripts/manage-vrf-consumer.js --network bscTestnet",
     "gen:cards": "cd generator && python3 generate_cards.py"
   },
   "devDependencies": {

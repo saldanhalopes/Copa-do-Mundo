@@ -133,6 +133,8 @@ const OFERTAS_INICIAIS = [
   { id: 4, user: "didico.sol", da: "ARG-11", quer: "ALE-1" },
 ];
 
+const API_BASE = "http://localhost:3001";
+
 // ============================================================
 
 export default function CryptoAlbumCopa() {
@@ -159,10 +161,42 @@ export default function CryptoAlbumCopa() {
   // ranking / ELO do jogador
   const [elo, setElo] = useState(1000);
   const [record, setRecord] = useState({ v: 0, d: 0 });
+  const [geoStatus, setGeoStatus] = useState({
+    loading: true,
+    packsAllowed: true,
+    stakingAllowed: true,
+    countryCode: null,
+    countryName: null,
+    vpnRisk: false,
+    error: null,
+  });
 
   const unicas = useMemo(() => Object.keys(owned).filter((k) => owned[k] > 0).length, [owned]);
   const repetidas = useMemo(() => Object.values(owned).reduce((a, c) => a + Math.max(0, c - 1), 0), [owned]);
   const completo = unicas === TOTAL;
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE}/compliance/geofence-status`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const d = await res.json();
+        if (active) setGeoStatus({
+          loading: false,
+          packsAllowed: d.packsAllowed,
+          stakingAllowed: d.stakingAllowed,
+          countryCode: d.countryCode,
+          countryName: d.countryName,
+          vpnRisk: d.vpnRisk,
+          error: null,
+        });
+      } catch {
+        if (active) setGeoStatus(s => ({ ...s, loading: false, error: "offline" }));
+      }
+    })();
+    return () => { active = false; };
+  }, []);
 
   function toast(msg, sub) {
     const id = ++toastId.current;
@@ -297,6 +331,9 @@ export default function CryptoAlbumCopa() {
         </div>
       )}
 
+      {/* GEOFENCE BANNER */}
+      <GeofenceBanner geo={geoStatus} />
+
       {/* PROGRESSO */}
       <div className="px-4 pt-4 max-w-3xl mx-auto">
         <div className="flex items-end justify-between mb-1">
@@ -326,8 +363,8 @@ export default function CryptoAlbumCopa() {
       <main className="max-w-3xl mx-auto px-4 pb-24">
         <div className="rounded-b-2xl rounded-tr-2xl p-4 paper" style={{ color: "#3A2E1E" }}>
           {tab === "album" && <Album teamTab={teamTab} setTeamTab={setTeamTab} owned={owned} novas={novas} />}
-          {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} />}
-          {tab === "partida" && <Partida owned={owned} connected={connected} toast={toast} pol={pol} setPol={setPol} activeChain={activeChain} elo={elo} setElo={setElo} record={record} setRecord={setRecord} />}
+          {tab === "pacotes" && <Pacotes comprar={comprar} pol={pol} activeChain={activeChain} geo={geoStatus} />}
+          {tab === "partida" && <Partida owned={owned} connected={connected} toast={toast} pol={pol} setPol={setPol} activeChain={activeChain} elo={elo} setElo={setElo} record={record} setRecord={setRecord} geo={geoStatus} />}
           {tab === "ranking" && <Ranking elo={elo} record={record} />}
           {tab === "trocas" && <Trocas ofertas={ofertas} owned={owned} aceitar={aceitarTroca} criarOferta={criarOferta} connected={connected} toast={toast} />}
           {tab === "vender" && <Vender owned={owned} activeChain={activeChain} connected={connected} toast={toast} />}
@@ -357,6 +394,47 @@ export default function CryptoAlbumCopa() {
             {t.sub && <div className="text-xs mt-0.5" style={{ color: "rgba(243,233,210,.55)", fontFamily: "monospace" }}>{t.sub}</div>}
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// GEOFENCE BANNER
+// ============================================================
+function GeofenceBanner({ geo }) {
+  if (geo.loading) return null;
+
+  const { countryName, countryCode, packsAllowed, stakingAllowed, vpnRisk } = geo;
+
+  if (!countryCode && !vpnRisk) return null;
+
+  let segments = [];
+
+  if (vpnRisk) {
+    segments.push("VPN detectado. Desative o VPN para acessar todos os recursos da plataforma.");
+  }
+
+  if (!packsAllowed && !stakingAllowed) {
+    segments.push(`Compra de pacotes e partidas com aposta indisponíveis em ${countryName} devido a requisitos regulatórios. Entre em contato com o suporte para mais informações.`);
+  } else if (!packsAllowed) {
+    segments.push(`Compra de pacotes indisponível em ${countryName} devido a requisitos regulatórios. Você ainda pode trocar figurinhas (🔄 Trocas) e jogar partidas casuais (⚔️ Partida).`);
+  } else if (!stakingAllowed) {
+    segments.push(`Partidas com aposta indisponíveis em ${countryName} devido a requisitos regulatórios. O modo casual continua disponível.`);
+  }
+
+  if (segments.length === 0) return null;
+
+  return (
+    <div className="px-4 max-w-3xl mx-auto">
+      <div className="rounded-xl p-2.5 mt-2 text-xs flex items-start gap-2" style={{ background: "rgba(58,46,30,.9)", border: "1px solid rgba(255,223,0,.25)", color: "#FFDF00" }}>
+        <span className="text-sm mt-0.5 shrink-0">🛡️</span>
+        <div className="flex-1 leading-relaxed">
+          {segments.map((s, i) => <div key={i}>{s}</div>)}
+        </div>
+        {geo.error === "offline" && (
+          <span className="text-xs shrink-0" style={{ color: "rgba(243,233,210,.4)" }}>offline</span>
+        )}
       </div>
     </div>
   );
@@ -454,11 +532,22 @@ function Sticker({ fig, count = 1, nova, pasted, big }) {
 // ============================================================
 // PACOTES
 // ============================================================
-function Pacotes({ comprar, pol, activeChain }) {
+function Pacotes({ comprar, pol, activeChain, geo }) {
+  const packsBlocked = !geo.loading && !geo.packsAllowed;
   return (
     <div>
       <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Banca de pacotes</h2>
       <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Sorteio verificável via <b>{activeChain.vrf}</b> · Polygon 70% Comum · 20% Rara · 8% Épica · 2% Lendária</p>
+
+      {packsBlocked && (
+        <div className="rounded-xl p-3 mb-3 flex items-start gap-2.5" style={{ background: "#FFF3D6", border: "1px solid #D4A938" }}>
+          <span className="text-lg shrink-0">🛡️</span>
+          <div className="text-xs leading-relaxed" style={{ color: "#6A5E48" }}>
+            <div className="font-bold mb-0.5" style={{ color: "#3A2E1E" }}>Compra de pacotes indisponível</div>
+            <div>Por requisitos regulatórios, a compra de pacotes não está disponível em <b>{geo.countryName}</b>. Você ainda pode trocar figurinhas na aba <b>🔄 Trocas</b> ou comprar no marketplace externo.</div>
+          </div>
+        </div>
+      )}
 
       {/* Marketplace badge */}
       <div className="flex items-center gap-2 mb-3 p-2.5 rounded-xl" style={{ background: activeChain.id === "bnb" ? "#F0B90B18" : "#8247E518", border: `1px solid ${activeChain.cor}44` }}>
@@ -479,12 +568,12 @@ function Pacotes({ comprar, pol, activeChain }) {
               <div className="text-xs mt-0.5" style={{ color: "#B0A080", fontFamily: "monospace" }}>comprarPacote({p.id}) → {activeChain.vrf}</div>
             </div>
             <div className="flex flex-col gap-1 shrink-0">
-              <button onClick={() => comprar(p)} disabled={pol < p.preco} className="px-3 py-1.5 rounded-xl font-bold text-xs transition-all" style={pol >= p.preco ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
-                {p.preco} {activeChain.symbol}
+              <button onClick={() => comprar(p)} disabled={pol < p.preco || packsBlocked} className="px-3 py-1.5 rounded-xl font-bold text-xs transition-all" style={pol >= p.preco && !packsBlocked ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
+                {packsBlocked ? "Indisponível" : `${p.preco} ${activeChain.symbol}`}
               </button>
               {activeChain.id === "bnb" && (
-                <button onClick={() => comprar(p)} className="px-3 py-1.5 rounded-xl font-bold text-xs" style={{ background: "#F0B90B", color: "#1A1200" }}>
-                  Binance Pay
+                <button onClick={() => comprar(p)} disabled={packsBlocked} className="px-3 py-1.5 rounded-xl font-bold text-xs" style={packsBlocked ? { background: "#E0D2B4", color: "#A89878" } : { background: "#F0B90B", color: "#1A1200" }}>
+                  {packsBlocked ? "Indisponível" : "Binance Pay"}
                 </button>
               )}
             </div>
@@ -773,15 +862,21 @@ function gerarOponente() {
   ].map((s) => s.id);
 }
 
-function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setElo, record, setRecord }) {
+function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setElo, record, setRecord, geo }) {
   const [time, setTime] = useState(Array(5).fill(null));
   const [slotAberto, setSlotAberto] = useState(null);
-  const [stake, setStake] = useState(5);
+  const [stake, setStake] = useState(0);
   const [batalha, setBatalha] = useState(null);
+  const stakingBlocked = !geo.loading && !geo.stakingAllowed;
+
+  useEffect(() => {
+    if (stakingBlocked && stake > 0) setStake(0);
+  }, [stakingBlocked]);
 
   const minhas = Object.keys(owned).filter((id) => owned[id] > 0 && BY_ID[id] && BY_ID[id].attrs);
   const preenchidos = time.filter(Boolean).length;
   const somaOvr = time.reduce((a, id) => a + (id ? BY_ID[id].attrs.OVR : 0), 0);
+  const isCasual = stake === 0;
 
   function escolher(id) { const nt = [...time]; nt[slotAberto] = id; setTime(nt); setSlotAberto(null); }
 
@@ -799,11 +894,11 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setEl
   function iniciar() {
     if (!connected) return toast("Conecte sua carteira primeiro");
     if (preenchidos < 5) return toast("Escale as 5 cartas");
-    if (pol < stake) return toast("Saldo insuficiente para a aposta");
+    if (!isCasual && pol < stake) return toast("Saldo insuficiente para a aposta");
 
-    setPol((p) => p - stake);
+    if (!isCasual) setPol((p) => p - stake);
     const op = gerarOponenteEquilibrado();
-    setBatalha({ fase: "matchmaking", oponente: op.time, opNome: op.nome, opElo: op.elo, confrontos: [], placar: [0, 0] });
+    setBatalha({ fase: "matchmaking", oponente: op.time, opNome: op.nome, opElo: op.elo, confrontos: [], placar: [0, 0], isCasual });
 
     setTimeout(() => {
       let pa = 0, pb = 0;
@@ -825,9 +920,12 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setEl
       });
       setTimeout(() => {
         const venci = pa >= pb;
-        const pote = stake * 2;
-        const premio = Math.floor(pote * 0.95);
-        if (venci) setPol((p) => p + premio);
+        if (!isCasual) {
+          const pote = stake * 2;
+          const premio = Math.floor(pote * 0.95);
+          if (venci) setPol((p) => p + premio);
+          setBatalha((b) => b && { ...b, fase: "fim", venci, premio, deltaElo: 0 });
+        }
 
         // atualiza ELO (espelha RankingSeasons.sol)
         const exp = expectativaELO(elo, op.elo);
@@ -835,30 +933,55 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setEl
         setElo((e) => Math.max(0, e + delta));
         setRecord((r) => venci ? { ...r, v: r.v + 1 } : { ...r, d: r.d + 1 });
 
-        setBatalha((b) => b && { ...b, fase: "fim", venci, premio, deltaElo: delta });
+        setBatalha((b) => b && { ...b, fase: "fim", venci, deltaElo: delta });
       }, 700 + confrontos.length * 800 + 400);
     }, 1600);
   }
 
   function fechar() { setBatalha(null); setTime(Array(5).fill(null)); }
 
+  const opcoesStake = [
+    { value: 0, label: "Casual", sub: "sem aposta" },
+    { value: 5, label: "5", sub: `${activeChain.symbol}` },
+    { value: 10, label: "10", sub: `${activeChain.symbol}` },
+    { value: 25, label: "25", sub: `${activeChain.symbol}` },
+  ];
+
   return (
     <div>
       <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 22, color: "#3A2E1E" }}>Partida PvP ⚔️</h2>
-      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Escale 5 cartas, aposte e enfrente outro jogador. Os <b>atributos decidem</b> cada confronto. Vencedor leva o pote. Suas cartas <b>nunca saem</b> da carteira.</p>
+      <p className="text-xs mb-3" style={{ color: "#8A7A5E" }}>Escale 5 cartas e enfrent outro jogador. Os <b>atributos decidem</b> cada confronto. <b>Modo casual</b> por padrão: sem entrada, apenas ELO. Suas cartas <b>nunca saem</b> da carteira.</p>
 
-      {/* Aposta */}
+      {/* Modo de jogo */}
       <div className="flex items-center gap-2 mb-3 p-3 rounded-xl" style={{ background: "#FFF3D6", border: "1px solid #D4A938" }}>
-        <span className="text-xl">💰</span>
+        <span className="text-xl">{isCasual ? "🎮" : "💰"}</span>
         <div className="flex-1">
-          <div className="text-xs font-bold" style={{ color: "#6A5E48" }}>Aposta de entrada</div>
-          <div className="text-xs" style={{ color: "#8A7A5E" }}>Vencedor leva {(stake * 2 * 0.95).toFixed(1)} {activeChain.symbol} (pote −5% taxa)</div>
+          <div className="text-xs font-bold" style={{ color: "#6A5E48" }}>{isCasual ? "Casual (sem aposta)" : `Aposta: ${stake} ${activeChain.symbol}`}</div>
+          <div className="text-xs" style={{ color: "#8A7A5E" }}>
+            {isCasual ? "Ranking ELO — sem custo" : `Vencedor leva ${(stake * 2 * 0.95).toFixed(1)} ${activeChain.symbol} (pote −5% taxa)`}
+          </div>
         </div>
         <div className="flex items-center gap-1">
-          {[5, 10, 25].map((v) => (
-            <button key={v} onClick={() => setStake(v)} className="text-xs font-bold px-2 py-1 rounded-lg" style={stake === v ? { background: "#0A2E22", color: "#FFDF00" } : { background: "#E0D2B4", color: "#6A5E48" }}>{v}</button>
-          ))}
+          {opcoesStake.map((op) => {
+            const disabled = op.value > 0 && stakingBlocked;
+            return (
+              <button key={op.value} onClick={() => setStake(op.value)} disabled={disabled}
+                className="text-xs font-bold px-2 py-1 rounded-lg transition-all"
+                style={stake === op.value && !disabled
+                  ? { background: "#0A2E22", color: "#FFDF00" }
+                  : disabled
+                  ? { background: "#E0D2B4", color: "#A89878", cursor: "not-allowed", opacity: 0.5 }
+                  : { background: "#E0D2B4", color: "#6A5E48" }}>
+                {op.label}
+              </button>
+            );
+          })}
         </div>
+        {stakingBlocked && (
+          <div className="text-xs mt-1" style={{ color: "#B08018" }}>
+            ⚠️ Partidas com aposta indisponíveis em {geo.countryName}. Apenas modo casual disponível.
+          </div>
+        )}
       </div>
 
       {/* Slots de escalação */}
@@ -880,11 +1003,13 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setEl
       <div className="text-xs text-center mb-3" style={{ color: "#8A7A5E" }}>OVR total do time: <b style={{ color: "#3A2E1E" }}>{somaOvr}</b></div>
 
       <button onClick={iniciar} disabled={preenchidos < 5} className="w-full py-3 rounded-xl font-bold text-sm" style={preenchidos === 5 ? { background: "linear-gradient(90deg,#0A2E22,#1A7A3C)", color: "#FFDF00" } : { background: "#E0D2B4", color: "#A89878" }}>
-        {preenchidos === 5 ? `⚔️ Buscar oponente — apostar ${stake} ${activeChain.symbol}` : `Escale ${5 - preenchidos} carta(s)`}
+        {preenchidos < 5 ? `Escale ${5 - preenchidos} carta(s)` : isCasual ? "🎮 Jogar partida casual" : `⚔️ Buscar oponente — apostar ${stake} ${activeChain.symbol}`}
       </button>
 
       <div className="mt-3 rounded-xl p-3 text-xs" style={{ background: "rgba(10,46,34,.06)", color: "#6A5E48" }}>
-        🔒 Sua aposta fica travada no contrato <b>MatchEscrow.sol</b> até o fim. A aleatoriedade de cada confronto vem do VRF — ninguém pode trapacear.
+        {isCasual
+          ? "🛡️ Partida casual: sem entrada financeira. Apenas ELO e ranking. Partidas com aposta disponíveis como opção em jurisdições permitidas."
+          : "🔒 Sua aposta fica travada no contrato <b>MatchEscrow.sol</b> até o fim. A aleatoriedade de cada confronto vem do VRF — ninguém pode trapacear."}
       </div>
 
       {/* Seletor de carta */}
@@ -910,7 +1035,7 @@ function Partida({ owned, connected, toast, pol, setPol, activeChain, elo, setEl
 }
 
 function BatalhaModal({ batalha, fechar, stake, activeChain }) {
-  const { fase, confrontos = [], revelados = 0, placar = [0, 0] } = batalha;
+  const { fase, confrontos = [], revelados = 0, placar = [0, 0], isCasual } = batalha;
   const placarParcial = confrontos.slice(0, revelados).reduce((acc, c) => c.ganhei ? [acc[0] + 1, acc[1]] : [acc[0], acc[1] + 1], [0, 0]);
 
   return (
@@ -921,7 +1046,9 @@ function BatalhaModal({ batalha, fechar, stake, activeChain }) {
             <div className="text-5xl mb-4 anim-spin-slow inline-block">⚔️</div>
             <div className="font-bold" style={{ color: "#F3E9D2" }}>Pareando oponente equilibrado…</div>
             <div className="text-xs mt-2" style={{ color: "rgba(243,233,210,.7)" }}>Encontrado: <b>{batalha.opNome}</b> · ELO {batalha.opElo}</div>
-            <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.45)", fontFamily: "monospace" }}>aceitarPartida() · stake {stake} {activeChain.symbol} travado</div>
+            <div className="text-xs mt-1" style={{ color: "rgba(243,233,210,.45)", fontFamily: "monospace" }}>
+              {isCasual ? "Partida casual · stake 0 · apenas ELO" : `aceitarPartida() · stake ${stake} ${activeChain.symbol} travado`}
+            </div>
           </div>
         )}
         {(fase === "lutando" || fase === "fim") && (
@@ -949,7 +1076,9 @@ function BatalhaModal({ batalha, fechar, stake, activeChain }) {
                   {batalha.venci ? "🏆 VITÓRIA!" : "DERROTA"}
                 </div>
                 <div className="text-sm" style={{ color: "rgba(243,233,210,.8)" }}>
-                  {batalha.venci ? `Você levou ${batalha.premio} ${activeChain.symbol} do pote!` : `Você perdeu a aposta de ${stake} ${activeChain.symbol}.`}
+                  {isCasual
+                    ? (batalha.venci ? "Você venceu a partida casual!" : "Você perdeu a partida casual.")
+                    : (batalha.venci ? `Você levou ${batalha.premio} ${activeChain.symbol} do pote!` : `Você perdeu a aposta de ${stake} ${activeChain.symbol}.`)}
                 </div>
                 <div className="text-sm font-bold mt-1" style={{ color: batalha.deltaElo >= 0 ? "#4DFFB8" : "#FF5C8A" }}>
                   ELO {batalha.deltaElo >= 0 ? "+" : ""}{batalha.deltaElo}
@@ -1057,13 +1186,38 @@ function Ranking({ elo, record }) {
 // CSS
 // ============================================================
 const CSS = `
+:root {
+  --green-dark: #0A2E22;
+  --green-field: #14533C;
+  --yellow-trophy: #FFDF00;
+  --paper-bg: #F3E9D2;
+  --ink-brown: #3A2E1E;
+  --ink-muted: #8A7A5E;
+  --ink-light: #B0A080;
+  --rarity-comum: #8A8F98;
+  --rarity-rara: #9FB6CC;
+  --rarity-epica: #D4A938;
+  --rarity-lendaria: #B36CF0;
+  --surface-dark: #112A20;
+  --surface-card: #FFF8E8;
+  --border-card: #E0D2B4;
+  --font-display: 'Archivo Black', sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --ease-snap: cubic-bezier(.2,.9,.3,1.2);
+  --ease-out: cubic-bezier(0,.8,.2,1);
+}
 .paper {
   background:
     radial-gradient(circle at 18% 12%, rgba(255,255,255,.65), transparent 42%),
     repeating-linear-gradient(0deg, rgba(58,46,30,.025) 0 2px, transparent 2px 5px),
-    #F3E9D2;
+    var(--paper-bg);
   box-shadow: inset 0 0 60px rgba(58,46,30,.12);
 }
+.attr-bar { transition: width .5s var(--ease-out); }
 .pack-foil {
   background: linear-gradient(135deg, #0A2E22 0%, #14533C 35%, #FFDF00 50%, #14533C 65%, #0A2E22 100%);
   background-size: 250% 250%;
@@ -1071,32 +1225,34 @@ const CSS = `
   border: 1px solid rgba(255,223,0,.5);
 }
 @keyframes foil { 0%,100%{background-position:0% 0%} 50%{background-position:100% 100%} }
-.frame-comum { border: 3px solid #fff; }
-.frame-rara { border: 3px solid; border-image: linear-gradient(135deg,#E8EDF2,#9FB6CC,#E8EDF2) 1; }
-.frame-epica { border: 3px solid #D4A938; box-shadow: 0 0 10px rgba(212,169,56,.55) !important; }
-.frame-lendaria { border: 3px solid transparent; background-clip: padding-box; position: relative; }
+.frame-comum { border: 2px solid var(--rarity-comum); }
+.frame-rara { border: 2px solid var(--rarity-rara); }
+.frame-epica { border: 2px solid var(--rarity-epica); box-shadow: 0 0 8px rgba(212,169,56,.45) !important; }
+.frame-lendaria { border: 2px solid transparent; background-clip: padding-box; position: relative; }
 .frame-lendaria::after {
-  content:""; position:absolute; inset:-3px; z-index:-1; border-radius:10px;
+  content:""; position:absolute; inset:-2px; z-index:-1; border-radius:10px;
   background: conic-gradient(from var(--a,0deg), #FF5C8A, #FFDF00, #4DFFB8, #4DA6FF, #B36CF0, #FF5C8A);
   animation: holo 2.6s linear infinite;
 }
 @property --a { syntax:'<angle>'; initial-value:0deg; inherits:false; }
 @keyframes holo { to { --a: 360deg; } }
-.frame-lendaria { box-shadow: 0 0 14px rgba(179,108,240,.6) !important; }
+.frame-lendaria { box-shadow: 0 0 12px rgba(179,108,240,.55) !important; }
 @keyframes slap { 0%{transform:scale(1.9) rotate(8deg);opacity:0} 60%{transform:scale(.94) rotate(-2deg);opacity:1} 100%{transform:scale(1) rotate(0)} }
-.anim-slap { animation: slap .5s cubic-bezier(.2,.9,.3,1.2) both; }
+.anim-slap { animation: slap .5s var(--ease-snap) both; }
 @keyframes pop { from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
-.anim-pop { animation: pop .35s ease both; }
+.anim-pop { animation: pop .35s var(--ease-out) both; }
 @keyframes toastIn { from{transform:translateY(16px);opacity:0} to{transform:translateY(0);opacity:1} }
-.anim-toast { animation: toastIn .3s ease both; }
+.anim-toast { animation: toastIn .3s var(--ease-out) both; }
 @keyframes spinSlow { to{transform:rotate(360deg)} }
 .anim-spin-slow { animation: spinSlow 1.6s linear infinite; }
 @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 .anim-float { animation: floaty 2.4s ease-in-out infinite; }
 @keyframes pulseG { 0%,100%{opacity:1} 50%{opacity:.7} }
 .anim-pulse { animation: pulseG 1.4s ease infinite; }
-.anim-bar { transition: width .6s ease; }
+.anim-bar { transition: width .6s var(--ease-out); }
+@keyframes reveal { from{opacity:0;transform:scale(.8) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.anim-reveal { animation: reveal .45s var(--ease-out) both; }
 @media (prefers-reduced-motion: reduce) {
-  .anim-slap,.anim-pop,.anim-toast,.anim-spin-slow,.anim-float,.anim-pulse,.pack-foil,.frame-lendaria::after { animation: none !important; }
+  .anim-slap,.anim-pop,.anim-toast,.anim-spin-slow,.anim-float,.anim-pulse,.anim-reveal,.pack-foil,.frame-lendaria::after,.attr-bar { animation: none !important; transition: none !important; }
 }
 `;

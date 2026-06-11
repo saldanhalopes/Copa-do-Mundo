@@ -75,8 +75,13 @@ contract MatchEscrowTest is Test {
 
     function testCriarPartidaStakeZero() public {
         vm.prank(jogadorA);
-        vm.expectRevert("stake > 0");
-        escrow.criarPartida{value: 0}(_timeA());
+        uint256 id = escrow.criarPartida{value: 0}(_timeA());
+
+        MatchEscrow.Partida memory p = escrow.getPartida(id);
+        assertEq(uint256(p.estado), uint256(MatchEscrow.Estado.Aberta));
+        assertEq(p.jogadorA, jogadorA);
+        assertEq(p.stake, 0);
+        assertEq(p.jogadorB, address(0));
     }
 
     function testCriarPartidaSemCarta() public {
@@ -249,9 +254,60 @@ contract MatchEscrowTest is Test {
         escrow.cancelar(id);
     }
 
+    // ─── Partida casual (stake = 0) ─────────────────────────────────
+
+    function testPartidaCasualStakeZero() public {
+        vm.prank(jogadorA);
+        uint256 id = escrow.criarPartida{value: 0}(_timeA());
+
+        vm.prank(jogadorB);
+        escrow.aceitarPartida{value: 0}(id, _timeB());
+
+        uint256 tesouroSaldoBefore = tesouro.balance;
+        uint256 jogadorASaldoBefore = jogadorA.balance;
+        uint256 jogadorBSaldoBefore = jogadorB.balance;
+
+        vm.prank(resolver);
+        escrow.resolver(id, 54321);
+
+        MatchEscrow.Partida memory p = escrow.getPartida(id);
+        assertEq(uint256(p.estado), uint256(MatchEscrow.Estado.Resolvida));
+        assertTrue(p.vencedor == jogadorA || p.vencedor == jogadorB);
+        assertEq(p.stake, 0);
+
+        // Nenhum fundo foi movido (stake = 0)
+        assertEq(tesouro.balance, tesouroSaldoBefore);
+        assertEq(jogadorA.balance, jogadorASaldoBefore);
+        assertEq(jogadorB.balance, jogadorBSaldoBefore);
+    }
+
+    function testAceitarPartidaCasualComStake() public {
+        vm.prank(jogadorA);
+        uint256 id = escrow.criarPartida{value: 0}(_timeA());
+
+        vm.deal(jogadorB, 1 ether);
+        vm.prank(jogadorB);
+        vm.expectRevert(abi.encodeWithSelector(MatchEscrow.StakeIncorreto.selector));
+        escrow.aceitarPartida{value: 1 ether}(id, _timeB());
+    }
+
+    function testCancelarCasualStakeZero() public {
+        vm.prank(jogadorA);
+        uint256 id = escrow.criarPartida{value: 0}(_timeA());
+
+        uint256 saldoAntes = jogadorA.balance;
+        vm.warp(block.timestamp + 2 hours);
+        vm.prank(jogadorA);
+        escrow.cancelar(id);
+
+        MatchEscrow.Partida memory p = escrow.getPartida(id);
+        assertEq(uint256(p.estado), uint256(MatchEscrow.Estado.Cancelada));
+        assertEq(jogadorA.balance, saldoAntes); // sem reembolso (não havia stake)
+    }
+
     // ─── Fuzz: distribuição do pote ────────────────────────────────
 
-    /// @dev O pote = 2 * stake. Premio + taxa = pote.
+    /// @dev O pote = 2 * stake (quando stake > 0). Premio + taxa = pote.
     function testFuzz_potDistribution(uint96 stakeWei) public {
         vm.assume(stakeWei > 0);
         vm.assume(stakeWei <= 1000 ether);
@@ -288,8 +344,8 @@ contract MatchEscrowTest is Test {
     // ─── Fuzz: múltiplas partidas com stakes variados ──────────────
 
     function testFuzz_multiplasPartidas(uint96 stakeA, uint96 stakeB) public {
-        vm.assume(stakeA > 0 && stakeA < 100 ether);
-        vm.assume(stakeB > 0 && stakeB < 100 ether);
+        vm.assume(stakeA <= 100 ether);
+        vm.assume(stakeB <= 100 ether);
 
         vm.deal(jogadorA, stakeA);
         vm.prank(jogadorA);

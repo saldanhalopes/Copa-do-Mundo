@@ -44,6 +44,18 @@ Esse prefab já vem com OVR, posição, nome, 6 atributos e moldura ligados ao `
 
 ---
 
+## Passo 3.5 — Gerar o prefab da tela de Partida (automático)
+
+1. **CryptoÁlbum ▸ Criar Prefab da Partida**
+2. Cria `Assets/Prefabs/PartidaPanel.prefab` com:
+   - Seletor de modo (Ranqueada / Aposta) com highlights ligados
+   - Painel de aposta com 4 botões de valor (5/10/25/50 POL)
+   - Grid de escalação (11 jogadores + técnico) com `CardSlot` e `CardView`
+   - Botão de iniciar partida com texto dinâmico
+   - Picker overlay + Modal de confirmação + Battle panel + Result panel
+   - `BattleController` já adicionado e ligado ao `MatchScreen.battle`
+3. Todos os 28 campos públicos do `MatchScreen` já estão ligados aos GameObjects
+
 ## Passo 4 — Gerar a cena base (automático)
 
 **Opção A (recomendada) — UI completa em um clique:**

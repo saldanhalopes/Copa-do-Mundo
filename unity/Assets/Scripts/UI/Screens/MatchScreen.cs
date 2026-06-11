@@ -6,13 +6,10 @@ using TMPro;
 using CryptoAlbumCopa.Data;
 using CryptoAlbumCopa.Battle;
 using CryptoAlbumCopa.Game;
+using CryptoAlbumCopa.Services;
 
 namespace CryptoAlbumCopa.UI.Screens
 {
-    /// <summary>
-    /// Tela de Partida PvP: escala 11 jogadores + 1 técnico, escolhe a aposta,
-    /// e dispara a batalha via BattleController. Anima os 5 confrontos.
-    /// </summary>
     public class MatchScreen : MonoBehaviour
     {
         [Header("Refs")]
@@ -20,13 +17,29 @@ namespace CryptoAlbumCopa.UI.Screens
 
         [Header("Slots de escalação (11 jogadores)")]
         public CardSlot[] playerSlots = new CardSlot[11];
-        public CardSlot coachSlot; // 1 técnico
+        public CardSlot coachSlot;
 
-        [Header("Aposta")]
+        [Header("Modo de Jogo")]
+        public Button rankedModeButton;
+        public Button stakedModeButton;
+        public GameObject rankedModeHighlight;
+        public GameObject stakedModeHighlight;
+        public TMP_Text modeDescriptionText;
+
+        [Header("Aposta (modo Staked)")]
+        public GameObject stakedOptionsPanel;
         public TMP_Text stakeText;
-        public Button[] stakeButtons;       // 5,10,25,50
+        public Button[] stakeButtons;
         public int[] stakeValues = { 5, 10, 25, 50 };
-        private int _stake = 5;
+        private int _stake = 0;
+        private bool _isStakedMode = false;
+
+        [Header("Modal de Confirmação (Staked)")]
+        public GameObject stakedConfirmModal;
+        public TMP_Text confirmStakeValueText;
+        public TMP_Text confirmWarningText;
+        public Button confirmStakeButton;
+        public Button cancelStakeButton;
 
         [Header("Controles")]
         public Button startButton;
@@ -36,7 +49,7 @@ namespace CryptoAlbumCopa.UI.Screens
         [Header("Seletor de carta")]
         public GameObject pickerPanel;
         public Transform pickerGrid;
-        public GameObject pickerCardPrefab; // CardView + Button
+        public GameObject pickerCardPrefab;
         private int _pickingSlot = -1;
         private bool _pickingCoach = false;
 
@@ -45,17 +58,21 @@ namespace CryptoAlbumCopa.UI.Screens
         public TMP_Text battleStatus;
         public TMP_Text scoreText;
         public Transform clashContainer;
-        public GameObject clashRowPrefab;   // 2 CardViews + força + resultado
+        public GameObject clashRowPrefab;
         public GameObject resultPanel;
         public TMP_Text resultText;
         public TMP_Text resultDetail;
 
         void Start()
         {
+            SetModeRanked();
+            HookModeButtons();
             HookStakeButtons();
-            if (startButton != null) startButton.onClick.AddListener(OnStart);
+            if (startButton != null) startButton.onClick.AddListener(OnStartClicked);
             if (pickerPanel != null) pickerPanel.SetActive(false);
             if (battlePanel != null) battlePanel.SetActive(false);
+            if (stakedConfirmModal != null) stakedConfirmModal.SetActive(false);
+            if (stakedOptionsPanel != null) stakedOptionsPanel.SetActive(false);
 
             for (int i = 0; i < playerSlots.Length; i++)
             {
@@ -73,6 +90,47 @@ namespace CryptoAlbumCopa.UI.Screens
             RefreshLineup();
         }
 
+        private void HookModeButtons()
+        {
+            if (rankedModeButton != null)
+                rankedModeButton.onClick.AddListener(SetModeRanked);
+            if (stakedModeButton != null)
+                stakedModeButton.onClick.AddListener(SetModeStaked);
+        }
+
+        private void SetModeRanked()
+        {
+            _isStakedMode = false;
+            _stake = 0;
+            if (rankedModeHighlight != null) rankedModeHighlight.SetActive(true);
+            if (stakedModeHighlight != null) stakedModeHighlight.SetActive(false);
+            if (stakedOptionsPanel != null) stakedOptionsPanel.SetActive(false);
+            if (modeDescriptionText != null)
+                modeDescriptionText.text = "Partida ranqueada · Sem valor financeiro · Sobe no ranking";
+            RefreshLineup();
+        }
+
+        private void SetModeStaked()
+        {
+            if (GeofenceService.Instance != null && GeofenceService.Instance.isReady && !GeofenceService.Instance.stakingAllowed)
+            {
+                string country = string.IsNullOrEmpty(GeofenceService.Instance.countryName)
+                    ? "sua região" : GeofenceService.Instance.countryName;
+                if (modeDescriptionText != null)
+                    modeDescriptionText.text = $"⚠️ Partidas com aposta indisponíveis em {country}. Apenas modo ranqueado disponível.";
+                return;
+            }
+
+            _isStakedMode = true;
+            _stake = stakeValues.Length > 0 ? stakeValues[0] : 5;
+            if (rankedModeHighlight != null) rankedModeHighlight.SetActive(false);
+            if (stakedModeHighlight != null) stakedModeHighlight.SetActive(true);
+            if (stakedOptionsPanel != null) stakedOptionsPanel.SetActive(true);
+            if (modeDescriptionText != null)
+                modeDescriptionText.text = "Partida com aposta financeira · Verifique os riscos";
+            RefreshLineup();
+        }
+
         private void HookStakeButtons()
         {
             for (int i = 0; i < stakeButtons.Length && i < stakeValues.Length; i++)
@@ -82,7 +140,6 @@ namespace CryptoAlbumCopa.UI.Screens
             }
         }
 
-        // ─── Escalação ────────────────────────────────────────────
         private void OpenPicker(int slot, bool coach)
         {
             _pickingSlot = slot;
@@ -97,7 +154,6 @@ namespace CryptoAlbumCopa.UI.Screens
             var options = coach ? inv.OwnedCoaches() : inv.OwnedPlayers();
             foreach (var card in options)
             {
-                // não repetir carta já escalada
                 if (!coach && IsPlayerUsed(card.TokenId)) continue;
 
                 var go = Instantiate(pickerCardPrefab, pickerGrid);
@@ -145,15 +201,77 @@ namespace CryptoAlbumCopa.UI.Screens
             bool hasCoach = lineup.CoachTokenId != 0;
             bool complete = filled == 11 && hasCoach;
 
-            if (teamOvrText != null) teamOvrText.text = $"OVR do time: {lineup.TeamOvr()}  ·  Téc +{lineup.CoachBonus()}";
-            if (stakeText != null) stakeText.text = $"Aposta: {_stake}  ·  vencedor leva {(int)(_stake * 2 * 0.95f)}";
+            if (teamOvrText != null)
+                teamOvrText.text = $"OVR do time: {lineup.TeamOvr()}  ·  Téc +{lineup.CoachBonus()}";
+
+            if (_isStakedMode)
+            {
+                if (stakeText != null)
+                    stakeText.text = $"Aposta: {_stake}  ·  vencedor leva {(int)(_stake * 2 * 0.95f)}";
+                if (startButtonText != null && startButton != null)
+                    startButtonText.text = complete
+                        ? $"⚔️ Buscar oponente — apostar {_stake}"
+                        : $"Escale {(11 - filled)} jog. {(hasCoach ? "" : "+ técnico")}";
+            }
+            else
+            {
+                if (stakeText != null)
+                    stakeText.text = "Modo Ranqueada · Sem aposta financeira";
+                if (startButtonText != null && startButton != null)
+                    startButtonText.text = complete
+                        ? "⚔️ Buscar partida ranqueada"
+                        : $"Escale {(11 - filled)} jog. {(hasCoach ? "" : "+ técnico")}";
+            }
+
             if (startButton != null) startButton.interactable = complete;
-            if (startButtonText != null)
-                startButtonText.text = complete ? $"⚔️ Buscar oponente — apostar {_stake}"
-                                                : $"Escale {(11 - filled)} jog. {(hasCoach ? "" : "+ técnico")}";
         }
 
-        private void OnStart()
+        private void OnStartClicked()
+        {
+            if (_isStakedMode && _stake > 0)
+            {
+                ShowStakedConfirmModal();
+            }
+            else
+            {
+                StartMatchInternal();
+            }
+        }
+
+        private void ShowStakedConfirmModal()
+        {
+            if (GeofenceService.Instance != null && GeofenceService.Instance.isReady && !GeofenceService.Instance.stakingAllowed)
+            {
+                SetModeRanked();
+                return;
+            }
+
+            if (stakedConfirmModal != null) stakedConfirmModal.SetActive(true);
+            if (confirmStakeValueText != null)
+                confirmStakeValueText.text = $"Aposta: {_stake} {Web3Service.Instance?.ActiveChainSymbol ?? "POL"}";
+            if (confirmWarningText != null)
+                confirmWarningText.text = $"Valor total: {_stake * 2} (você + oponente). "
+                    + "Você só recupera se vencer. A casa retém 5% do pote.";
+
+            if (cancelStakeButton != null)
+            {
+                cancelStakeButton.onClick.RemoveAllListeners();
+                cancelStakeButton.onClick.AddListener(() => {
+                    if (stakedConfirmModal != null) stakedConfirmModal.SetActive(false);
+                });
+            }
+
+            if (confirmStakeButton != null)
+            {
+                confirmStakeButton.onClick.RemoveAllListeners();
+                confirmStakeButton.onClick.AddListener(() => {
+                    if (stakedConfirmModal != null) stakedConfirmModal.SetActive(false);
+                    StartMatchInternal();
+                });
+            }
+        }
+
+        private void StartMatchInternal()
         {
             if (battle == null) return;
             battle.MyLineup = BuildLineup();
@@ -165,7 +283,6 @@ namespace CryptoAlbumCopa.UI.Screens
             battle.StartMatch(stakeWei);
         }
 
-        // ─── Callbacks da batalha ─────────────────────────────────
         private void OnClashRevealed(Clash clash, int pm, int pt)
         {
             if (scoreText != null) scoreText.text = $"{pm} — {pt}";
@@ -189,10 +306,21 @@ namespace CryptoAlbumCopa.UI.Screens
             if (resultText != null) resultText.text = victory ? "🏆 VITÓRIA!" : "DERROTA";
             if (resultDetail != null)
             {
-                int premio = (int)(_stake * 2 * 0.95f);
-                resultDetail.text = victory
-                    ? $"Você levou {premio}!  ELO {(eloDelta >= 0 ? "+" : "")}{eloDelta}"
-                    : $"Você perdeu {_stake}.  ELO {eloDelta}";
+                if (_isStakedMode && _stake > 0)
+                {
+                    int premio = (int)(_stake * 2 * 0.95f);
+                    string eloSign = eloDelta >= 0 ? "+" : "";
+                    resultDetail.text = victory
+                        ? $"Você levou {premio}!  ELO {eloSign}{eloDelta}"
+                        : $"Você perdeu {_stake}.  ELO {eloDelta}";
+                }
+                else
+                {
+                    string eloSign = eloDelta >= 0 ? "+" : "";
+                    resultDetail.text = victory
+                        ? $"Vitória!  ELO {eloSign}{eloDelta}"
+                        : $"Derrota.  ELO {eloDelta}";
+                }
             }
         }
 

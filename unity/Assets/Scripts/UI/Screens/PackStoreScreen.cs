@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using CryptoAlbumCopa.Data;
 using CryptoAlbumCopa.Game;
+using CryptoAlbumCopa.Services;
 using CryptoAlbumCopa.Web3Net;
 
 namespace CryptoAlbumCopa.UI.Screens
@@ -79,6 +80,19 @@ namespace CryptoAlbumCopa.UI.Screens
         public async void BuyPack(int packIndex)
         {
             var pack = Packs[packIndex];
+
+            // 0) verificação de geofence antes de gastar gás
+            if (GeofenceService.Instance != null && GeofenceService.Instance.isReady && !GeofenceService.Instance.packsAllowed)
+            {
+                if (openModal != null) openModal.SetActive(true);
+                foreach (var g in _revealed) Destroy(g);
+                _revealed.Clear();
+                string country = string.IsNullOrEmpty(GeofenceService.Instance.countryName)
+                    ? "sua região" : GeofenceService.Instance.countryName;
+                SetStatus($"🛡️ Compra de pacotes indisponível em {country} devido a requisitos regulatórios.");
+                if (collectButton != null) collectButton.gameObject.SetActive(true);
+                return;
+            }
 
             // 1) pagar on-chain (PackStore.comprarPacote)
             if (Web3Service.Instance != null && Web3Service.Instance.IsConnected)

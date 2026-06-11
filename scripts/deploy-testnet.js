@@ -96,6 +96,17 @@ async function main() {
   await (await rank.grantRole(MATCH_ROLE, matchAddr)).wait();
   console.log("   MATCH_ROLE → MatchEscrow (atualiza ELO)");
 
+  // ── Registrar PackStore como consumer na subscription VRF ────
+  console.log("\n🔗 Registrando PackStore como consumer VRF...");
+  const coordinatorAddr = cfg.coordinator;
+  const abiConsumer = [
+    "function addConsumer(uint256 subId, address consumer) external",
+    "function getSubscription(uint256 subId) external view returns (uint96 balance, uint96 nativeBalance, uint64 reqCount, address owner, address[] memory consumers)",
+  ];
+  const coordinator = new ethers.Contract(coordinatorAddr, abiConsumer, deployer);
+  await (await coordinator.addConsumer(subId, packAddr)).wait();
+  console.log("   PackStore adicionado como consumer na subscription VRF");
+
   // ── Output JSON ────────────────────────────────────────────────
   const deployment = {
     network: net,
@@ -117,6 +128,12 @@ async function main() {
       MINTER_ROLE_assignedTo: "PackStore",
       MATCH_ROLE_assignedTo: "MatchEscrow",
     },
+    vrf: {
+      coordinator: cfg.coordinator,
+      subscriptionId: subId,
+      consumer: packAddr,
+      consumerRegistered: true,
+    },
     deployedAt: new Date().toISOString(),
   };
   const outDir = path.resolve(__dirname, "..", "deployments");
@@ -130,8 +147,7 @@ async function main() {
   console.log("   2. configurarFigurinhas() com os 680 ids/raridades/supplies");
   console.log("   3. setStatsBatch() com o output/stats.json");
   console.log("   4. Upload arte no IPFS, setURI(), freezeMetadata(), freezeStats()");
-  console.log("   5. Criar subscription VRF e adicionar PackStore como consumer");
-  console.log("   6. iniciarTemporada(30) no RankingSeasons");
+  console.log("   5. iniciarTemporada(30) no RankingSeasons");
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -52,6 +52,11 @@ contract PackStore is VRFConsumerBaseV2Plus, ReentrancyGuard {
     mapping(address => mapping(uint256 => uint256)) public comprasNoDia;
 
     address public tesouro;
+    mapping(address => bool) public ageVerified;
+    mapping(address => bool) public blockedWallets;
+
+    error IdadeNaoVerificada();
+    error WalletBlocked();
 
     event PacoteComprado(address indexed comprador, uint8 tipo, uint256 requestId);
     event PacoteAberto(address indexed comprador, uint256 requestId, uint256[] ids);
@@ -82,6 +87,8 @@ contract PackStore is VRFConsumerBaseV2Plus, ReentrancyGuard {
         TipoPacote memory p = pacotes[tipo];
         require(p.ativo, "pacote inativo");
         require(msg.value == p.preco, "valor incorreto");
+        if (blockedWallets[msg.sender]) revert WalletBlocked();
+        if (!ageVerified[msg.sender]) revert IdadeNaoVerificada();
 
         uint256 dia = block.timestamp / 1 days;
         require(comprasNoDia[msg.sender][dia] < LIMITE_DIARIO, "limite diario");
@@ -166,5 +173,13 @@ contract PackStore is VRFConsumerBaseV2Plus, ReentrancyGuard {
 
     function setTesouro(address t) external onlyOwner {
         tesouro = t;
+    }
+
+    function setAgeVerified(address wallet, bool verified) external onlyOwner {
+        ageVerified[wallet] = verified;
+    }
+
+    function setBlockedWallet(address wallet, bool blocked) external onlyOwner {
+        blockedWallets[wallet] = blocked;
     }
 }

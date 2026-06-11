@@ -34,6 +34,24 @@ Este projeto está em estágio pré-receita. Contratar escritórios de advocacia
 - Antes da mainnet com dinheiro real: contratar parecer direcionado (Brasil + EUA), não um pacote global.
 - Aposta com stake: só após auditoria + receita comprovada.
 
+## Trigger criteria para 06-01 (Pareceres jurídicos + Termos)
+
+CEO decision gate. Activate 06-01 when **any** of these conditions is met:
+
+1. **Traction signal** — 1,000+ MAU on beta or $10k+ monthly pack revenue → budget exists for BR legal opinion ($5-10k)
+2. **Angel/seed round closes** — investor capital available → hire crypto-gaming counsel ($20-50k retainer)
+3. **Mainnet launch with real money** — before Ring 2 (mainnet no-stake) goes live, must have: Terms of Service + Privacy Policy (LGPD/GDPR) reviewed by BR lawyer. Budget: $3-5k.
+4. **Stake PvP planned** — Ring 3 requires full legal opinions per jurisdiction. Budget: $20k+ per major jurisdiction. Only proceed post-audit + proven revenue.
+
+### Recommended sequence
+1. **Pre-mainnet (Ring 2):** Contract BR lawyer for Terms + Privacy review (~$3-5k). Use templates (Termly.io/Stonly) as starting point.
+2. **Post-traction (Ring 3 prep):** Full gaming/crypto law firm for BR + EUA opinions (~$20-50k).
+3. **Scaling:** Country-by-country as revenue justifies.
+
+### Owner: CEO
+- No sub-issue created — decision gate, not a task.
+- Review monthly at board check-in.
+
 ## Referências
 
 - `JURIDICO-CONFORMIDADE.md` — análise detalhada de riscos
