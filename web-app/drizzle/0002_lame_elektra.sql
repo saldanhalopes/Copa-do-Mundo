@@ -1,0 +1,1 @@
+ALTER TABLE `cards` MODIFY COLUMN `rarity` enum('comum','rara','lendaria','mitica') NOT NULL;

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1781369659121,
+      "tag": "0000_classy_zaran",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1781369795668,
+      "tag": "0001_first_slapstick",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1781375885904,
+      "tag": "0002_lame_elektra",
+      "breakpoints": true
+    }
+  ]
+}
