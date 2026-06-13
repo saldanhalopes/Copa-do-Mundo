@@ -349,6 +349,19 @@ app.get("/compliance/blocked-jurisdictions", defaultRateLimit, async (req, res) 
   res.json(getBlockedJurisdictions());
 });
 
+app.get("/contracts", defaultRateLimit, async (req, res) => {
+  try {
+    const depPath = process.env.DEPLOYMENTS_PATH || "../deployments/local.json";
+    const fs = await import("fs");
+    const path = await import("path");
+    const absPath = path.resolve(depPath);
+    const data = JSON.parse(fs.readFileSync(absPath, "utf8"));
+    res.json(data.contracts);
+  } catch (e) {
+    res.status(500).json({ error: "Deployments not found", details: e.message });
+  }
+});
+
 app.get("/compliance/contract-addresses", defaultRateLimit, authenticate, async (req, res) => {
   const geo = getGeoStatus(req);
   const overrides = getBlockedJurisdictions().contractOverrides || {};

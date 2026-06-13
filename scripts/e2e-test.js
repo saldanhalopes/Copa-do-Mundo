@@ -15,8 +15,7 @@ function check(name, cond) {
 }
 
 async function main() {
-  const depPath = path.join("/app", "deployments", "local.json");
-  const localPath = fs.existsSync(depPath) ? depPath : path.join(__dirname, "..", "deployments", "local.json");
+  const localPath = path.join(__dirname, "..", "deployments", "local.json");
   const dep = JSON.parse(fs.readFileSync(localPath, "utf8"));
   const [user] = await hre.ethers.getSigners();
 
@@ -26,7 +25,7 @@ async function main() {
   console.log("1. Contratos deployados");
   const fig = await hre.ethers.getContractAt("FigurinhasCopa", dep.contracts.FigurinhasCopa);
   const cardStats = await hre.ethers.getContractAt("CardStats", dep.contracts.CardStats);
-  check("FigurinhasCopa responde", (await fig.TOTAL_FIGURINHAS()) === 680n || true);
+  check("FigurinhasCopa responde", (await fig.TOTAL_FIGURINHAS()) === 1352n || true);
 
   // 2. Cartas configuradas (supply)
   console.log("\n2. Cartas configuradas");

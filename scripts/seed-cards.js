@@ -13,8 +13,7 @@ const SUPPLY = [50000, 10000, 2500, 500, 50];
 
 async function main() {
   // carrega endereços do deploy
-  const depPath = path.join("/app", "deployments", "local.json");
-  const localPath = fs.existsSync(depPath) ? depPath : path.join(__dirname, "..", "deployments", "local.json");
+  const localPath = path.join(__dirname, "..", "deployments", "local.json");
   if (!fs.existsSync(localPath)) {
     console.error("❌ deployments/local.json não encontrado. Rode deploy-local.js primeiro.");
     process.exit(1);
@@ -67,8 +66,12 @@ async function main() {
   for (let rar = 0; rar < 5; rar++) {
     const poolIds = catalogo.filter((c) => c.tipo === 0 && c.rar === rar).map((c) => c.id);
     if (poolIds.length === 0) continue;
-    const tx = await pack.configurarPool(rar, poolIds);
-    await tx.wait();
+    const POOL_BATCH = 100;
+    for (let i = 0; i < poolIds.length; i += POOL_BATCH) {
+      const batch = poolIds.slice(i, i + POOL_BATCH);
+      const tx = await pack.configurarPool(rar, batch);
+      await tx.wait();
+    }
     console.log(`   raridade ${rar}: ${poolIds.length} cartas`);
   }
 

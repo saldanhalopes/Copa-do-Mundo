@@ -103,7 +103,7 @@ async function main() {
     deployedAt: new Date().toISOString(),
   };
 
-  const dir = path.join("/app", "deployments");
+  const dir = path.join(process.cwd(), "deployments");
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "local.json"), JSON.stringify(out, null, 2));
   console.log("\n✅ Deploy local concluído. Endereços em deployments/local.json");

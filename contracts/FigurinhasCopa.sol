@@ -18,7 +18,7 @@ contract FigurinhasCopa is ERC1155, ERC2981, AccessControl, Pausable {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-    uint256 public constant TOTAL_FIGURINHAS = 680;
+    uint256 public constant TOTAL_FIGURINHAS = 1352;
 
     // Raridade de cada figurinha: 0=Comum, 1=Rara, 2=Épica, 3=Lendária, 4=Mítica
     mapping(uint256 => uint8) public raridade;
